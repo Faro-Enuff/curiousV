@@ -2,6 +2,9 @@
 
 node_modules/
 
+# Connect MongoDB with Mongoose
+keys.js
+
 # dependencies
 /node_modules
 /.pnp
