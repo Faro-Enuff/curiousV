@@ -1,4 +1,6 @@
+// Import Mongoose
 const mongoose = require("mongoose");
+// Destructure Schema form mongoose
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
@@ -13,7 +15,10 @@ const userSchema = new Schema({
   },
 });
 
-// Creating a Moodel  + exporting it
+// Creating a Moodel
+
 const User = mongoose.model("User", userSchema);
+
+// Export
 
 module.exports = User;

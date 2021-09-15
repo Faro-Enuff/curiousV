@@ -1,4 +1,3 @@
-const usersModel = require("../model/usersModel");
 // Express variable
 const express = require("express");
 
@@ -12,6 +11,9 @@ router.get("/test", (req, res) => {
   res.send({ msg: "Test route." });
 });
 
+//Import users model
+const usersModel = require("../model/usersModel");
+
 router.get("/all", (req, res) => {
   usersModel.find({}, function (err, users) {
     if (err) {
@@ -21,4 +23,6 @@ router.get("/all", (req, res) => {
     }
   });
 });
+
+// Export Users Route
 module.exports = router;

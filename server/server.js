@@ -43,6 +43,10 @@ app.use(cors());
 
 app.use("/users", require("./routes/users"));
 
+// Back-End Route to summons collection
+
+app.use("/summons", require("./routes/summons"));
+
 ////////////////////////
 ////////////////////////
 
