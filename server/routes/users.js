@@ -1,3 +1,4 @@
+const usersModel = require("../model/usersModel");
 // Express variable
 const express = require("express");
 
@@ -9,5 +10,15 @@ const router = express.Router();
 // 2. Argument of call back function (res = simple String in JSON format "Test route")
 router.get("/test", (req, res) => {
   res.send({ msg: "Test route." });
+});
+
+router.get("/all", (req, res) => {
+  usersModel.find({}, function (err, users) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(users);
+    }
+  });
 });
 module.exports = router;
