@@ -1,18 +1,14 @@
 // Import Mongoose
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 // Destructure Schema form mongoose
 const { Schema } = mongoose;
 
-const summonSchema = new Schema({
+const summonsSchema = new Schema({
   exercise: String,
   duration: Number,
   learningSource: String,
 });
 
-// Creating a Model
+// Export Module
 
-const Summon = mongoose.model("Summon", summonSchema);
-
-// Export
-
-module.exports = Summon;
+export default mongoose.model("summon", summonsSchema);

@@ -1,34 +1,45 @@
 ////////////////////////
 ////////////////////////
 
-// !!! Initalise the server and assign it to a port !!!
+// !!! Initialize the server and assign it to a port !!!
 
 ////////////////////////
 ////////////////////////
 
 // Import Express into our application (express + app)
-const express = require("express");
+import express from "express";
+
+// Server Creation via express
 const app = express();
 
 // Create a server to connect API Calls and Browser
 const port = process.env.PORT || 5000;
+
+// TODO eventually put this listen function into the connect function of mongoDB, makes more sense to wait until the connection is set (async function for mongoose connect. Netninja min 13 of mongoDB video)
 app.listen(port, () => {
   console.log("Server is running on " + port + "port");
 });
 
-const bodyParser = require("body-parser");
-const cors = require("cors");
+////////////////////////
+////////////////////////
 
 // Middleware
+
+////////////////////////
+////////////////////////
+
 // BodyParser
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
+
 // Cors
+//Import
+import cors from "cors";
 app.use(cors());
 
 ////////////////////////
@@ -39,30 +50,36 @@ app.use(cors());
 ////////////////////////
 ////////////////////////
 
+// Import Back-End Routes
+import userRoutes from "./routes/userRoute.js";
+import summonRoutes from "./routes/summonRoute.js";
+
 // Back-End Route to users collection
 
-app.use("/users", require("./routes/users"));
+app.use("/api/users", userRoutes);
 
 // Back-End Route to summons collection
 
-app.use("/summons", require("./routes/summons"));
+app.use("/api/summons", summonRoutes);
 
 ////////////////////////
 ////////////////////////
 
 // !!! Connecting Server and Database !!!
 
-////////////////////////
-////////////////////////
-
-// Import keys file and select the mongoURI
-const db = require("./keys").mongoURI;
-// Import mongoose in our application
-const mongoose = require("mongoose");
-
 // Connecting to database (mongoDB Atlas "interestCV")
-// LMS is outdate
+
+////////////////////////
+////////////////////////
+
+// Import .env
+import dotenv from "dotenv";
+dotenv.config();
+
+// Import mongoose in our application
+import mongoose from "mongoose";
+
 mongoose
-  .connect(db)
+  .connect(process.env.DB)
   .then(() => console.log("Connection to Mongo DB established"))
   .catch((err) => console.log(err));

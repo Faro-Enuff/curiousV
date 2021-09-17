@@ -1,0 +1,9 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "front": "npm start -prefix client",
+    "server": "npm server -prefix server"
+  }
+}
