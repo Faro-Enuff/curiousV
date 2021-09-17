@@ -5,14 +5,23 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const usersSchema = new Schema({
-  name: String, // String is shorthand for {type: String}
-  hobbys: String,
-  contacts: {
-    email: String,
-    mobile: Number,
+  artistName: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  socials: {
-    instagram: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
 });
 

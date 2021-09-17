@@ -53,6 +53,7 @@ app.use(cors());
 // Import Back-End Routes
 import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
+import hobbyRoutes from "./routes/hobbyRoute.js";
 
 // Back-End Route to users collection
 
@@ -61,6 +62,10 @@ app.use("/api/users", userRoutes);
 // Back-End Route to summons collection
 
 app.use("/api/summons", summonRoutes);
+
+// Back-End Route to hobbies collection
+
+app.use("/api/hobbies", hobbyRoutes);
 
 ////////////////////////
 ////////////////////////
