@@ -4,26 +4,30 @@ import mongoose from "mongoose";
 // Destructure Schema form mongoose
 const { Schema } = mongoose;
 
-const usersSchema = new Schema({
-  artistName: {
-    type: String,
-    required: true,
-    unique: true,
+const usersSchema = new Schema(
+  {
+    // artistName: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    //   minlength: 3,
+    // },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 // Export Module
 

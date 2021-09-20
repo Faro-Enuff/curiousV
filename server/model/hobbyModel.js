@@ -6,6 +6,15 @@ const { Schema } = mongoose;
 
 const hobbiesSchema = new Schema(
   {
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
+    artistname: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     genre: {
       type: String,
       required: true,
