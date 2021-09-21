@@ -4,9 +4,28 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const summonsSchema = new Schema({
-  exercise: String,
-  duration: Number,
-  learningSource: String,
+  assignmentName: {
+    type: String,
+    required: true,
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
+  source: {
+    type: String,
+    required: true,
+  },
+  sourceMedia: {
+    type: String,
+  },
+  summonToCreate: {
+    type: Boolean,
+  },
 });
 
 // Export Module

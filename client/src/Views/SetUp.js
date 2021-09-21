@@ -15,9 +15,10 @@ import EquipmentTextfield from "../Components/SetUpComponents/EquipmentTextfield
 import { Box, Button } from "@mui/material";
 
 const SetUp = () => {
-  
+  const { getHobbies, postHobbies } = useContext(HobbiesContext);
+
   const [hobbyInput, setHobbyInput] = useState({
-    artistname: "peta",
+    artistname: "Celeste",
     genre: "",
     hobby: "",
     level: "",
@@ -26,8 +27,12 @@ const SetUp = () => {
     curiosity: 2,
   });
 
-  const { getHobbies } = useContext(HobbiesContext);
+  const onClickHandler = () => {
+    postHobbies(hobbyInput);
+  };
+
   console.log(hobbyInput);
+
   return (
     <div className="">
       <Box m={3}>
@@ -56,7 +61,9 @@ const SetUp = () => {
         />
       </Box>
       <Box m={3}>
-        <Button onClick={} variant="outlined">Create Your Curiosity</Button>
+        <Button onClick={onClickHandler} variant="outlined">
+          Create Your Curiosity
+        </Button>
       </Box>
     </div>
   );

@@ -5,5 +5,9 @@
   "scripts": {
     "front": "npm start -prefix client",
     "server": "npm server -prefix server"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0"
   }
 }
