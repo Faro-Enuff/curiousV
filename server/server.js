@@ -1,3 +1,7 @@
+import MongoStore from "connect-mongo";
+// Import Passport Middleware
+import passport from "passport";
+import { strategy } from "./config/PassportConfig.js";
 ////////////////////////
 ////////////////////////
 
@@ -12,13 +16,17 @@ import express from "express";
 // Server Creation via express
 const app = express();
 
-// Create a server to connect API Calls and Browser
-const port = process.env.PORT || 5000;
+// Import .env
+import dotenv from "dotenv";
+dotenv.config();
 
-// TODO eventually put this listen function into the connect function of mongoDB, makes more sense to wait until the connection is set (async function for mongoose connect. Netninja min 13 of mongoDB video)
-app.listen(port, () => {
-  console.log("Server is running on " + port + "port");
-});
+// Import mongoose in our application
+import mongoose from "mongoose";
+
+export const connection = mongoose
+  .connect(process.env.DB)
+  .then(() => console.log("Connection to Mongo DB established"))
+  .catch((err) => console.log(err));
 
 ////////////////////////
 ////////////////////////
@@ -27,6 +35,11 @@ app.listen(port, () => {
 
 ////////////////////////
 ////////////////////////
+
+import session from "express-session";
+import cookieParser from "cookie-parser";
+
+app.use(cookieParser(process.env.SECRET));
 
 // BodyParser
 app.use(express.json());
@@ -37,10 +50,38 @@ app.use(
   })
 );
 
-// Cors
-//Import
+// Cors Import + Initialization
 import cors from "cors";
 app.use(cors());
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB,
+      dbName: "interestCV",
+      collectionName: "sessions",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // Equals 1 day
+    },
+  })
+);
+
+// Define Strategy
+passport.use(strategy);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// app.use((req, res, next) => {
+//   console.log(req.session?.passport?.user);
+//   console.log(req.session);
+//   console.log(req.user);
+//   next();
+// });
 
 ////////////////////////
 ////////////////////////
@@ -77,14 +118,10 @@ app.use("/api/hobbies", hobbyRoutes);
 ////////////////////////
 ////////////////////////
 
-// Import .env
-import dotenv from "dotenv";
-dotenv.config();
+// Create a server to connect API Calls and Browser
+const port = process.env.PORT || 5000;
 
-// Import mongoose in our application
-import mongoose from "mongoose";
-
-mongoose
-  .connect(process.env.DB)
-  .then(() => console.log("Connection to Mongo DB established"))
-  .catch((err) => console.log(err));
+// TODO eventually put this listen function into the connect function of mongoDB, makes more sense to wait until the connection is set (async function for mongoose connect. Netninja min 13 of mongoDB video)
+app.listen(port, () => {
+  console.log("Server is running on " + port + "port");
+});

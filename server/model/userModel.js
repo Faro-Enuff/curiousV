@@ -6,12 +6,12 @@ const { Schema } = mongoose;
 
 const usersSchema = new Schema(
   {
-    // artistName: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    //   minlength: 3,
-    // },
+    artistName: {
+      type: String,
+      required: true,
+      unique: true,
+      minlength: 3,
+    },
     email: {
       type: String,
       required: true,
@@ -21,11 +21,15 @@ const usersSchema = new Schema(
       type: String,
       required: true,
     },
-    lastName: {
+    // password: {
+    //   type: String,
+    //   required: true,
+    // },
+    hash: {
       type: String,
       required: true,
     },
-    password: {
+    salt: {
       type: String,
       required: true,
     },
