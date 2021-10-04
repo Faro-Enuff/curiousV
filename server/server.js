@@ -1,7 +1,6 @@
-import MongoStore from "connect-mongo";
 // Import Passport Middleware
 import passport from "passport";
-import { strategy } from "./config/PassportConfig.js";
+import { jwtStrategy } from "./config/PassportConfig.js";
 ////////////////////////
 ////////////////////////
 
@@ -36,7 +35,6 @@ export const connection = mongoose
 ////////////////////////
 ////////////////////////
 
-import session from "express-session";
 import cookieParser from "cookie-parser";
 
 app.use(cookieParser(process.env.SECRET));
@@ -54,34 +52,10 @@ app.use(
 import cors from "cors";
 app.use(cors());
 
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.DB,
-      dbName: "interestCV",
-      collectionName: "sessions",
-    }),
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // Equals 1 day
-    },
-  })
-);
-
 // Define Strategy
-passport.use(strategy);
+passport.use(jwtStrategy);
 
 app.use(passport.initialize());
-app.use(passport.session());
-
-// app.use((req, res, next) => {
-//   console.log(req.session?.passport?.user);
-//   console.log(req.session);
-//   console.log(req.user);
-//   next();
-// });
 
 ////////////////////////
 ////////////////////////

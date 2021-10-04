@@ -1,64 +1,28 @@
-// Import Passport Library
-import passport from "passport";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+// Import .env
+import dotenv from "dotenv";
+dotenv.config();
+// Import users model
+import userModel from "../model/userModel.js";
 
-// Import Password Utils - Password Validation Function
-import { validPassword } from "../lib/passwordUtils.js";
-
-// Import Local Strategy
-import { Strategy as LocalStrategy } from "passport-local";
-
-// Import DB
-import { connection } from "../server.js";
-import User from "../model/userModel.js";
-// const LocalStrategy = PassportStrategy.Strategy;
-
-const customFields = {
-  usernameField: "artistName",
-  passwordField: "password",
+const jwtOptions = {
+  secretOrKey: process.env.SECRET,
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-// VerifyCallback includes own implementation of password verification || Return Values of "done" call back function are important, here PASSPORT expect certain values
-const verifyCallback = (username, password, done) => {
-  User.findOne({ username: username })
-    .then((user) => {
-      console.log(`${username}, ${password}`);
-      if (!user) {
-        return done(null, false, { message: "No user found" });
-      }
-
-      // Putting password through verification function VALIDPASSWORD
-      const isValid = validPassword(password, user.hash, user.salt);
-      console.log(isValid);
-      if (isValid) {
-        console.log("Correct");
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    })
-    .catch((err) => {
-      done(err);
-      console.log("Cannot reach database");
-    });
+const jwtVerify = async (payload, next) => {
+  try {
+    const user = await userModel.findById(payload.id);
+    console.log(`user :>>`, user);
+    if (!user) {
+      return next(null, false);
+    }
+    next(null, user);
+  } catch (error) {
+    next(error, false);
+  }
 };
 
-// Create new Strategy
-const strategy = new LocalStrategy(customFields, verifyCallback);
+const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify);
 
-passport.use(strategy);
-
-passport.serializeUser((user, done) => {
-  console.log(user.id);
-  done(null, user.id);
-});
-
-passport.deserializeUser((userId, done) => {
-  User.findById(userId)
-    .then((user) => {
-      console.log(`userBOY`, user);
-      done(null, user);
-    })
-    .catch((err) => done(err));
-});
-
-export { verifyCallback, strategy };
+export { jwtStrategy };

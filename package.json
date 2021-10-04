@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "front": "npm start -prefix client",
-    "server": "npm server -prefix server"
+    "front": "npm --prefix client run start",
+    "back": "npm --prefix server run server"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
