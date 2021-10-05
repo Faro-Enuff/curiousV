@@ -1,6 +1,6 @@
 // Import Passport Middleware
 import passport from "passport";
-import { jwtStrategy } from "./config/PassportConfig.js";
+import { jwtStrategy, googleStrategy } from "./config/PassportConfig.js";
 ////////////////////////
 ////////////////////////
 
@@ -52,10 +52,16 @@ app.use(
 import cors from "cors";
 app.use(cors());
 
+// import session from "express-session";
+
+// app.use(session({ secret: "cats" }));
+
 // Define Strategy
 passport.use(jwtStrategy);
+passport.use(googleStrategy);
 
 app.use(passport.initialize());
+// app.use(passport.session());
 
 ////////////////////////
 ////////////////////////
@@ -69,6 +75,33 @@ app.use(passport.initialize());
 import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
 import hobbyRoutes from "./routes/hobbyRoute.js";
+
+// Google Auth
+
+// const isLoggedIn = (req, res, next) => {
+//   req.user ? next() : res.sendStatus(401);
+// };
+
+// app.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["email", "profile"] })
+// );
+
+// app.get(
+//   "/google/callback",
+//   passport.authenticate("google", {
+//     successRedirect: "/google-profile",
+//     failureRedirect: "/login",
+//   })
+// );
+
+// app.get("/login", (req, res) => {
+//   res.send("Something went wrong..");
+// });
+
+// app.get("/google-profile", isLoggedIn, (req, res) => {
+//   res.send("Hey");
+// });
 
 // Back-End Route to users collection
 

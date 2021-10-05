@@ -10,7 +10,7 @@ const SignIn = () => {
   let history = useHistory();
 
   const [user, setUser] = useState({
-    artistName: "",
+    email: "",
     password: "",
   });
 
@@ -31,11 +31,11 @@ const SignIn = () => {
   return (
     <form method="post">
       <div>
-        <label>Artistname:</label>
+        <label>Email:</label>
         <input
           type="text"
-          name="artistName"
-          value={user.artistName}
+          name="email"
+          value={user.email}
           onChange={handleChange}
         />
       </div>

@@ -50,21 +50,27 @@ router.post("/signin", (req, res) => {
       res.json({ error: err });
     }
     if (!user) {
-      res.send("User doesn't exist!");
+      res.status(401).json({ success: false, msg: "Could not finde user!" });
     } else {
       const isValid = validPassword(password, user.hash, user.salt);
       if (isValid) {
         const options = { id: user._id };
+        const expiresIn = "30d";
         const token = jwt.sign(options, process.env.SECRET, {
-          expiresIn: "2h",
+          expiresIn: expiresIn,
         });
-        res.json({
+        res.status(200).json({
           success: true,
           token: token,
+          expiresIn: expiresIn,
+          user: user,
         });
         console.log(token);
       } else {
-        res.send("Password does not match, please try again!");
+        res.status(401).json({
+          success: false,
+          msg: "Password does not match, please try again!",
+        });
       }
     }
   });
@@ -97,7 +103,11 @@ router.post("/register", (req, res) => {
       newUser
         .save()
         .then((user) => {
-          res.send(user);
+          const options = { id: user._id };
+          const token = jwt.sign(options, process.env.SECRET, {
+            expiresIn: "30d",
+          });
+          res.json({ success: true, user: user, token: token });
         })
         .catch((err) => res.send(err));
 
