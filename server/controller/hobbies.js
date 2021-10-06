@@ -11,11 +11,20 @@ export const getHobby = async (req, res) => {
 };
 
 export const createHobby = async (req, res) => {
-  const { artistname, genre, hobby, start, level, equipment, curiosity } =
-    req.body;
+  const {
+    userId,
+    artistName,
+    genre,
+    hobby,
+    start,
+    level,
+    equipment,
+    curiosity,
+  } = req.body;
 
   let newHobby = new hobbyModel({
-    artistname,
+    userId,
+    artistName,
     genre,
     hobby,
     start,

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 
 // Context Import
 import { HobbiesContext } from "../Context/hobbiesContext";
+import { AuthContext } from "../Context/authContext";
 
 // Internal Imports
 import CuriositySlider from "../Components/SetUpComponents/CuriositySlider";
@@ -16,9 +17,10 @@ import { Box, Button } from "@mui/material";
 
 const SetUp = () => {
   const { getHobbies, postHobbies } = useContext(HobbiesContext);
-
+  const { loggedInUser } = useContext(AuthContext);
   const [hobbyInput, setHobbyInput] = useState({
-    artistname: "Celeste",
+    userId: loggedInUser.id,
+    artistName: loggedInUser.artistName,
     genre: "",
     hobby: "",
     level: "",
@@ -32,9 +34,12 @@ const SetUp = () => {
   };
 
   console.log(hobbyInput);
-
+  console.log(loggedInUser);
   return (
     <div className="">
+      <Box m={3}>
+        <h1>{loggedInUser.artistName}</h1>
+      </Box>
       <Box m={3}>
         <GenreDropdown hobbyInput={hobbyInput} setHobbyInput={setHobbyInput} />
       </Box>

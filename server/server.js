@@ -57,7 +57,7 @@ app.use(cors());
 // app.use(session({ secret: "cats" }));
 
 // Define Strategy
-passport.use(jwtStrategy);
+passport.use("jwt", jwtStrategy);
 passport.use(googleStrategy);
 
 app.use(passport.initialize());

@@ -21,14 +21,18 @@ router.post("/test", (req, res) => {
   console.log(req.body);
 });
 
-router.get("/all", (req, res) => {
-  userModel
-    .find()
-    .then((files) => {
-      res.send(files);
-    })
-    .catch((err) => console.log(err));
-});
+router.get(
+  "/loggedIn",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    userModel
+      .findOne({ _id: id })
+      .then((files) => {
+        res.send(files);
+      })
+      .catch((err) => console.log(err));
+  }
+);
 
 router.get("/login-success", (req, res) => {
   userModel
@@ -54,16 +58,21 @@ router.post("/signin", (req, res) => {
     } else {
       const isValid = validPassword(password, user.hash, user.salt);
       if (isValid) {
-        const options = { id: user._id };
+        const payload = { id: user._id };
         const expiresIn = "30d";
-        const token = jwt.sign(options, process.env.SECRET, {
+        const token = jwt.sign(payload, process.env.SECRET, {
           expiresIn: expiresIn,
         });
         res.status(200).json({
           success: true,
           token: token,
           expiresIn: expiresIn,
-          user: user,
+          user: {
+            id: user._id,
+            artistName: user.artistName,
+            email: user.email,
+            firstName: user.firstName,
+          },
         });
         console.log(token);
       } else {
@@ -103,8 +112,8 @@ router.post("/register", (req, res) => {
       newUser
         .save()
         .then((user) => {
-          const options = { id: user._id };
-          const token = jwt.sign(options, process.env.SECRET, {
+          const payload = { id: user._id };
+          const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: "30d",
           });
           res.json({ success: true, user: user, token: token });
@@ -122,7 +131,20 @@ router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.send(req.user);
+    // console.log(`user`, req);
+    const user = req.user.user;
+    const payload = req.user.payload;
+    console.log(user);
+
+    res.json({
+      user: {
+        id: user._id,
+        artistName: user.artistName,
+        email: user.email,
+        firstName: user.firstName,
+      },
+      payload: payload,
+    });
   }
 );
 

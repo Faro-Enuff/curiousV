@@ -1,19 +1,13 @@
 import React, { useState, createContext, useEffect } from "react";
-import Axios from "axios";
+import axios from "../Utils/axios";
+import jwt_decode from "jwt-decode";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 const setLocalStorage = (response) => {
-  const expires = moment().add(response.data.expiresIn);
-  localStorage.setItem("expires", JSON.stringify(expires.valueOf()));
   localStorage.setItem("token", response.data.token);
-};
-
-const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("expires");
 };
 
 const getExpiration = () => {
@@ -25,18 +19,49 @@ const getExpiration = () => {
 export const AuthContextProvider = ({ children }) => {
   let history = useHistory();
 
-  const axios = Axios.create({ baseURL: "http://localhost:5000/api/users" });
+  const [loggedInUser, setLoggedInUser] = useState({});
 
-  const [loggedInUser, setLoggedInUser] = useState();
+  const logout = () => {
+    localStorage.removeItem("token");
+    setLoggedInUser({});
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      // const userId = jwt_decode(localStorage.getItem("token")).id;
+      // console.log(userId);
+      axios
+        .get("/users/profile")
+        .then((response) => {
+          // console.log(response.data);
+          const data = response.data;
+          const user = data.user;
+          setLoggedInUser(user);
+        })
+        .catch((error) => console.log(`error`, error));
+    } else {
+      setLoggedInUser({});
+    }
+  }, []);
 
   const loginUser = (user) => {
     axios
-      .post("/signin", user)
+      .post("/users/signin", user)
       .then((response) => {
         console.log(`success:`, response);
+
+        // Safe Token in Local Storage
         setLocalStorage(response);
-        console.log(getExpiration());
-        console.log();
+
+        const data = response.data;
+        const user = data.user;
+
+        // Token decoded
+        console.log(jwt_decode(data.token));
+
+        // Set User
+        setLoggedInUser(user);
+
         history.push("/");
       })
       .catch((error) => console.log(`Message:`, error.message));
@@ -44,19 +69,19 @@ export const AuthContextProvider = ({ children }) => {
 
   const registerUser = (user) => {
     axios
-      .post("/register", user)
+      .post("/users/register", user)
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };
 
   const protectedUserRoute = (user) => {
     axios
-      .post("/profile", user)
+      .post("/users/profile", user)
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };
 
-  const value = { registerUser, loginUser };
+  const value = { registerUser, loginUser, loggedInUser, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

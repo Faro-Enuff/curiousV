@@ -1,16 +1,14 @@
 import React, { useState, createContext, useEffect } from "react";
-import Axios from "axios";
+import axios from "../Utils/axios";
 
 export const HobbiesContext = createContext();
 
 export const HobbiesContextProvider = ({ children }) => {
   const [hobbies, setHobbies] = useState(null);
 
-  const axios = Axios.create({ baseURL: "http://localhost:5000/api/hobbies" });
-
   const getHobbies = () => {
     axios
-      .get("/")
+      .get("/hobbies")
       .then((response) => {
         console.log(response);
         setHobbies(response.data);
@@ -20,7 +18,7 @@ export const HobbiesContextProvider = ({ children }) => {
 
   const postHobbies = (hobbies) => {
     axios
-      .post("/add", hobbies)
+      .post("/hobbies/add", hobbies)
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };

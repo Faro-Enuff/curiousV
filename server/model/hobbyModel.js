@@ -6,11 +6,12 @@ const { Schema } = mongoose;
 
 const hobbiesSchema = new Schema(
   {
-    // user: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User",
-    // },
-    artistname: {
+    userId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    artistName: {
       type: String,
       unique: true,
       required: true,

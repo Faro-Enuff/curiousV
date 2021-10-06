@@ -18,9 +18,10 @@ function App() {
         <HobbiesContextProvider>
           <div className="App">
             <Switch>
-              <Route path="/signin" component={SignIn} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/getStarted" component={SetUp} />
+              <Route path="/" exact component={Home} />
+              <Route path="/signin" exact component={SignIn} />
+              <Route path="/signup" exact component={SignUp} />
+              <Route path="/getStarted" exact component={SetUp} />
               {/* <Route path="/" component={Home} /> */}
             </Switch>
           </div>
