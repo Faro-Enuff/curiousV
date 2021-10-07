@@ -1,7 +1,7 @@
 import { Card } from "@mui/material";
 
-const Assignment = () => {
+const AssEqCard = ({}) => {
   return <Card></Card>;
 };
 
-export default Assignment;
+export default AssEqCard;

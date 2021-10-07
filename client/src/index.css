@@ -2,3 +2,8 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
+/* Delete the ugly default styling of input type file */
+input[type="file"] {
+  display: none;
+}

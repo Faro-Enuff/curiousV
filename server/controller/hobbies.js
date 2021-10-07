@@ -3,8 +3,14 @@ import hobbyModel from "../model/hobbyModel.js";
 export const getHobby = async (req, res) => {
   try {
     const hobbies = await hobbyModel.find();
+    const user = await req.user;
 
-    res.send(hobbies);
+    // Filtering for the authenticated user
+    const userHobby = hobbies.filter(
+      (hobby) => hobby.userId === user.user.id
+    )[0];
+
+    res.send({ userHobby });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

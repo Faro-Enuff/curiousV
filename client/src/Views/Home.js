@@ -8,7 +8,8 @@ import CVTimeline from "../Components/CVTimeline";
 import Navbar from "../Navigation/Navbar";
 
 // MUI Core Imports
-import { Card, Typography } from "@mui/material";
+import { Card, Typography, Box } from "@mui/material";
+import Profile from "../Components/Profile";
 
 const Home = () => {
   const { getHobbies, userHobby } = useContext(HobbiesContext);
@@ -24,11 +25,19 @@ const Home = () => {
       <h1>curiousV</h1>
       <Navbar />
       <Typography variant="h4">{`My ${userHobby?.hobby} cV`}</Typography>
-      <Card>
-        <Typography variant="h6">Equipment</Typography>
-        <Typography variant="body1">{userHobby?.equipment}</Typography>
-      </Card>
-      <CVTimeline />
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box>
+          <h1>Box I</h1>
+          <Card>
+            <Typography variant="h6">Equipment</Typography>
+            <Typography variant="body1">{userHobby?.equipment}</Typography>
+          </Card>
+          <CVTimeline />
+        </Box>
+        <Box>
+          <h1>Box II</h1>
+        </Box>
+      </Box>
     </div>
   );
 };

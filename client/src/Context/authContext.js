@@ -19,11 +19,11 @@ const getExpiration = () => {
 export const AuthContextProvider = ({ children }) => {
   let history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useState({});
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const logout = () => {
     localStorage.removeItem("token");
-    setLoggedInUser({});
+    setLoggedInUser(null);
   };
 
   useEffect(() => {

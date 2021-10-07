@@ -4,14 +4,14 @@ import axios from "../Utils/axios";
 export const HobbiesContext = createContext();
 
 export const HobbiesContextProvider = ({ children }) => {
-  const [hobbies, setHobbies] = useState(null);
+  const [userHobby, setUserHobby] = useState(null);
 
   const getHobbies = () => {
     axios
       .get("/hobbies")
       .then((response) => {
         console.log(response);
-        setHobbies(response.data);
+        setUserHobby(response.data.userHobby);
       })
       .catch((error) => console.log(error.message));
   };
@@ -23,9 +23,7 @@ export const HobbiesContextProvider = ({ children }) => {
       .catch((error) => console.log(error.message));
   };
 
-  console.log(hobbies);
-
-  const value = { hobbies, getHobbies, postHobbies };
+  const value = { userHobby, getHobbies, postHobbies };
 
   return (
     <HobbiesContext.Provider value={value}>{children}</HobbiesContext.Provider>
