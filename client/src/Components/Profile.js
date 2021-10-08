@@ -62,7 +62,7 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <Avatar />
+      <Avatar sx={{ width: 64, height: 64 }} />
       <div className="upload">
         <Input
           required

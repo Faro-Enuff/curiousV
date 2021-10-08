@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
+
 // Context Imports
 import { AuthContext } from "../Context/authContext";
 
@@ -12,16 +13,30 @@ import {
   Typography,
   MenuItem,
   Menu,
+  Avatar,
 } from "@mui/material";
 
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+
+// Import Images
+import Enso from "../Images/Enso.png";
 
 // MUI Icon Imports
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    top: 0,
+    width: "100%",
+    position: "fixed",
+  },
+}));
+
 const AppBarCostum = () => {
+  const classes = useStyles();
+
   const { loggedInUser } = useContext(AuthContext);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,9 +74,12 @@ const AppBarCostum = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
       <AppBar position="static">
         <Toolbar>
+          <Box>
+            <Avatar src={Enso} />
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Typography
             variant="h6"
