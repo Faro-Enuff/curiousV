@@ -28,18 +28,6 @@ const stories = [
     Avatar: Enso,
   },
   {
-    // First story
-    inverted: true,
-    badgeColor: "danger",
-    Avatar: Enso,
-  },
-  {
-    // First story
-    inverted: true,
-    badgeColor: "danger",
-    Avatar: Enso,
-  },
-  {
     // Second story
     badgeColor: "success",
     Avatar: Enso,

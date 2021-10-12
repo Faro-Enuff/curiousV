@@ -11,11 +11,6 @@ import {
 } from "./material-dashboard-pro-react";
 const timelineStyle = (theme) => ({
   timeline: {
-    [theme.breakpoints.down("xs")]: {
-      "&:before": {
-        left: "5% !important",
-      },
-    },
     listStyle: "none",
     padding: "20px 0 20px",
     position: "relative",
@@ -49,9 +44,6 @@ const timelineStyle = (theme) => ({
     },
   },
   timelineBadge: {
-    [theme.breakpoints.down("xs")]: {
-      left: "5% !important",
-    },
     width: "100px",
     height: "100px",
     lineHeight: "51px",
@@ -121,21 +113,19 @@ const timelineStyle = (theme) => ({
     height: "51px",
   },
   timelinePanel: {
-    [theme.breakpoints.down("xs")]: {
-      float: "right !important",
-      width: "86% !important",
-      "&:before": {
-        borderLeftWidth: "0 !important",
-        borderRightWidth: "15px !important",
-        left: "-15px !important",
-        right: "auto !important",
-      },
-      "&:after": {
-        borderLeftWidth: "0 !important",
-        borderRightWidth: "14px !important",
-        left: "-14px !important",
-        right: "auto !important",
-      },
+    float: "right !important",
+    width: "86% !important",
+    "&:before": {
+      borderLeftWidth: "0 !important",
+      borderRightWidth: "15px !important",
+      left: "-15px !important",
+      right: "auto !important",
+    },
+    "&:after": {
+      borderLeftWidth: "0 !important",
+      borderRightWidth: "14px !important",
+      left: "-14px !important",
+      right: "auto !important",
     },
     width: "45%",
     float: "left",
@@ -173,21 +163,19 @@ const timelineStyle = (theme) => ({
     width: "86%",
   },
   timelinePanelInverted: {
-    [theme.breakpoints.up("xs")]: {
-      float: "right",
-      backgroundColor: whiteColor,
-      "&:before": {
-        borderLeftWidth: "0",
-        borderRightWidth: "15px",
-        left: "-15px",
-        right: "auto",
-      },
-      "&:after": {
-        borderLeftWidth: "0",
-        borderRightWidth: "14px",
-        left: "-14px",
-        right: "auto",
-      },
+    float: "right",
+    backgroundColor: whiteColor,
+    "&:before": {
+      borderLeftWidth: "0",
+      borderRightWidth: "15px",
+      left: "-15px",
+      right: "auto",
+    },
+    "&:after": {
+      borderLeftWidth: "0",
+      borderRightWidth: "14px",
+      left: "-14px",
+      right: "auto",
     },
   },
   timelineHeading: {

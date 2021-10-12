@@ -9,12 +9,12 @@ import HomeMiniIcon from "@mui/icons-material/HomeMini";
 import SearchIcon from "@mui/icons-material/Search";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   bottomNav: {
-    bottom: 0,
+    bottom: "0%",
     position: "fixed",
   },
-}));
+});
 
 const BottomNavigationCustom = () => {
   const classes = useStyles();
@@ -24,15 +24,17 @@ const BottomNavigationCustom = () => {
     <BottomNavigation
       sx={{ width: "100%" }}
       className={classes.bottomNav}
+      position="fixed"
       showLabels
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
+      color="secondary"
     >
-      <BottomNavigationAction icon={<AssignmentIcon />} />
-      <BottomNavigationAction icon={<HomeMiniIcon />} />
-      <BottomNavigationAction icon={<SearchIcon />} />
+      <BottomNavigationAction icon={<AssignmentIcon color="secondary" />} />
+      <BottomNavigationAction icon={<HomeMiniIcon color="secondary" />} />
+      <BottomNavigationAction icon={<SearchIcon color="secondary" />} />
     </BottomNavigation>
   );
 };

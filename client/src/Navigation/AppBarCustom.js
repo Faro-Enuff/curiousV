@@ -27,10 +27,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
+  appBarBox: {
     top: 0,
     width: "100%",
+    color: "#000000",
+    maxHeight: "15%",
     position: "fixed",
+  },
+  appBar: {
+    minHeight: "15%",
   },
 }));
 
@@ -54,6 +59,7 @@ const AppBarCostum = () => {
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
+      color="primary"
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: "top",
@@ -74,8 +80,8 @@ const AppBarCostum = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
+      <AppBar position="static" color="primary" className={classes.appBar}>
         <Toolbar>
           <Box>
             <Avatar src={Enso} />

@@ -16,44 +16,53 @@ import AppBarCostum from "./Navigation/AppBarCustom";
 import { ThemeProvider } from "./Context/themeContext";
 
 // MUI Core Imports
+// import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import Enso from "./Images/Enso.png";
 import { Box } from "@mui/system";
 
 const useStyles = makeStyles((theme) => ({
   app: {
-    width: "100%",
-    height: "100vh",
     backgroundImage: `url(${Enso})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "-350% 50%",
     backgroundSize: "450px",
+  },
+  innerApp: {
+    maxHeight: "70%",
+    marginTop: "15%",
+    marginBottom: "15%",
+    display: "flex",
   },
 }));
 
 function App() {
   const classes = useStyles();
   return (
-    <Router>
-      <ThemeProvider>
+    <ThemeProvider>
+      <Router>
         <AuthContextProvider>
           <HobbiesContextProvider>
             <div className={classes.app}>
-              <AppBarCostum />
-              <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/signin" exact component={SignIn} />
-                <Route path="/signup" exact component={SignUp} />
-                {/* <Route path="/getStarted" exact component={SetUp} /> */}
-                <PrivateRoute path="/getStarted" component={SetUp} />
-                {/* <Route path="/" component={Home} /> */}
-              </Switch>
-              <BottomNavigationCustom />
+              <Route exact path={["/"]}>
+                <AppBarCostum />
+              </Route>
+              <div className={classes.innerApp}>
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/signin" exact component={SignIn} />
+                  <Route path="/signup" exact component={SignUp} />
+                  <PrivateRoute path="/getStarted" exact component={SetUp} />
+                </Switch>
+              </div>
+              <Route exact path={["/"]}>
+                <BottomNavigationCustom />
+              </Route>
             </div>
           </HobbiesContextProvider>
         </AuthContextProvider>
-      </ThemeProvider>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
 

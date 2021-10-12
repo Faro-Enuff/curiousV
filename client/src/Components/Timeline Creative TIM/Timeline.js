@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
 // @material-ui/core components
-import { Avatar, Dialog } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Enso from "../../Images/Enso.png";
 
 // core components
 import Badge from "./Badge";
 
-import styles from "./timelineStyle";
+import styles from "./timelineStyle.js";
+import TimelineDialog from "./TimelineDialog";
 
 const useStyles = makeStyles(styles);
 
 export default function Timeline(props) {
   const classes = useStyles();
+
   const { stories, simple } = props;
+
   const timelineClass =
     classes.timeline +
     " " +
     cx({
       [classes.timelineSimple]: simple,
     });
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClick = () => {
+    console.log("hey");
+  };
+
   return (
     <ul className={timelineClass}>
       {stories.map((prop, key) => {
@@ -44,13 +62,18 @@ export default function Timeline(props) {
         return (
           <li className={classes.item} key={key}>
             {prop.Avatar ? (
-              <div>
+              <div onClick={handleOpen}>
                 <Avatar className={timelineBadgeClasses} src={prop.Avatar} />
               </div>
             ) : null}
-            {prop.Assignment ? (
+            {open ? (
               <div className={classes.assignmentClasses}>
-                <Dialog className={classes.assignmentDialog}>
+                <TimelineDialog
+                  open={open}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                />
+                {/* <Dialog className={classes.assignmentDialog}>
                   {prop.title ? (
                     <div className={classes.timelineHeading}>
                       <Badge color={prop.titleColor}>{prop.title}</Badge>
@@ -64,7 +87,7 @@ export default function Timeline(props) {
                   {prop.footer ? (
                     <div className={classes.timelineFooter}>{prop.footer}</div>
                   ) : null}
-                </Dialog>
+                </Dialog> */}
               </div>
             ) : null}
             {/* <div className={panelClasses}>
