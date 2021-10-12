@@ -75,6 +75,7 @@ app.use(passport.initialize());
 import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
 import hobbyRoutes from "./routes/hobbyRoute.js";
+import creationRoutes from "./routes/creationRoute.js";
 
 // Google Auth
 
@@ -114,6 +115,10 @@ app.use("/api/summons", summonRoutes);
 // Back-End Route to hobbies collection
 
 app.use("/api/hobbies", hobbyRoutes);
+
+// Back-End Route to creations collection
+
+app.use("/api/creations", creationRoutes);
 
 ////////////////////////
 ////////////////////////

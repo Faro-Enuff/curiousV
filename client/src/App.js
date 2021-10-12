@@ -17,37 +17,37 @@ import { ThemeProvider } from "./Context/themeContext";
 
 // MUI Core Imports
 // import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import Enso from "./Images/Enso.png";
 import { Box } from "@mui/system";
 
-const useStyles = makeStyles((theme) => ({
-  app: {
-    backgroundImage: `url(${Enso})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "-350% 50%",
-    backgroundSize: "450px",
-  },
-  innerApp: {
-    maxHeight: "70%",
-    marginTop: "15%",
-    marginBottom: "15%",
-    display: "flex",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   app: {
+//     backgroundImage: `url(${Enso})`,
+//     backgroundRepeat: "no-repeat",
+//     backgroundPosition: "-350% 50%",
+//     backgroundSize: "450px",
+//   },
+//   innerApp: {
+//     maxHeight: "70%",
+//     marginTop: "15%",
+//     marginBottom: "15%",
+//     display: "flex",
+//   },
+// }));
 
 function App() {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <ThemeProvider>
       <Router>
         <AuthContextProvider>
           <HobbiesContextProvider>
-            <div className={classes.app}>
+            <div>
               <Route exact path={["/"]}>
                 <AppBarCostum />
               </Route>
-              <div className={classes.innerApp}>
+              <div>
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/signin" exact component={SignIn} />

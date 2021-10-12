@@ -2,8 +2,6 @@
 import express from "express";
 // Import Passport
 import passport from "passport";
-// Import hobbyModel
-import hobbyModel from "../model/hobbyModel.js";
 // Import Controller functions
 import { getHobby, createHobby } from "../controller/hobbies.js";
 

@@ -4,7 +4,12 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const summonsSchema = new Schema({
-  assignmentName: {
+  userId: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  assignmentTitle: {
     type: String,
     required: true,
   },
@@ -16,12 +21,16 @@ const summonsSchema = new Schema({
     type: Date,
     required: true,
   },
-  source: {
+  learningSource: {
     type: String,
     required: true,
   },
-  sourceMedia: {
+  learningMaterial: {
     type: String,
+  },
+  complexity: {
+    type: String,
+    required: true,
   },
   summonToCreate: {
     type: Boolean,

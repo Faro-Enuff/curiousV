@@ -15,16 +15,24 @@ import { Card, Typography, Box, Container, Grid } from "@mui/material";
 import Profile from "../Components/Profile";
 import AssEqCard from "../Components/AssEqCard";
 import { makeStyles } from "@mui/styles";
+import { useTheme } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
-  timeline: {
-    maxHeight: "68%",
-    overflow: "scroll",
-    overflowX: "hidden",
-  },
-}));
+const useStyles = makeStyles(
+  (theme) => (
+    console.log(theme),
+    {
+      timeline: {
+        maxHeight: "68%",
+        overflow: "scroll",
+        overflowX: "hidden",
+      },
+    }
+  )
+);
 
 const Home = () => {
+  const theme = useTheme();
+  console.log(theme);
   const classes = useStyles();
   const { getHobbies, userHobby } = useContext(HobbiesContext);
 
