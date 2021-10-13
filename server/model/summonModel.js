@@ -13,12 +13,9 @@ const summonsSchema = new Schema({
     type: String,
     required: true,
   },
-  startDate: {
-    type: Date,
-    required: true,
-  },
-  endDate: {
-    type: Date,
+  timeFrame: {
+    type: Array,
+    of: Date,
     required: true,
   },
   learningSource: {

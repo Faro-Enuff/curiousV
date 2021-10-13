@@ -28,8 +28,7 @@ export const createSummon = async (req, res) => {
   const {
     userId,
     assignmentTitle,
-    startDate,
-    endDate,
+    timeFrame,
     learningSource,
     learningMaterial,
     complexity,
@@ -39,8 +38,7 @@ export const createSummon = async (req, res) => {
   let newSummon = new summonModel({
     userId,
     assignmentTitle,
-    startDate,
-    endDate,
+    timeFrame,
     learningSource,
     learningMaterial,
     complexity,
