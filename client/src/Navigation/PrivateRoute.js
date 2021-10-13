@@ -9,13 +9,18 @@ import { AuthContext } from "../Context/authContext";
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // console.log("rest :>> ", rest);
   const { loggedInUser } = useContext(AuthContext);
+
+  console.log(loggedInUser);
+
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        loggedInUser ? <Component {...props} /> : <Redirect to="/signin" />
-      }
-    />
+    loggedInUser && (
+      <Route
+        {...rest}
+        render={(props) =>
+          loggedInUser.id ? <Component {...props} /> : <Redirect to="/signin" />
+        }
+      />
+    )
   );
 };
 

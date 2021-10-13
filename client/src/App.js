@@ -14,6 +14,7 @@ import Home from "./Views/Home";
 import BottomNavigationCustom from "./Navigation/BottomNavigationCustom";
 import AppBarCostum from "./Navigation/AppBarCustom";
 import { ThemeProvider } from "./Context/themeContext";
+import SummonBuild from "./Views/SummonBuild";
 
 // MUI Core Imports
 // import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
@@ -53,6 +54,11 @@ function App() {
                   <Route path="/signin" exact component={SignIn} />
                   <Route path="/signup" exact component={SignUp} />
                   <PrivateRoute path="/getStarted" exact component={SetUp} />
+                  <PrivateRoute
+                    path="/createSummon"
+                    exact
+                    component={SummonBuild}
+                  />
                 </Switch>
               </div>
               <Route exact path={["/"]}>

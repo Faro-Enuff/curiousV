@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react";
 
 // Context Imports
-import { HobbiesContext, AuthContext } from "../Context/hobbiesContext";
-
+import { HobbiesContext } from "../Context/hobbiesContext";
+import { AuthContext } from "../Context/authContext";
 // Internal Imports
 import CVTimeline from "../Components/CVTimeline";
 import Navbar from "../Navigation/Navbar";
@@ -32,27 +32,27 @@ const useStyles = makeStyles(
 
 const Home = () => {
   const theme = useTheme();
-  console.log(theme);
   const classes = useStyles();
   const { getHobbies, userHobby } = useContext(HobbiesContext);
+  const { loggedInUser } = useContext(AuthContext);
 
   useEffect(() => {
     getHobbies();
   }, []);
 
-  console.log(userHobby);
+  console.log(loggedInUser);
 
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.home}>
-        <Box sx={{ m: "5%", overflow: "hidden" }}>
+        <Box sx={{ mt: "30%" }}>
           <Navbar />
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
               width: "100%",
-              mt: "10%",
+              mt: "5%",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>

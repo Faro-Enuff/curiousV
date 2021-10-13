@@ -26,24 +26,6 @@ export const AuthContextProvider = ({ children }) => {
     setLoggedInUser(null);
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      // const userId = jwt_decode(localStorage.getItem("token")).id;
-      // console.log(userId);
-      axios
-        .get("/users/profile")
-        .then((response) => {
-          // console.log(response.data);
-          const data = response.data;
-          const user = data.user;
-          setLoggedInUser(user);
-        })
-        .catch((error) => console.log(`error`, error));
-    } else {
-      setLoggedInUser({});
-    }
-  }, []);
-
   const loginUser = (user) => {
     axios
       .post("/users/signin", user)
@@ -66,6 +48,25 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch((error) => console.log(`Message:`, error.message));
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      // const userId = jwt_decode(localStorage.getItem("token")).id;
+      // console.log(userId);
+      axios
+        .get("/users/profile")
+        .then((response) => {
+          // console.log(response.data);
+          const data = response.data;
+          const user = data.user;
+          console.log(user);
+          setLoggedInUser(user);
+        })
+        .catch((error) => console.log(`error`, error));
+    } else {
+      setLoggedInUser({});
+    }
+  }, [localStorage.getItem("token")]);
 
   const registerUser = (user) => {
     axios

@@ -5,15 +5,19 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 
-const GenreDropdown = ({ hobbyInput, setHobbyInput }) => {
+////////////////////////
+// Select a title, input as well as a useState to track the Input in the parent component
+////////////////////////
+
+const Dropdown = ({ title, data, input, setInput }) => {
   const [open, setOpen] = useState(false);
 
   // console.log(genre);
 
   const handleChange = (event) => {
-    console.log(event);
-    setHobbyInput({
-      ...hobbyInput,
+    console.log(event.target.name);
+    setInput({
+      ...input,
       [event.target.name]: event.target.value,
     });
   };
@@ -27,28 +31,27 @@ const GenreDropdown = ({ hobbyInput, setHobbyInput }) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Choose your Hobby Genre</Button>
+      <Button onClick={handleOpen}>{title}</Button>
       <FormControl sx={{ minWidth: "70%" }}>
-        <InputLabel>Genre</InputLabel>
+        <InputLabel>{`${
+          data[0].charAt(0).toUpperCase() + data[0].slice(1)
+        }`}</InputLabel>
         <Select
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={hobbyInput.genre}
-          name="genre"
-          label="genre"
+          value={input.genre}
+          name={`${data[0]}`}
+          label={`${data[0]}`}
           onChange={handleChange}
         >
-          <MenuItem value={"Music"}>Music</MenuItem>
-          <MenuItem value={"Photography"}>Photography</MenuItem>
-          <MenuItem value={"Dancing"}>Dancing</MenuItem>
-          <MenuItem value={"Sports"}>Sports</MenuItem>
-          <MenuItem value={"Painting"}>Painting</MenuItem>
-          <MenuItem value={"Kitchen"}>Kitchen</MenuItem>
+          {data.slice(1).map((d, key) => (
+            <MenuItem key={key} value={`${d}`}>{`${d}`}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </div>
   );
 };
 
-export default GenreDropdown;
+export default Dropdown;
