@@ -9,16 +9,12 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDateRangePicker from "@mui/lab/MobileDateRangePicker";
 
 const DateRangePicker = ({ title, input, setInput }) => {
-  const [value, setValue] = useState([null, null]);
-
   // Create a better Way to get it reusable at this part
 
   const handleOnChange = (event) => {
     console.log(event);
-    setValue(event);
     setInput({ ...input, ["timeFrame"]: event });
   };
-  console.log(value);
 
   return (
     <div>
@@ -26,7 +22,7 @@ const DateRangePicker = ({ title, input, setInput }) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDateRangePicker
           startText="Start"
-          value={value}
+          value={input.timeFrame}
           name="date"
           onChange={handleOnChange}
           renderInput={(startProps, endProps) => (

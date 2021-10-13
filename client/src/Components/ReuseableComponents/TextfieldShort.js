@@ -31,7 +31,10 @@ const TextfieldShort = ({ title, value, input, setInput }) => {
           onChange={handleOnChange}
           name={value}
           id="demo-helper-text-aligned-no-helper"
-          label={value.charAt(0).toUpperCase()}
+          label={
+            value.charAt(0).toUpperCase() +
+            value.slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
+          }
         />
       </FormControl>
     </div>

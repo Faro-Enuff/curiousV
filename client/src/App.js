@@ -2,6 +2,8 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Context Imports
+import { ThemeProvider } from "./Context/themeContext";
+import { SummonsContextProvider } from "./Context/summonsContext";
 import { HobbiesContextProvider } from "./Context/hobbiesContext";
 import { AuthContextProvider } from "./Context/authContext";
 
@@ -13,7 +15,6 @@ import SetUp from "./Views/SetUp";
 import Home from "./Views/Home";
 import BottomNavigationCustom from "./Navigation/BottomNavigationCustom";
 import AppBarCostum from "./Navigation/AppBarCustom";
-import { ThemeProvider } from "./Context/themeContext";
 import SummonBuild from "./Views/SummonBuild";
 
 // MUI Core Imports
@@ -44,27 +45,29 @@ function App() {
       <Router>
         <AuthContextProvider>
           <HobbiesContextProvider>
-            <div>
-              <Route exact path={["/"]}>
-                <AppBarCostum />
-              </Route>
+            <SummonsContextProvider>
               <div>
-                <Switch>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/signin" exact component={SignIn} />
-                  <Route path="/signup" exact component={SignUp} />
-                  <PrivateRoute path="/getStarted" exact component={SetUp} />
-                  <PrivateRoute
-                    path="/createSummon"
-                    exact
-                    component={SummonBuild}
-                  />
-                </Switch>
+                <Route exact path={["/"]}>
+                  <AppBarCostum />
+                </Route>
+                <div>
+                  <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/signin" exact component={SignIn} />
+                    <Route path="/signup" exact component={SignUp} />
+                    <PrivateRoute path="/getStarted" exact component={SetUp} />
+                    <PrivateRoute
+                      path="/createSummon"
+                      exact
+                      component={SummonBuild}
+                    />
+                  </Switch>
+                </div>
+                <Route exact path={["/"]}>
+                  <BottomNavigationCustom />
+                </Route>
               </div>
-              <Route exact path={["/"]}>
-                <BottomNavigationCustom />
-              </Route>
-            </div>
+            </SummonsContextProvider>
           </HobbiesContextProvider>
         </AuthContextProvider>
       </Router>

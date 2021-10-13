@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 // Select a title, input as well as a useState to track the Input in the parent component
 ////////////////////////
 
-const Dropdown = ({ title, data, input, setInput }) => {
+const Dropdown = ({ title, value, data, input, setInput }) => {
   const [open, setOpen] = useState(false);
 
   // console.log(genre);
@@ -34,13 +34,14 @@ const Dropdown = ({ title, data, input, setInput }) => {
       <Button onClick={handleOpen}>{title}</Button>
       <FormControl sx={{ minWidth: "70%" }}>
         <InputLabel>{`${
-          data[0].charAt(0).toUpperCase() + data[0].slice(1)
+          data[0].charAt(0).toUpperCase() +
+          data[0].slice(1).replace(/([a-z])([A-Z])/g, "$1 $2")
         }`}</InputLabel>
         <Select
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={input.genre}
+          value={value}
           name={`${data[0]}`}
           label={`${data[0]}`}
           onChange={handleChange}
