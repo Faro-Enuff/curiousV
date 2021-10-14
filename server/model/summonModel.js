@@ -13,9 +13,12 @@ const summonsSchema = new Schema({
     type: String,
     required: true,
   },
-  timeFrame: {
-    type: Array,
-    of: Date,
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
     required: true,
   },
   learningSource: {
@@ -23,6 +26,9 @@ const summonsSchema = new Schema({
     required: true,
   },
   learningMaterial: {
+    type: String,
+  },
+  learningFile: {
     type: String,
   },
   complexity: {

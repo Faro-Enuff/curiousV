@@ -5,9 +5,9 @@ body {
 }
 
 /* Delete the ugly default styling of input type file */
-input[type="file"] {
+/* input[type="file"] {
   display: none;
-}
+} */
 
 button {
   background: transparent;

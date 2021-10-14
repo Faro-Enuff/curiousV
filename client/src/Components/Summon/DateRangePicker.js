@@ -13,7 +13,12 @@ const DateRangePicker = ({ title, input, setInput }) => {
 
   const handleOnChange = (event) => {
     console.log(event);
-    setInput({ ...input, ["timeFrame"]: event });
+    setInput({
+      ...input,
+      ["timeFrame"]: event,
+      ["startDate"]: event[0],
+      ["endDate"]: event[1],
+    });
   };
 
   return (
