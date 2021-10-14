@@ -52,9 +52,9 @@ function App() {
                 </Route>
                 <div>
                   <Switch>
-                    <Route path="/" exact component={Home} />
                     <Route path="/signin" exact component={SignIn} />
                     <Route path="/signup" exact component={SignUp} />
+                    <PrivateRoute path="/" exact component={Home} />
                     <PrivateRoute path="/getStarted" exact component={SetUp} />
                     <PrivateRoute
                       path="/createSummon"

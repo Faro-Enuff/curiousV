@@ -31,14 +31,13 @@ const useStyles = makeStyles(
 );
 
 const Home = () => {
-  const theme = useTheme();
   const classes = useStyles();
-  const { getHobbies, userHobby } = useContext(HobbiesContext);
   const { loggedInUser } = useContext(AuthContext);
+  const { getHobbies, userHobby } = useContext(HobbiesContext);
 
   useEffect(() => {
     getHobbies();
-  }, []);
+  }, [loggedInUser]);
 
   console.log(loggedInUser);
 
@@ -56,7 +55,9 @@ const Home = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-              <Typography variant="h5">{`My ${userHobby?.hobby} cV`}</Typography>
+              {userHobby && (
+                <Typography variant="h5">{`My ${userHobby?.hobby} cV`}</Typography>
+              )}
             </Box>
             <Box
               sx={{

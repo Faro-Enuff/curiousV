@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const summonsSchema = new Schema({
   userId: {
     type: String,
-    unique: true,
     required: true,
   },
   assignmentTitle: {

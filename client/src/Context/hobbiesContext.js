@@ -1,9 +1,11 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import axios from "../Utils/axios";
+import { AuthContext } from "./authContext";
 
 export const HobbiesContext = createContext();
 
 export const HobbiesContextProvider = ({ children }) => {
+  const { loggedInUser } = useContext(AuthContext);
   const [userHobby, setUserHobby] = useState(null);
 
   const getHobbies = () => {
@@ -11,10 +13,16 @@ export const HobbiesContextProvider = ({ children }) => {
       .get("/hobbies")
       .then((response) => {
         console.log(response);
-        setUserHobby(response.data.userHobby);
+        setUserHobby(response.data.userHobby[0]);
       })
       .catch((error) => console.log(error.message));
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getHobbies();
+    }
+  }, [localStorage.getItem("token")]);
 
   const postHobbies = (hobbies) => {
     axios

@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    setLoggedInUser(null);
+    setLoggedInUser({});
   };
 
   const loginUser = (user) => {

@@ -134,7 +134,7 @@ router.get(
     // console.log(`user`, req);
     const user = req.user.user;
     const payload = req.user.payload;
-    console.log(user);
+    // console.log(user);
 
     res.json({
       user: {
