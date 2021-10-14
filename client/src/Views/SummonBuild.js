@@ -66,12 +66,15 @@ const SummonBuild = () => {
       handleUpload(event.target.files);
     }
     console.log(event.target.files[0]);
-    setSummonInput({ ...summonInput, ["learningFile"]: event.target.files[0] });
   };
 
   const handleUpload = (files) => {
     const file = files[0];
     console.log(file);
+    setSummonInput({
+      ...summonInput,
+      ["learningFile"]: file,
+    });
   };
 
   console.log(summonInput);
@@ -108,7 +111,7 @@ const SummonBuild = () => {
             type="file"
             id="imageUpload"
             name="learningFile"
-            onClick={fileSelectedHandler}
+            onChange={fileSelectedHandler}
           />
           <label htmlFor="imageUpload">
             <FileUploadIcon
