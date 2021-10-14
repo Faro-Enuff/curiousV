@@ -35,9 +35,9 @@ const Home = () => {
   const { loggedInUser } = useContext(AuthContext);
   const { getHobbies, userHobby } = useContext(HobbiesContext);
 
-  useEffect(() => {
-    getHobbies();
-  }, [loggedInUser]);
+  // useEffect(() => {
+  //   getHobbies();
+  // }, [loggedInUser]);
 
   console.log(loggedInUser);
 

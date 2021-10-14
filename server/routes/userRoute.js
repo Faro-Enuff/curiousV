@@ -47,7 +47,8 @@ router.get("/login-success", (req, res) => {
 router.post("/signin", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log(email, password);
+
+  console.log("email :>>", email, "password :>>", password);
 
   userModel.findOne({ email: email }, (err, user) => {
     if (err) {
@@ -74,7 +75,7 @@ router.post("/signin", (req, res) => {
             firstName: user.firstName,
           },
         });
-        console.log(token);
+        console.log("token :>>", token);
       } else {
         res.status(401).json({
           success: false,
