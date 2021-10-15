@@ -1,12 +1,4 @@
 import summonModel from "../model/summonModel.js";
-(req, res) => {
-  summonModel
-    .find()
-    .then((files) => {
-      res.send(files);
-    })
-    .catch((err) => console.log(err));
-};
 
 export const getSummon = async (req, res) => {
   try {

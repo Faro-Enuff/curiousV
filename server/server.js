@@ -1,6 +1,6 @@
 // Import Passport Middleware
 import passport from "passport";
-import { jwtStrategy, googleStrategy } from "./config/PassportConfig.js";
+import { jwtStrategy, googleStrategy } from "./Middleware/PassportConfig.js";
 ////////////////////////
 ////////////////////////
 

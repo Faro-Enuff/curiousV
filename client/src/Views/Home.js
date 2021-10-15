@@ -14,8 +14,7 @@ import Enso from "../Images/Enso.png";
 import { Card, Typography, Box, Container, Grid } from "@mui/material";
 import Profile from "../Components/Profile";
 import AssEqCard from "../Components/AssEqCard";
-import { makeStyles } from "@mui/styles";
-import { useTheme } from "@mui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(
   (theme) => (
