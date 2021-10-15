@@ -1,15 +1,25 @@
-// Import Express
-import express from "express";
 // Import Multer
 import multer from "multer";
 
 // Define Multer Storage
-const storage = multer.diskStorage({
+const storageProfileImages = multer.diskStorage({
   // Destination
   destination: (req, file, cb) => {
-    cb(null, "./Uploads");
+    cb(null, "./Uploads/profileImages");
   },
-  // TODO Filename (cb, maybe use file.originalname for naming)
+
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
+
+const storageSummonFiles = multer.diskStorage({
+  // Destination
+  destination: (req, file, cb) => {
+    cb(null, "./Uploads/summonFiles");
+  },
+
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now();
     cb(null, uniqueSuffix + "-" + file.originalname);
@@ -17,7 +27,13 @@ const storage = multer.diskStorage({
 });
 
 // Upload Parameters for multer
-export const upload = multer({
-  storage: storage,
+export const uploadProfileImages = multer({
+  storage: storageProfileImages,
+  limits: { fieldSize: 1024 * 1024 * 3 },
+});
+
+// Upload Parameters for multer
+export const uploadSummonFiles = multer({
+  storage: storageSummonFiles,
   limits: { fieldSize: 1024 * 1024 * 3 },
 });

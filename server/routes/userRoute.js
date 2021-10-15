@@ -5,7 +5,7 @@ import userModel from "../model/userModel.js";
 // Import Passport
 import passport from "passport";
 // Import Multer Upload Config
-import { upload } from "../Middleware/MulterConfig.js";
+import { uploadProfileImages } from "../Middleware/MulterConfig.js";
 // Import Controller Functions
 import {
   profileDetail,
@@ -55,7 +55,7 @@ router.get(
 router.post(
   "/uploadProfileImage",
   passport.authenticate("jwt", { session: false }),
-  upload.single("profileImage"),
+  uploadProfileImages.single("profileImage"),
   updateImage
 );
 

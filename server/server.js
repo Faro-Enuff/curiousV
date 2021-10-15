@@ -120,6 +120,8 @@ app.use("/api/hobbies", hobbyRoutes);
 
 app.use("/api/creations", creationRoutes);
 
+// Provide Static files
+
 ////////////////////////
 ////////////////////////
 
