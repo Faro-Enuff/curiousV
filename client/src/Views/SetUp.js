@@ -15,7 +15,7 @@ import EquipmentTextfield from "../Components/SetUpComponents/EquipmentTextfield
 import { Box, Button } from "@mui/material";
 
 const SetUp = () => {
-  const { getHobbies, postHobbies } = useContext(HobbiesContext);
+  const { postHobbies } = useContext(HobbiesContext);
   const { loggedInUser } = useContext(AuthContext);
   const genre = [
     "genre",
@@ -28,7 +28,7 @@ const SetUp = () => {
   ];
   const level = ["level", "Beginner", "Advanced", "Intermediate", "Profession"];
   const [hobbyInput, setHobbyInput] = useState({
-    userId: loggedInUser?.id,
+    userId: loggedInUser?._id,
     artistName: loggedInUser?.artistName,
     genre: "",
     hobby: "",
@@ -42,8 +42,8 @@ const SetUp = () => {
     postHobbies(hobbyInput);
   };
 
-  console.log(hobbyInput);
-  console.log(loggedInUser);
+  console.log("SetUp: Hobby Input:", hobbyInput);
+
   return (
     <div className="">
       <Box m={3}>

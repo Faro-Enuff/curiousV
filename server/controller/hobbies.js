@@ -1,10 +1,10 @@
 import hobbyModel from "../model/hobbyModel.js";
 
 export const getHobby = async (req, res) => {
+  const userId = req.user.user._id;
   try {
-    const user = await req.user;
-    const userHobby = await hobbyModel.find({ userId: user.user._id });
-    console.log(`userHobby`, userHobby);
+    const userHobby = await hobbyModel.find({ userId: userId });
+    console.log(`getUserHobby : >> `, userHobby);
     res.send({ userHobby });
   } catch (error) {
     res.status(404).json({ message: error.message });

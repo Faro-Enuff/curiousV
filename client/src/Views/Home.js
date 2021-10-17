@@ -1,8 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 
 // Context Imports
 import { HobbiesContext } from "../Context/hobbiesContext";
 import { AuthContext } from "../Context/authContext";
+import { UserContext } from "../Context/userContext";
+
 // Internal Imports
 import CVTimeline from "../Components/CVTimeline";
 import Navbar from "../Navigation/Navbar";
@@ -16,29 +18,19 @@ import Profile from "../Components/Profile";
 import AssEqCard from "../Components/AssEqCard";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(
-  (theme) => (
-    console.log(theme),
-    {
-      timeline: {
-        maxHeight: "68%",
-        overflow: "scroll",
-        overflowX: "hidden",
-      },
-    }
-  )
-);
+const useStyles = makeStyles((theme) => ({
+  timeline: {
+    maxHeight: "68%",
+    overflow: "scroll",
+    overflowX: "hidden",
+  },
+}));
 
 const Home = () => {
   const classes = useStyles();
-  const { loggedInUser } = useContext(AuthContext);
-  const { getHobbies, userHobby } = useContext(HobbiesContext);
+  const { userHobby } = useContext(HobbiesContext);
 
-  // useEffect(() => {
-  //   getHobbies();
-  // }, [loggedInUser]);
-
-  console.log(loggedInUser);
+  console.log(`Home: userHobby : >>`, userHobby);
 
   return (
     <Container component="main" maxWidth="xs">

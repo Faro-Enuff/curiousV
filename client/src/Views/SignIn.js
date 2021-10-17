@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 // Import Context
 import { AuthContext } from "../Context/authContext";
@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
   let history = useHistory();
-
+  const { loginUser } = useContext(AuthContext);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -18,15 +18,13 @@ const SignIn = () => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const { loginUser } = useContext(AuthContext);
-
   const handleClick = (event) => {
     event.preventDefault();
-
     loginUser(user);
+    history.push("/");
   };
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <form method="post">

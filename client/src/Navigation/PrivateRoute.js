@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // React Router Dom
 import { Redirect, Route } from "react-router-dom";
@@ -9,15 +9,13 @@ import { AuthContext } from "../Context/authContext";
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // console.log("rest :>> ", rest);
   const { loggedInUser } = useContext(AuthContext);
-
-  console.log(loggedInUser);
-
+  // console.log(loggedInUser?._id);
   return (
     loggedInUser && (
       <Route
         {...rest}
         render={(props) =>
-          loggedInUser.id ? <Component {...props} /> : <Redirect to="/signin" />
+          loggedInUser ? <Component {...props} /> : <Redirect to="/signin" />
         }
       />
     )

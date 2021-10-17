@@ -87,14 +87,16 @@ const AppBarCostum = () => {
             <Avatar src={Enso} />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: "flex" }}
-          >
-            {loggedInUser?.artistName}
-          </Typography>
+          {loggedInUser && (
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: "flex" }}
+            >
+              {loggedInUser?.artistName}
+            </Typography>
+          )}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: "flex" }}>
             <IconButton size="large" color="inherit">

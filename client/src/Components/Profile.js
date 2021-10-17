@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 // Context Imports
 import { UserContext } from "../Context/userContext";
@@ -8,9 +8,10 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 // MUI Core Imports
 import { Avatar, Input } from "@mui/material";
+import { AuthContext } from "../Context/authContext";
 
 const Profile = () => {
-  const { updateProfilePicture } = useContext(UserContext);
+  const { profile, updateProfilePicture } = useContext(UserContext);
 
   const fileSelectedHandler = (event) => {
     if (event.target.files) {
@@ -36,7 +37,7 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <Avatar sx={{ width: 64, height: 64 }} />
+      <Avatar sx={{ width: 64, height: 64 }} src={profile?.profileImage} />
       <div className="upload">
         <form method="post" encType="multipart/form-data">
           <Input

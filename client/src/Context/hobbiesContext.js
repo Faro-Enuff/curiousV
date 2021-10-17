@@ -5,15 +5,18 @@ import { AuthContext } from "./authContext";
 export const HobbiesContext = createContext();
 
 export const HobbiesContextProvider = ({ children }) => {
-  const { loggedInUser } = useContext(AuthContext);
   const [userHobby, setUserHobby] = useState(null);
 
   const getHobbies = () => {
     axios
-      .get("/hobbies")
+      .get("/hobbies/getUserHobby")
       .then((response) => {
-        console.log(response);
-        setUserHobby(response.data.userHobby[0]);
+        // console.log("Get user hobby : >>",response);
+
+        const data = response.data;
+        const hobby = data.userHobby[0];
+        console.log("Get user hobby : >>", hobby);
+        setUserHobby(hobby);
       })
       .catch((error) => console.log(error.message));
   };

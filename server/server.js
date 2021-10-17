@@ -122,6 +122,10 @@ app.use("/api/creations", creationRoutes);
 
 // Provide Static files
 
+app.use("/profileImage", express.static("UploadProfileImages"));
+
+app.use("/summonFile", express.static("UploadSummonFiles"));
+
 ////////////////////////
 ////////////////////////
 

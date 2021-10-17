@@ -5,6 +5,9 @@ node_modules/
 
 .env
 
+UploadProfileImages
+UploadSummonFiles
+
 # Connect MongoDB with Mongoose
 keys.js
 

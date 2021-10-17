@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className="navbar">
       <Link to="/signup">Register</Link>
       <Link to="/signin">Login</Link>
-      <Link to="/" onClick={logout}>
+      <Link to="/signin" onClick={logout}>
         Logout
       </Link>
       <Link to="/getStarted">Profile</Link>

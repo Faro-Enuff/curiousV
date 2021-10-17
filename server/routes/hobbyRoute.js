@@ -10,7 +10,11 @@ const router = express.Router();
 
 // GET -> showing all the data in DB - call back function 'getHobby' is in "hobbies"
 
-router.get("/", passport.authenticate("jwt", { session: false }), getHobby);
+router.get(
+  "/getUserHobby",
+  passport.authenticate("jwt", { session: false }),
+  getHobby
+);
 
 // POST -> Adding data to DB - call back function 'createHobby' is in "hobbies"
 

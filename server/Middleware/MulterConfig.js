@@ -5,7 +5,7 @@ import multer from "multer";
 const storageProfileImages = multer.diskStorage({
   // Destination
   destination: (req, file, cb) => {
-    cb(null, "./Uploads/profileImages");
+    cb(null, "./UploadProfileImages");
   },
 
   filename: (req, file, cb) => {
@@ -17,7 +17,7 @@ const storageProfileImages = multer.diskStorage({
 const storageSummonFiles = multer.diskStorage({
   // Destination
   destination: (req, file, cb) => {
-    cb(null, "./Uploads/summonFiles");
+    cb(null, "./UploadSummonFiles");
   },
 
   filename: (req, file, cb) => {

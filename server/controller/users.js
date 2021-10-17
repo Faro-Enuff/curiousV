@@ -26,15 +26,17 @@ export const signInUser = async (req, res) => {
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: expiresIn,
           });
+
           res.status(200).json({
             success: true,
             token: token,
             expiresIn: expiresIn,
             user: {
-              id: user._id,
+              _id: user._id,
               artistName: user.artistName,
               email: user.email,
               firstName: user.firstName,
+              profileImage: user.profileImage,
             },
           });
           console.log("token :>>", token);
@@ -93,41 +95,52 @@ export const registerUser = async (req, res) => {
 };
 
 export const profileDetail = async (req, res) => {
-  const user = req.user.user;
+  const userId = req.user.user._id;
   const payload = req.user.payload;
   try {
-    res.json({
-      user: {
-        id: user._id,
-        artistName: user.artistName,
-        email: user.email,
-        firstName: user.firstName,
-      },
-      payload: payload,
-    });
+    const user = await userModel
+      .findById(userId)
+      .select(["_id", "artistName", "email", "firstName", "profileImage"]);
+
+    console.log("User : >>", user);
+
+    res.json({ user: user });
   } catch (error) {
     res.json({ message: error.message });
   }
 };
 
 export const updateImage = async (req, res) => {
-  // File
-  console.log(req.file);
+  // File Req
+  console.log("File : >>", req.file);
+  // User Req
+  const user = req.user;
+  console.log("user : >>", user);
+
+  const userId = user.user._id;
+  console.log("userId : >>", userId);
+
   try {
-    const user = req.user;
-    console.log(user);
-    const userId = user.user._id;
-    console.log(userId);
-    const query = { _id: userId };
-    console.log(query);
-    userModel.updateOne(
-      query,
-      { profileImage: req.file.filename },
+    // Find User by ID and Update Profile Image
+    userModel.findByIdAndUpdate(
+      userId,
+      {
+        profileImage: `${
+          "http://localhost:5000/" +
+          req.file.fieldname +
+          "/" +
+          req.file.filename
+        }`,
+      },
       (err, res) => {
-        console.log("err : >>", err);
-        console.log("res : >>", res);
+        if (res) {
+          console.log("res Profile old (success): >>", res);
+        } else {
+          console.log("err profileImage : >>", err);
+        }
       }
     );
+    res.status(200).send("Profile Image successfully updated!");
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
