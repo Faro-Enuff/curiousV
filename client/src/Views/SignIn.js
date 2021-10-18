@@ -21,7 +21,6 @@ const SignIn = () => {
   const handleClick = (event) => {
     event.preventDefault();
     loginUser(user);
-    history.push("/");
   };
 
   // console.log(user);

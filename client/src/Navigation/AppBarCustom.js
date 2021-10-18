@@ -11,73 +11,44 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  MenuItem,
-  Menu,
   Avatar,
 } from "@mui/material";
 
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from "@material-ui/core/styles";
+
+// Internal Imports
+import MenuCostum from "../Components/AppBar/MenuCostum";
 
 // Import Images
 import Enso from "../Images/Enso.png";
 
 // MUI Icon Imports
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 
-const useStyles = makeStyles((theme) => ({
-  appBarBox: {
-    top: 0,
-    width: "100%",
-    color: "#000000",
-    maxHeight: "15%",
-    position: "fixed",
-  },
-  appBar: {
-    minHeight: "15%",
-  },
-}));
+const useStyles = makeStyles(
+  (muiTheme) => (
+    console.log(muiTheme),
+    {
+      appBarBox: {
+        top: 0,
+        width: "100%",
+        maxHeight: "15%",
+        position: "fixed",
+      },
+      appBar: {
+        minHeight: "15%",
+        cssHip9hqMuiPaperRootMuiAppBarRoot: {
+          backgroundColor: muiTheme.palette.primary.main,
+        },
+      },
+    }
+  )
+);
 
 const AppBarCostum = () => {
   const classes = useStyles();
 
   const { loggedInUser } = useContext(AuthContext);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      color="primary"
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
@@ -104,29 +75,11 @@ const AppBarCostum = () => {
               <MailIcon />
               {/* </Badge> */}
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
+            <MenuCostum />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}></Box>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
   );
 };

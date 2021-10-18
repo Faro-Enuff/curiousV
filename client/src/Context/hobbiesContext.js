@@ -5,6 +5,7 @@ import { AuthContext } from "./authContext";
 export const HobbiesContext = createContext();
 
 export const HobbiesContextProvider = ({ children }) => {
+  const { loggedInUser } = useContext(AuthContext);
   const [userHobby, setUserHobby] = useState(null);
 
   const getHobbies = () => {
@@ -22,11 +23,8 @@ export const HobbiesContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      console.log("token :>>", localStorage.getItem("token"));
-      getHobbies();
-    }
-  }, [localStorage.getItem("token")]);
+    getHobbies();
+  }, [loggedInUser]);
 
   const postHobbies = (hobbies) => {
     axios

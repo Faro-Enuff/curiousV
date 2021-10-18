@@ -52,16 +52,22 @@ app.use(
 import cors from "cors";
 app.use(cors());
 
-// import session from "express-session";
+import session from "express-session";
 
-// app.use(session({ secret: "cats" }));
+app.use(
+  session({
+    secret: "Our little secret.",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Define Strategy
 passport.use("jwt", jwtStrategy);
-passport.use(googleStrategy);
+passport.use("google", googleStrategy);
 
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
 ////////////////////////
 ////////////////////////
@@ -78,13 +84,33 @@ import hobbyRoutes from "./routes/hobbyRoute.js";
 import creationRoutes from "./routes/creationRoute.js";
 
 // Google Auth
+const successLoginUrl = "http://localhost:3000/";
+const errorLoginUrl = "http://localhost:3000/signin";
+
+app.get(
+  "/login/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureMessage: "Cannot login to Google, please try again later!",
+    failureRedirect: errorLoginUrl,
+    successRedirect: successLoginUrl,
+  }),
+  (req, res) => {
+    console.log("User", req.user);
+    res.send("Thank you for signing in!");
+  }
+);
 
 // const isLoggedIn = (req, res, next) => {
 //   req.user ? next() : res.sendStatus(401);
 // };
 
 // app.get(
-//   "/auth/google",
+//   "/google",
 //   passport.authenticate("google", { scope: ["email", "profile"] })
 // );
 

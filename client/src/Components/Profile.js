@@ -42,6 +42,7 @@ const Profile = () => {
         <form method="post" encType="multipart/form-data">
           <Input
             required
+            style={{ display: "none" }}
             accept="image/*"
             type="file"
             name="profileImage"

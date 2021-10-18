@@ -47,6 +47,9 @@ export const AuthContextProvider = ({ children }) => {
 
         // Set User
         setLoggedInUser(user);
+        if (user) {
+          history.push("/");
+        }
       })
       .catch((error) => console.log(`Message:`, error.message));
   };
@@ -81,7 +84,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    // setLoggedInUser(null);
+    setLoggedInUser(null);
   };
   console.log("WAS IST HIER LOS?", loggedInUser);
   const value = { registerUser, loginUser, loggedInUser, logout };
