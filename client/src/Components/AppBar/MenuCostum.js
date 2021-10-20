@@ -9,15 +9,22 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const MenuCostum = () => {
+const MenuCostum = ({ logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClickLogout = () => {
+    logout();
+  };
+
   return (
     <React.Fragment>
       <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
@@ -70,7 +77,7 @@ const MenuCostum = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleClickLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

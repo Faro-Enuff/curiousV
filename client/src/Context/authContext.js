@@ -15,20 +15,29 @@ const setLocalStorage = (response) => {
   console.log("Token set in Local Storage");
 };
 
-const getExpiration = () => {
-  const expiration = localStorage.getItem("expires");
-  const expiresAt = JSON.parse(expiration);
-  return moment(expiresAt);
-};
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////
 // AUTH Context Provider
 ///////////////////////////////////
 
 export const AuthContextProvider = ({ children }) => {
   let history = useHistory();
-  const [loggedInUser, setLoggedInUser] = useState("Not logged in");
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
+  /////////////////////////////////
+  // Register User Email & Password
+  /////////////////////////////////
+  const registerUser = (user) => {
+    axios
+      .post("/users/register", user)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.message));
+  };
+
+  /////////////////////////////////
+  // Login User Email & Password
+  /////////////////////////////////
   const loginUser = (userLogin) => {
     axios
       .post("/users/signin", userLogin)
@@ -54,6 +63,48 @@ export const AuthContextProvider = ({ children }) => {
       .catch((error) => console.log(`Message:`, error.message));
   };
 
+  /////////////////////////////////
+  // Login Google
+  /////////////////////////////////
+
+  const loginGoogle = () => {
+    axios
+      .get("/users/google")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(`Message:`, error.message));
+  };
+
+  /////////////////////////////////
+  // User SignIn via GoogleAccount
+  /////////////////////////////////
+
+  const googleSignInUser = (loadingState) => {
+    axios
+      .get("/users/google/signIn")
+      .then((response) => {
+        // Safe Token in Local Storage
+        setLocalStorage(response);
+        const user = response.data.user;
+
+        // set User
+        setLoggedInUser(user);
+
+        if (user) {
+          history.push("/");
+        } else {
+          // Set Parameter Loading useState true
+          loadingState(true);
+        }
+      })
+      .catch((error) => console.log(`Message:`, error.message));
+  };
+
+  /////////////////////////////////
+  // Set User
+  /////////////////////////////////
+
   const getUser = () => {
     axios
       .get("/users/profile")
@@ -61,7 +112,7 @@ export const AuthContextProvider = ({ children }) => {
         console.log(response.data.user);
         const user = response.data.user;
         if (user) {
-          console.log("Fuyk aye");
+          console.log("User set : >>", user);
           setLoggedInUser(user);
         } else {
           console.log("No user");
@@ -75,19 +126,25 @@ export const AuthContextProvider = ({ children }) => {
     getUser();
   }, []);
 
-  const registerUser = (user) => {
-    axios
-      .post("/users/register", user)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error.message));
-  };
-
+  /////////////////////////////////
+  // User LogOut
+  /////////////////////////////////
   const logout = () => {
     localStorage.removeItem("token");
     setLoggedInUser(null);
+    history.push("/signin");
   };
-  console.log("WAS IST HIER LOS?", loggedInUser);
-  const value = { registerUser, loginUser, loggedInUser, logout };
+  console.log("Logged in User : >>", loggedInUser);
+
+  // Values
+  const value = {
+    registerUser,
+    loginUser,
+    loggedInUser,
+    logout,
+    loginGoogle,
+    googleSignInUser,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

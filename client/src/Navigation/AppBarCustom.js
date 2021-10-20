@@ -48,7 +48,7 @@ const useStyles = makeStyles(
 const AppBarCostum = () => {
   const classes = useStyles();
 
-  const { loggedInUser } = useContext(AuthContext);
+  const { loggedInUser, logout } = useContext(AuthContext);
 
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
@@ -75,7 +75,7 @@ const AppBarCostum = () => {
               <MailIcon />
               {/* </Badge> */}
             </IconButton>
-            <MenuCostum />
+            <MenuCostum logout={logout} />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}></Box>
         </Toolbar>

@@ -10,11 +10,17 @@ import DateRangePicker from "../Components/Summon/DateRangePicker";
 import Dropdown from "../Components/ReuseableComponents/Dropdown";
 
 // MUI Imports
+import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button, Input } from "@mui/material";
 // MUI Icons Import
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
+const useStyles = makeStyles({
+  buildDiv: {},
+});
+
 const SummonBuild = () => {
+  const classes = useStyles();
   const { getSummons, postSummon } = useContext(SummonsContext);
   const { loggedInUser } = useContext(AuthContext);
   const source = [
@@ -79,8 +85,8 @@ const SummonBuild = () => {
 
   console.log(summonInput);
   return (
-    <div className="">
-      <Box m={3}>
+    <div className={classes.buildDiv}>
+      <Box>
         <TextfieldShort
           title={"NAME YOUR CURSIGNMENT"}
           value={"assignmentTitle"}
@@ -88,7 +94,7 @@ const SummonBuild = () => {
           setInput={setSummonInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <Dropdown
           title={"CHOOSE YOUR LEARNING SOURCE"}
           value={summonInput.learningSource}
@@ -97,7 +103,7 @@ const SummonBuild = () => {
           setInput={setSummonInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <TextfieldShort
           title={"Specify YOUR SOURCE (e.g. URL)"}
           value={"learningMaterial"}
@@ -122,7 +128,7 @@ const SummonBuild = () => {
           </label>
         </form>
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <Dropdown
           title={"RATE THE COMPLEXITY UPFRONT"}
           value={summonInput.complexity}
@@ -131,7 +137,7 @@ const SummonBuild = () => {
           setInput={setSummonInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <DateRangePicker
           title={"CHOOSE YOUR TIME FRAME"}
           input={summonInput}

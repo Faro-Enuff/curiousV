@@ -33,6 +33,13 @@ export const ThemeProviderTwo = ({ children }) => {
           },
         },
       },
+      MuiBottomNavigation: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#c0b3c2",
+          },
+        },
+      },
     },
     typography: {
       fontFamily: "Quicksand",

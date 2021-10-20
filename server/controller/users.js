@@ -5,6 +5,14 @@ import { genPassword, validPassword } from "../lib/passwordUtils.js";
 // Import JWT
 import jwt from "jsonwebtoken";
 
+export const isUserAuthenticated = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send("You must login first!");
+  }
+};
+
 export const signInUser = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -69,6 +77,7 @@ export const registerUser = async (req, res) => {
 
         const newUser = new userModel({
           artistName: req.body.artistName,
+          firstName: req.body.artistName,
           email: req.body.email,
           firstName: req.body.firstName,
           hash: hash,
@@ -143,5 +152,29 @@ export const updateImage = async (req, res) => {
     res.status(200).send("Profile Image successfully updated!");
   } catch (error) {
     res.status(404).json({ message: error.message });
+  }
+};
+
+export const test = async (req, res) => {
+  try {
+    let user = req.user;
+    const payload = { id: user._id };
+    const expiresIn = "30d";
+    const token = jwt.sign(payload, process.env.SECRET, {
+      expiresIn: expiresIn,
+    });
+    res.status(200).json({
+      user: {
+        _id: user._id,
+        artistName: user.artistName,
+        email: user.email,
+        firstName: user.firstName,
+        profileImage: user.profileImage,
+      },
+      success: true,
+      token: token,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };

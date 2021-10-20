@@ -37,24 +37,6 @@ const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify);
 // // userModel.plugin(passportLocalMongoose);
 // userModel.plugin(findOrCreate);
 
-const googleOptions = {
-  clientID: process.env.ClientIDGoogle,
-  clientSecret: process.env.ClientKeyGoogle,
-  callbackURL: "http://localhost:5000/google/callback",
-  passReqToCallback: true,
-};
-
-const googleVerify = (accessToken, refreshToken, profile, cb) => {
-  console.log(profile);
-  console.log("AcessToken:", accessToken);
-  console.log(`RefreshToken`, refreshToken);
-  userModel.findOrCreate({ email: profile.email }, (err, user) => {
-    return cb(err, user);
-  });
-};
-
-const googleStrategy = new GoogleStrategy(googleOptions, googleVerify);
-
 passport.serializeUser((user, done) => {
   console.log(user);
   done(null, user.id);
@@ -66,20 +48,41 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// passport.serializeUser((user, done) => {
-//   console.log("Serialzing user", user);
-//   done(null, user.id);
-// });
+const googleOptions = {
+  clientID: process.env.ClientIDGoogle,
+  clientSecret: process.env.ClientKeyGoogle,
+  callbackURL: "http://localhost:5000/api/users/google/callback",
+  passReqToCallback: false,
+};
 
-// passport.deserializeUser((id, done) => {
-//   const user = userModel.findOne({ id }).catch((err) => {
-//     console.log("Error deserializing", err);
-//     done(err, null);
-//   });
-//   console.log("Deserialized user", user);
-//   if (user) {
-//     done(null, user);
-//   }
-// });
+const googleVerify = async (accessToken, refreshToken, profile, done) => {
+  console.log("Profile : >> ", profile);
+
+  userModel.findOne({ email: profile.emails[0].value }, (err, currentUser) => {
+    console.log("User : >> ", currentUser);
+    if (err) {
+      console.log(err);
+    }
+    if (currentUser) {
+      return done(err, currentUser);
+    } else {
+      new userModel({
+        googleId: profile.id,
+        email: profile.emails[0].value,
+        artistName: profile.displayName,
+        firstName: profile.name.givenName,
+        oAuth: true,
+        profileImage: profile.photos[0].value,
+      })
+        .save()
+        .then((newUser) => {
+          console.log("created new user : >>", newUser);
+          done(null, newUser);
+        });
+    }
+  });
+};
+
+const googleStrategy = new GoogleStrategy(googleOptions, googleVerify);
 
 export { jwtStrategy, googleStrategy };

@@ -9,6 +9,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "cookie-session": "^1.4.0"
+    "cookie-session": "^1.4.0",
+    "react-google-button": "^0.7.2"
   }
 }

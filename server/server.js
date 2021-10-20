@@ -50,7 +50,11 @@ app.use(
 
 // Cors Import + Initialization
 import cors from "cors";
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 import session from "express-session";
 
@@ -82,28 +86,6 @@ import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
 import hobbyRoutes from "./routes/hobbyRoute.js";
 import creationRoutes from "./routes/creationRoute.js";
-
-// Google Auth
-const successLoginUrl = "http://localhost:3000/";
-const errorLoginUrl = "http://localhost:3000/signin";
-
-app.get(
-  "/login/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-app.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureMessage: "Cannot login to Google, please try again later!",
-    failureRedirect: errorLoginUrl,
-    successRedirect: successLoginUrl,
-  }),
-  (req, res) => {
-    console.log("User", req.user);
-    res.send("Thank you for signing in!");
-  }
-);
 
 // const isLoggedIn = (req, res, next) => {
 //   req.user ? next() : res.sendStatus(401);

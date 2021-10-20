@@ -8,13 +8,16 @@ import passport from "passport";
 import { uploadProfileImages } from "../Middleware/MulterConfig.js";
 // Import Controller Functions
 import {
+  isUserAuthenticated,
   profileDetail,
   registerUser,
   signInUser,
+  test,
   updateImage,
 } from "../controller/users.js";
 // Import .env
 import dotenv from "dotenv";
+import { jwtStrategy } from "../Middleware/PassportConfig.js";
 dotenv.config();
 // Create Instance of the express router
 const router = express.Router();
@@ -58,6 +61,27 @@ router.post(
   uploadProfileImages.single("profileImage"),
   updateImage
 );
+
+// Google Auth
+const successLoginUrl = "http://localhost:3000/google/success";
+const errorLoginUrl = "http://localhost:3000/signin";
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureMessage: "Cannot login to Google, please try again later!",
+    successMessage: "You are successfully logged in !",
+    failureRedirect: errorLoginUrl,
+    successRedirect: successLoginUrl,
+  })
+);
+
+router.get("/google/signIn", isUserAuthenticated, test);
 
 // Export Users Route
 export default router;

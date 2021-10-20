@@ -24,19 +24,24 @@ import SummonBuild from "./Views/SummonBuild";
 import { makeStyles } from "@material-ui/core/styles";
 import Enso from "./Images/Enso.png";
 import { Box } from "@mui/system";
+import GoogleSuccess from "./Views/GoogleSuccess";
 
 const useStyles = makeStyles((muiTheme) => ({
+  app: {
+    marginTop: "15%",
+    marginBottom: "15%",
+  },
   imgDiv: {
     position: "absolute",
     width: "100%",
     overflow: "hidden",
   },
-  backgroundImageRight: {
-    bottom: "25%",
-    left: "60%",
-    width: "450px",
-    opacity: 0.1,
-  },
+  // backgroundImageRight: {
+  //   bottom: "25%",
+  //   left: "60%",
+  //   width: "450px",
+  //   opacity: 0.1,
+  // },
 }));
 
 function App() {
@@ -52,15 +57,15 @@ function App() {
                   <div className={classes.app}>
                     <Route exact path={["/", "/createSummon", "/getStarted"]}>
                       <AppBarCostum />
-                      <div className={classes.imgDiv}>
-                        <img
-                          src={Enso}
-                          className={classes.backgroundImageRight}
-                        />
-                      </div>
+                      <div className={classes.imgDiv}></div>
                     </Route>
                     <div>
                       <Switch>
+                        <Route
+                          path="/google/success"
+                          exact
+                          component={GoogleSuccess}
+                        />
                         <Route path="/signin" exact component={SignIn} />
                         <Route path="/signup" exact component={SignUp} />
                         <Route path="/" exact component={Home} />

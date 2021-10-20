@@ -35,7 +35,11 @@ const useStyles = makeStyles(
 
 const Home = () => {
   const classes = useStyles();
-  const { userHobby } = useContext(HobbiesContext);
+  const { getHobbies, userHobby } = useContext(HobbiesContext);
+
+  useEffect(() => {
+    getHobbies();
+  }, []);
 
   console.log(`Home: userHobby : >>`, userHobby);
 
@@ -56,7 +60,7 @@ const Home = () => {
               {userHobby && (
                 <Typography variant="h5">{`My ${userHobby?.hobby} cV`}</Typography>
               )}
-
+              <Typography variant="body1">{userHobby?.hobby}</Typography>
               <Profile />
             </Paper>
           </Box>

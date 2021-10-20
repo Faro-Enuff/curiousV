@@ -24,6 +24,10 @@ const usersSchema = new Schema(
       type: String,
       required: true,
     },
+    oAuth: {
+      type: Boolean,
+      required: true,
+    },
     profileImage: {
       type: String,
     },
@@ -33,11 +37,9 @@ const usersSchema = new Schema(
     // },
     hash: {
       type: String,
-      required: true,
     },
     salt: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
