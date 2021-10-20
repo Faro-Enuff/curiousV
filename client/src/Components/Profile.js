@@ -14,11 +14,15 @@ import { Avatar, Input } from "@mui/material";
 import { AuthContext } from "../Context/authContext";
 
 const Profile = () => {
+  // Get Profile Data of loggedIn User
   const {
     isLoading,
     apiData: profile,
     serverError,
   } = useFetch("get", "http://localhost:5000/api/users/profile");
+
+  // Post Profile Picture to the API for updating
+
   const { updateProfilePicture } = useContext(UserContext);
 
   const fileSelectedHandler = (event) => {
@@ -26,7 +30,9 @@ const Profile = () => {
       handleUpload(event.target.files);
     }
   };
-  console.log(`profile : >>`, profile);
+
+  // console.log(`profile : >>`, profile);
+
   const handleUpload = (files) => {
     const file = files[0];
     console.log(file);
@@ -34,10 +40,10 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("profileImage", file);
 
-    // To clg the formData
-    for (var key of formData.entries()) {
-      console.log(key[0] + ", " + key[1]);
-    }
+    // // To clg the formData
+    // for (var key of formData.entries()) {
+    //   console.log(key[0] + ", " + key[1]);
+    // }
 
     // Upload ProfilePicture
     updateProfilePicture(formData);

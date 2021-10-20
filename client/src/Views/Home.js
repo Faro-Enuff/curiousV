@@ -1,17 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 
-// Context Imports
-import { HobbiesContext } from "../Context/hobbiesContext";
-import { AuthContext } from "../Context/authContext";
-import { UserContext } from "../Context/userContext";
-
 // Custom Hooks
 import { useFetch } from "../Utils/useFetch";
 
 // Internal Imports
 import Loader from "../Utils/Loader";
-import CVTimeline from "../Components/CVTimeline";
-import Navbar from "../Navigation/Navbar";
 import Timeline from "../Components/Timeline Creative TIM/Timeline";
 import stories from "../Components/Timeline Creative TIM/stories";
 import Enso from "../Images/Enso.png";

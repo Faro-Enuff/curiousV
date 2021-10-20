@@ -40,17 +40,17 @@ const BottomNavigationCustom = () => {
       }}
     >
       <BottomNavigationAction
-        name="/createSummon"
+        href="/createSummon"
         onClick={handleOnClickPush}
         icon={<AssignmentIcon color="secondary" />}
       />
       <BottomNavigationAction
-        name="/"
+        href="/"
         onClick={handleOnClickPush}
         icon={<HomeMiniIcon color="secondary" />}
       />
       <BottomNavigationAction
-        name="/search"
+        href="/search"
         onClick={handleOnClickPush}
         icon={<SearchIcon color="secondary" />}
       />

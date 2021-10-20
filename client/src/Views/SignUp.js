@@ -28,7 +28,7 @@ const SignUp = () => {
     history.push("/signin");
   };
 
-  console.log(user);
+  console.log("User Credentials : >>", user);
 
   return (
     <form method="post">

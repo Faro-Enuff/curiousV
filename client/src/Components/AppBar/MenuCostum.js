@@ -1,28 +1,21 @@
 import * as React from "react";
 
-// Custom Hooks
-import { useFetch } from "../../Utils/useFetch";
+// Internal Imports
+import Enso from "../../Images/Enso.png";
 
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+// MUI Core Imports
+import { Menu, MenuItem, Avatar, Divider } from "@mui/material";
+
+// MUI Icons
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import Enso from "../../Images/Enso.png";
 
-const MenuCostum = ({ logout }) => {
+const MenuCostum = ({ profile, logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const {
-    isLoading,
-    apiData: profile,
-    serverError,
-  } = useFetch("get", "http://localhost:5000/api/users/profile");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -76,7 +69,7 @@ const MenuCostum = ({ logout }) => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar src={profile?.user.profileImage} /> Profile
+          <Avatar src={profile} /> Profile
         </MenuItem>
         <MenuItem>
           <Avatar src={Enso} /> Create Summon

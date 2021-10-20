@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useContext } from "react";
-
 // Context Imports
 import { AuthContext } from "../Context/authContext";
+
+// Custom Hooks
+import { useFetch } from "../Utils/useFetch";
 
 // MUI Core Imports
 import {
@@ -48,7 +50,13 @@ const useStyles = makeStyles(
 const AppBarCostum = () => {
   const classes = useStyles();
 
-  const { loggedInUser, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+
+  const {
+    isLoading,
+    apiData: profile,
+    serverError,
+  } = useFetch("get", "http://localhost:5000/api/users/profile");
 
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
@@ -58,14 +66,14 @@ const AppBarCostum = () => {
             <Avatar src={Enso} />
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {loggedInUser && (
+          {profile && (
             <Typography
               variant="h6"
               noWrap
               component="div"
               sx={{ display: "flex" }}
             >
-              {loggedInUser?.artistName}
+              {profile?.user.artistName}
             </Typography>
           )}
           <Box sx={{ flexGrow: 1 }} />
@@ -75,7 +83,7 @@ const AppBarCostum = () => {
               <MailIcon />
               {/* </Badge> */}
             </IconButton>
-            <MenuCostum logout={logout} />
+            <MenuCostum profile={profile?.user.profileImage} logout={logout} />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}></Box>
         </Toolbar>

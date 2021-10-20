@@ -1,20 +1,31 @@
 import React, { useEffect, useState, useContext } from "react";
+
+// NPM
+import GoogleButton from "react-google-button";
+
+// Internal Imports
 import Loader from "../Utils/Loader";
 
-import GoogleButton from "react-google-button";
 // MUI Imports
-import { Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
 
 // Import Context
 import { AuthContext } from "../Context/authContext";
 
 // React Router DOM
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
+const useStyles = makeStyles((muiTheme) => ({}));
 
 const SignIn = () => {
+  const classes = useStyles();
+
   let history = useHistory();
+
   // Auth Context
   const { loginUser, loginGoogle, googleSignInUser } = useContext(AuthContext);
+
   // User useState
   const [user, setUser] = useState({
     email: "",
@@ -30,11 +41,13 @@ const SignIn = () => {
   ////////////////////////////////////////////////////////
   // Email & Password  Login
   ////////////////////////////////////////////////////////
+
   const handleClick = (event) => {
     event.preventDefault();
     // Get request - Backend Route
     loginUser(user);
   };
+
   ////////////////////////////////////////////////////////
   // Google Login
   ////////////////////////////////////////////////////////
@@ -49,6 +62,7 @@ const SignIn = () => {
       "_blank",
       "width=500,height=600"
     );
+
     // Set Loader
     setLoading(true);
 
@@ -69,7 +83,8 @@ const SignIn = () => {
   return (
     <form method="post">
       {loading && <Loader />}
-      <div>
+
+      <Box m={2}>
         <label>Email:</label>
         <input
           type="text"
@@ -77,8 +92,9 @@ const SignIn = () => {
           value={user.email}
           onChange={handleChange}
         />
-      </div>
-      <div>
+      </Box>
+
+      <Box m={2}>
         <label>Password:</label>
         <input
           type="password"
@@ -86,13 +102,21 @@ const SignIn = () => {
           value={user.password}
           onChange={handleChange}
         />
-      </div>
-      <div>
+      </Box>
+
+      <Box m={2}>
         <input type="submit" value="signin" onClick={handleClick} />
-      </div>
-      <div>
+      </Box>
+
+      <Box m={2}>
+        <Link to="/signup" variant="body2" className={classes.signUpLink}>
+          Don't have an account? <b>Sign Up</b>
+        </Link>
+      </Box>
+
+      <Box m={2}>
         <GoogleButton type="dark" onClick={redirectToGoogleSSO} />
-      </div>
+      </Box>
     </form>
   );
 };
