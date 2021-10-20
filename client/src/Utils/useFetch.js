@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 export const useFetch = (method, url, body) => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
@@ -11,6 +14,9 @@ export const useFetch = (method, url, body) => {
           method: method,
           url: url,
           data: body,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         });
         const data = await resp?.data;
 

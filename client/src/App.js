@@ -10,6 +10,8 @@ import { AuthContextProvider } from "./Context/authContext";
 import { UserContextProvider } from "./Context/userContext";
 
 // Internal Imports
+import GoogleSuccess from "./Components/Google OAuth/GoogleSuccess";
+import GoogleFailure from "./Components/Google OAuth/GoogleFailure";
 import PrivateRoute from "./Navigation/PrivateRoute";
 import SignIn from "./Views/SignIn";
 import SignUp from "./Views/SignUp";
@@ -24,7 +26,6 @@ import SummonBuild from "./Views/SummonBuild";
 import { makeStyles } from "@material-ui/core/styles";
 import Enso from "./Images/Enso.png";
 import { Box } from "@mui/system";
-import GoogleSuccess from "./Views/GoogleSuccess";
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -61,14 +62,19 @@ function App() {
                     </Route>
                     <div>
                       <Switch>
+                        <Route path="/" exact component={Home} />
+                        <Route path="/signin" exact component={SignIn} />
+                        <Route path="/signup" exact component={SignUp} />
                         <Route
                           path="/google/success"
                           exact
                           component={GoogleSuccess}
                         />
-                        <Route path="/signin" exact component={SignIn} />
-                        <Route path="/signup" exact component={SignUp} />
-                        <Route path="/" exact component={Home} />
+                        <Route
+                          path="/google/failure"
+                          exact
+                          component={GoogleFailure}
+                        />
                         <PrivateRoute
                           path="/getStarted"
                           exact

@@ -1,4 +1,8 @@
 import * as React from "react";
+
+// Custom Hooks
+import { useFetch } from "../../Utils/useFetch";
+
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,10 +12,17 @@ import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
+import Enso from "../../Images/Enso.png";
 
 const MenuCostum = ({ logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const {
+    isLoading,
+    apiData: profile,
+    serverError,
+  } = useFetch("get", "http://localhost:5000/api/users/profile");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -65,10 +76,10 @@ const MenuCostum = ({ logout }) => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar src={profile?.user.profileImage} /> Profile
         </MenuItem>
         <MenuItem>
-          <Avatar /> Create Summon
+          <Avatar src={Enso} /> Create Summon
         </MenuItem>
         <Divider />
         <MenuItem>

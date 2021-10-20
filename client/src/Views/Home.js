@@ -5,7 +5,11 @@ import { HobbiesContext } from "../Context/hobbiesContext";
 import { AuthContext } from "../Context/authContext";
 import { UserContext } from "../Context/userContext";
 
+// Custom Hooks
+import { useFetch } from "../Utils/useFetch";
+
 // Internal Imports
+import Loader from "../Utils/Loader";
 import CVTimeline from "../Components/CVTimeline";
 import Navbar from "../Navigation/Navbar";
 import Timeline from "../Components/Timeline Creative TIM/Timeline";
@@ -35,16 +39,19 @@ const useStyles = makeStyles(
 
 const Home = () => {
   const classes = useStyles();
-  const { getHobbies, userHobby } = useContext(HobbiesContext);
 
-  useEffect(() => {
-    getHobbies();
-  }, []);
+  // Hobbies useFetch API
+  const {
+    isLoading,
+    apiData: hobbies,
+    serverError,
+  } = useFetch("get", "http://localhost:5000/api/hobbies/getUserHobby");
 
-  console.log(`Home: userHobby : >>`, userHobby);
+  console.log(hobbies);
 
   return (
     <Container component="main" maxWidth="xs">
+      {isLoading && <Loader />}
       <div className={classes.home}>
         <Box sx={{}}>
           <Box
@@ -57,10 +64,12 @@ const Home = () => {
             }}
           >
             <Paper>
-              {userHobby && (
-                <Typography variant="h5">{`My ${userHobby?.hobby} cV`}</Typography>
+              {hobbies?.userHobby[0] && (
+                <Typography variant="h5">{`My ${hobbies?.userHobby[0]?.hobby} cV`}</Typography>
               )}
-              <Typography variant="body1">{userHobby?.hobby}</Typography>
+              <Typography variant="body1">
+                {hobbies?.userHobby[0]?.hobby}
+              </Typography>
               <Profile />
             </Paper>
           </Box>
@@ -73,7 +82,10 @@ const Home = () => {
                   Cursignments
                 </Typography>
               </Card>
-              <AssEqCard header={"Equipment"} body={userHobby?.equipment} />
+              <AssEqCard
+                header={"Equipment"}
+                body={hobbies?.userHobby[0]?.equipment}
+              />
               <AssEqCard header={"Assignment"} />
             </Box>
             <Box sx={{ flexGrow: 3, ml: 2 }}>

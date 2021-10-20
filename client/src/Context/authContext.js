@@ -95,7 +95,7 @@ export const AuthContextProvider = ({ children }) => {
           history.push("/");
         } else {
           // Set Parameter Loading useState true
-          loadingState(true);
+          loadingState(false);
         }
       })
       .catch((error) => console.log(`Message:`, error.message));

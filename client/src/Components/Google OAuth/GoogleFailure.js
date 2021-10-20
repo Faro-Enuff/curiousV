@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import Enso from "../Images/Enso.png";
+import Enso from "../../Images/Enso.png";
 
 const useStyles = makeStyles((muiTheme) => ({
   successText: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((muiTheme) => ({
   },
 }));
 
-const GoogleSuccess = () => {
+const GoogleFailure = () => {
   const classes = useStyles();
   useEffect(() => {
     setTimeout(() => {
@@ -35,9 +35,11 @@ const GoogleSuccess = () => {
       <div className={classes.backgroundImageDiv}>
         <img src={Enso} className={classes.backgroundImage} />
       </div>
-      <Typography variant="h6">Successfully Signed In</Typography>
+      <Typography variant="h6">
+        Could not sign You in! Try it later again, or check your Google-Account
+      </Typography>
     </div>
   );
 };
 
-export default GoogleSuccess;
+export default GoogleFailure;

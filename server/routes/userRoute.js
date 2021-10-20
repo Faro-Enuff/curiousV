@@ -64,7 +64,7 @@ router.post(
 
 // Google Auth
 const successLoginUrl = "http://localhost:3000/google/success";
-const errorLoginUrl = "http://localhost:3000/signin";
+const errorLoginUrl = "http://localhost:3000/google/failure";
 
 router.get(
   "/google",

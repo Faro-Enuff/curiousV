@@ -80,6 +80,7 @@ export const registerUser = async (req, res) => {
           firstName: req.body.artistName,
           email: req.body.email,
           firstName: req.body.firstName,
+          oAuth: false,
           hash: hash,
           salt: salt,
         });

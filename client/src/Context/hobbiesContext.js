@@ -9,25 +9,6 @@ export const HobbiesContextProvider = ({ children }) => {
   const { loggedInUser } = useContext(AuthContext);
   const [userHobby, setUserHobby] = useState(null);
 
-  const getHobbies = () => {
-    axios({
-      url: "http://localhost:5000/api/hobbies/getUserHobby",
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        // console.log("Get user hobby : >>",response);
-
-        const data = response.data;
-        const hobby = data.userHobby[0];
-        console.log("Get user hobby : >>", hobby);
-        setUserHobby(hobby);
-      })
-      .catch((error) => console.log(error.message));
-  };
-
   const postHobbies = (hobbies) => {
     axios
       .post("/hobbies/add", hobbies)
@@ -35,7 +16,7 @@ export const HobbiesContextProvider = ({ children }) => {
       .catch((error) => console.log(error.message));
   };
 
-  const value = { userHobby, getHobbies, postHobbies };
+  const value = { userHobby, postHobbies };
 
   return (
     <HobbiesContext.Provider value={value}>{children}</HobbiesContext.Provider>

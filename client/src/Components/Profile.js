@@ -1,5 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 
+// Custom Hooks
+import { useFetch } from "../Utils/useFetch";
+
 // Context Imports
 import { UserContext } from "../Context/userContext";
 
@@ -11,14 +14,19 @@ import { Avatar, Input } from "@mui/material";
 import { AuthContext } from "../Context/authContext";
 
 const Profile = () => {
-  const { profile, updateProfilePicture } = useContext(UserContext);
+  const {
+    isLoading,
+    apiData: profile,
+    serverError,
+  } = useFetch("get", "http://localhost:5000/api/users/profile");
+  const { updateProfilePicture } = useContext(UserContext);
 
   const fileSelectedHandler = (event) => {
     if (event.target.files) {
       handleUpload(event.target.files);
     }
   };
-
+  console.log(`profile : >>`, profile);
   const handleUpload = (files) => {
     const file = files[0];
     console.log(file);
@@ -37,7 +45,10 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <Avatar sx={{ width: 64, height: 64 }} src={profile?.profileImage} />
+      <Avatar
+        sx={{ width: 64, height: 64 }}
+        src={profile?.user?.profileImage}
+      />
       <div className="upload">
         <form method="post" encType="multipart/form-data">
           <Input

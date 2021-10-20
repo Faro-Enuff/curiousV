@@ -13,46 +13,58 @@ import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
   let history = useHistory();
+  // Auth Context
   const { loginUser, loginGoogle, googleSignInUser } = useContext(AuthContext);
+  // User useState
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
+  ////////////////////////////////////////////////////////
+  // Email & Password  Login
+  ////////////////////////////////////////////////////////
   const handleClick = (event) => {
     event.preventDefault();
+    // Get request - Backend Route
     loginUser(user);
   };
+  ////////////////////////////////////////////////////////
+  // Google Login
+  ////////////////////////////////////////////////////////
 
   const redirectToGoogleSSO = async () => {
-    let timer = null;
+    // API Route
     const googleLoginUrl = "http://localhost:5000/api/users/google";
 
+    // Opten Pop-up Window for Google
     const newWindow = window.open(
       googleLoginUrl,
       "_blank",
       "width=500,height=600"
     );
-
+    // Set Loader
     setLoading(true);
 
+    let timer = null;
+    // Set Inverval to listen to the popup window for closing
     if (newWindow) {
       timer = setInterval(() => {
         if (newWindow.closed) {
           console.log("Yeah");
-          googleSignInUser();
+          googleSignInUser(loading);
+          setLoading(false);
           clearInterval(timer);
         }
       }, 500);
     }
   };
-
-  // console.log(user);
 
   return (
     <form method="post">
