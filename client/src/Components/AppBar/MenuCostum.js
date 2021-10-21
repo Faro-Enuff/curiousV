@@ -3,6 +3,9 @@ import * as React from "react";
 // Internal Imports
 import Enso from "../../Images/Enso.png";
 
+// React-Router-Dom
+import { useHistory } from "react-router-dom";
+
 // MUI Core Imports
 import { Menu, MenuItem, Avatar, Divider } from "@mui/material";
 
@@ -14,6 +17,7 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const MenuCostum = ({ profile, logout }) => {
+  let history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -23,6 +27,12 @@ const MenuCostum = ({ profile, logout }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClickHistory = (event) => {
+    const directory = event.target.id;
+    console.log(directory);
+    history.push(directory);
   };
 
   const handleClickLogout = () => {
@@ -68,10 +78,10 @@ const MenuCostum = ({ profile, logout }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem id={"/"} onClick={handleClickHistory}>
           <Avatar src={profile} /> Profile
         </MenuItem>
-        <MenuItem>
+        <MenuItem id={"/createSummon"} onClick={handleClickHistory}>
           <Avatar src={Enso} /> Create Summon
         </MenuItem>
         <Divider />

@@ -23,6 +23,10 @@ import summonRoutes from "./routes/summonRoute.js";
 import hobbyRoutes from "./routes/hobbyRoute.js";
 import creationRoutes from "./routes/creationRoute.js";
 
+// Import Socket.IO
+import { Server } from "socket.io";
+import { createServer } from "http";
+
 ////////////////////////
 ////////////////////////
 
@@ -130,3 +134,16 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log("Server is running on " + port + "port");
 });
+
+////////////////////////
+////////////////////////
+
+// !!! Socket Initialization !!!
+
+////////////////////////
+////////////////////////
+
+// const io = new Server(3025, {});
+
+// io.on("connection", (socket) => {});
+// io.listen(3025);

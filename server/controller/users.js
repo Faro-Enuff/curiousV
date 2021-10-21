@@ -13,53 +13,13 @@ export const isUserAuthenticated = (req, res, next) => {
   }
 };
 
-export const signInUser = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
-  // Clg Email & Password coming from the Req
-  console.log("email :>>", email, "password :>>", password);
-  try {
-    userModel.findOne({ email: email }, (err, user) => {
-      if (err) {
-        res.json({ error: err });
-      }
-      if (!user) {
-        res.status(401).json({ success: false, msg: "Could not finde user!" });
-      } else {
-        const isValid = validPassword(password, user.hash, user.salt);
-        if (isValid) {
-          const payload = { id: user._id };
-          const expiresIn = "30d";
-          const token = jwt.sign(payload, process.env.SECRET, {
-            expiresIn: expiresIn,
-          });
+// !!! Register user - Password & Email !!!
 
-          res.status(200).json({
-            success: true,
-            token: token,
-            expiresIn: expiresIn,
-            user: {
-              _id: user._id,
-              artistName: user.artistName,
-              email: user.email,
-              firstName: user.firstName,
-              profileImage: user.profileImage,
-            },
-          });
-          console.log("token :>>", token);
-        } else {
-          res.status(401).json({
-            success: false,
-            msg: "Password does not match, please try again!",
-          });
-        }
-      }
-    });
-  } catch (error) {
-    res.json({ message: error.message });
-  }
-};
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 export const registerUser = async (req, res) => {
   try {
@@ -103,6 +63,108 @@ export const registerUser = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// !!! Sign in user - Password & Email !!!
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+export const signInUser = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Clg Email & Password coming from the Req
+  console.log("email : >>", email, "password : >>", password);
+  try {
+    userModel.findOne({ email: email }, (err, user) => {
+      if (err) {
+        res.json({ error: err });
+      }
+      if (!user) {
+        res.status(401).json({ success: false, msg: "Could not finde user!" });
+      }
+      if (user.oAuth) {
+        res.status(401).json({
+          success: false,
+          msg: "Please use the Google Login Button for this Email.",
+        });
+      } else {
+        const isValid = validPassword(password, user.hash, user.salt);
+        if (isValid) {
+          const payload = { id: user._id };
+          const expiresIn = "30d";
+          const token = jwt.sign(payload, process.env.SECRET, {
+            expiresIn: expiresIn,
+          });
+
+          res.status(200).json({
+            success: true,
+            token: token,
+            expiresIn: expiresIn,
+            user: {
+              _id: user._id,
+              artistName: user.artistName,
+              email: user.email,
+              firstName: user.firstName,
+              profileImage: user.profileImage,
+            },
+          });
+          console.log("token :>>", token);
+        } else {
+          res.status(401).json({
+            success: false,
+            msg: "Password does not match, please try again!",
+          });
+        }
+      }
+    });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// !!! Send authenticated Google User !!!
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+export const googleUser = async (req, res) => {
+  try {
+    let user = req.user;
+    const payload = { id: user._id };
+    const expiresIn = "30d";
+    const token = jwt.sign(payload, process.env.SECRET, {
+      expiresIn: expiresIn,
+    });
+    res.status(200).json({
+      user: {
+        _id: user._id,
+        artistName: user.artistName,
+        email: user.email,
+        firstName: user.firstName,
+        profileImage: user.profileImage,
+      },
+      success: true,
+      token: token,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// !!! Profile Detail !!!
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 export const profileDetail = async (req, res) => {
   const userId = req.user.user._id;
@@ -153,29 +215,5 @@ export const updateImage = async (req, res) => {
     res.status(200).send("Profile Image successfully updated!");
   } catch (error) {
     res.status(404).json({ message: error.message });
-  }
-};
-
-export const test = async (req, res) => {
-  try {
-    let user = req.user;
-    const payload = { id: user._id };
-    const expiresIn = "30d";
-    const token = jwt.sign(payload, process.env.SECRET, {
-      expiresIn: expiresIn,
-    });
-    res.status(200).json({
-      user: {
-        _id: user._id,
-        artistName: user.artistName,
-        email: user.email,
-        firstName: user.firstName,
-        profileImage: user.profileImage,
-      },
-      success: true,
-      token: token,
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
   }
 };
