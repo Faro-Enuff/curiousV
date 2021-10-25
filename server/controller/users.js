@@ -84,13 +84,9 @@ export const signInUser = async (req, res) => {
         res.json({ error: err });
       }
       if (!user) {
-        res.status(401).json({ success: false, msg: "Could not finde user!" });
-      }
-      if (user.oAuth) {
-        res.status(401).json({
-          success: false,
-          msg: "Please use the Google Login Button for this Email.",
-        });
+        res
+          .status(401)
+          .json({ success: false, message: "Could not finde user!" });
       } else {
         const isValid = validPassword(password, user.hash, user.salt);
         if (isValid) {
@@ -116,7 +112,7 @@ export const signInUser = async (req, res) => {
         } else {
           res.status(401).json({
             success: false,
-            msg: "Password does not match, please try again!",
+            message: "Password does not match, please try again!",
           });
         }
       }
@@ -179,6 +175,17 @@ export const profileDetail = async (req, res) => {
     res.json({ user: user });
   } catch (error) {
     res.json({ message: error.message });
+  }
+};
+
+export const userArray = async (req, res) => {
+  try {
+    const users = await userModel.find({}, "_id artistName profileImage");
+    // console.log("Array of Users : >>", users);
+
+    res.status(200).json({ users });
+  } catch (error) {
+    console.log(error);
   }
 };
 

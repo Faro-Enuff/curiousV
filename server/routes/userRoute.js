@@ -12,6 +12,7 @@ import {
   signInUser,
   googleUser,
   updateImage,
+  userArray,
 } from "../controller/users.js";
 // Import .env
 import dotenv from "dotenv";
@@ -78,12 +79,15 @@ router.get("/google/signIn", isUserAuthenticated, googleUser);
 ////////////////////////////
 ////////////////////////////
 
+// Specific User
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   profileDetail
 );
 
+// Array of all Users
+router.get("/allUsers", userArray);
 ////////////////////////////
 ////////////////////////////
 

@@ -41,3 +41,7 @@ button:active {
 button:focus {
   outline: 0;
 }
+
+ul {
+  list-style: none;
+}

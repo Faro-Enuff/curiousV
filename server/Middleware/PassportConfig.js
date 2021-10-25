@@ -24,6 +24,9 @@ const jwtVerify = async (payload, next) => {
     if (!user) {
       return next(null, false);
     }
+    if (user?.oAuth) {
+      return next(null, false);
+    }
     next(null, { user, payload });
   } catch (error) {
     next(error, false);

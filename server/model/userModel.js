@@ -31,10 +31,6 @@ const usersSchema = new Schema(
     profileImage: {
       type: String,
     },
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
     hash: {
       type: String,
     },

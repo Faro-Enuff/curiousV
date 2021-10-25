@@ -18,6 +18,9 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 
+// React-Router-Dom
+import { useHistory } from "react-router-dom";
+
 // Internal Imports
 import MenuCostum from "../Components/AppBar/MenuCostum";
 
@@ -49,7 +52,7 @@ const useStyles = makeStyles(
 
 const AppBarCostum = () => {
   const classes = useStyles();
-
+  let history = useHistory();
   const { logout } = useContext(AuthContext);
 
   const {
@@ -57,6 +60,12 @@ const AppBarCostum = () => {
     apiData: profile,
     serverError,
   } = useFetch("get", "http://localhost:5000/api/users/profile");
+
+  const handleClickRedirect = (event) => {
+    console.log(event);
+    const directory = event.target.id;
+    history.push(directory);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
@@ -78,7 +87,7 @@ const AppBarCostum = () => {
           )}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: "flex" }}>
-            <IconButton size="large" color="inherit">
+            <IconButton href="/chatRoom" size="large" color="inherit">
               {/* <Badge badgeContent={4} color="error"> */}
               <MailIcon />
               {/* </Badge> */}

@@ -1,6 +1,5 @@
 // React Router Dom
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 // Context Imports
 import { ThemeProvider } from "./Context/themeContext";
 import { ThemeProviderTwo } from "./Context/themeContextTwo";
@@ -8,6 +7,7 @@ import { SummonsContextProvider } from "./Context/summonsContext";
 import { HobbiesContextProvider } from "./Context/hobbiesContext";
 import { AuthContextProvider } from "./Context/authContext";
 import { UserContextProvider } from "./Context/userContext";
+import { ChatContextProvider } from "./Context/chatContext";
 
 // Internal Imports
 import GoogleSuccess from "./Components/Google OAuth/GoogleSuccess";
@@ -20,6 +20,8 @@ import Home from "./Views/Home";
 import BottomNavigationCustom from "./Navigation/BottomNavigationCustom";
 import AppBarCostum from "./Navigation/AppBarCustom";
 import SummonBuild from "./Views/SummonBuild";
+import Chatroom from "./Views/Chatroom";
+import UserSearch from "./Views/UserSearch";
 
 // MUI Core Imports
 // import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
@@ -55,42 +57,72 @@ function App() {
             <UserContextProvider>
               <HobbiesContextProvider>
                 <SummonsContextProvider>
-                  <div className={classes.app}>
-                    <Route exact path={["/", "/createSummon", "/getStarted"]}>
-                      <AppBarCostum />
-                      <div className={classes.imgDiv}></div>
-                    </Route>
-                    <div>
-                      <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path="/signin" exact component={SignIn} />
-                        <Route path="/signup" exact component={SignUp} />
-                        <Route
-                          path="/google/success"
-                          exact
-                          component={GoogleSuccess}
-                        />
-                        <Route
-                          path="/google/failure"
-                          exact
-                          component={GoogleFailure}
-                        />
-                        <PrivateRoute
-                          path="/getStarted"
-                          exact
-                          component={SetUp}
-                        />
-                        <PrivateRoute
-                          path="/createSummon"
-                          exact
-                          component={SummonBuild}
-                        />
-                      </Switch>
+                  <ChatContextProvider>
+                    <div className={classes.app}>
+                      <Route
+                        exact
+                        path={[
+                          "/",
+                          "/createSummon",
+                          "/getStarted",
+                          "/userSearch",
+                          "/chatRoom/:receiverName",
+                        ]}
+                      >
+                        <AppBarCostum />
+                        <div className={classes.imgDiv}></div>
+                      </Route>
+                      <div>
+                        <Switch>
+                          <Route
+                            path="/chatRoom/:receiverName"
+                            exact
+                            component={Chatroom}
+                          />
+                          <Route path="/" exact component={Home} />
+                          <Route path="/signin" exact component={SignIn} />
+                          <Route path="/signup" exact component={SignUp} />
+                          <Route
+                            path="/google/success"
+                            exact
+                            component={GoogleSuccess}
+                          />
+                          <Route
+                            path="/google/failure"
+                            exact
+                            component={GoogleFailure}
+                          />
+                          <PrivateRoute
+                            path="/getStarted"
+                            exact
+                            component={SetUp}
+                          />
+                          <PrivateRoute
+                            path="/createSummon"
+                            exact
+                            component={SummonBuild}
+                          />
+                          <PrivateRoute
+                            path="/userSearch"
+                            exact
+                            component={UserSearch}
+                          />
+                        </Switch>
+                      </div>
+                      <Route
+                        exact
+                        path={[
+                          "/",
+                          "/createSummon",
+                          "/getStarted",
+                          "/userSearch",
+                          "/chatRoom/:receiverName",
+                        ]}
+                      >
+                        <BottomNavigationCustom />
+                      </Route>
                     </div>
-                    <Route exact path={["/", "/createSummon", "/getStarted"]}>
-                      <BottomNavigationCustom />
-                    </Route>
-                  </div>
+                  </ChatContextProvider>
                 </SummonsContextProvider>
               </HobbiesContextProvider>
             </UserContextProvider>

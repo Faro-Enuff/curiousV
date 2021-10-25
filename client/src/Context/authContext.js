@@ -1,7 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "../Utils/axios";
-import jwt_decode from "jwt-decode";
-import moment from "moment";
 import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -23,6 +21,7 @@ const setLocalStorage = (response) => {
 
 export const AuthContextProvider = ({ children }) => {
   let history = useHistory();
+
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   /////////////////////////////////
@@ -42,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
     axios
       .post("/users/signin", userLogin)
       .then((response) => {
+        console.log(response);
         // console.log(`AuthContext: Success:`, response);
 
         // Safe Token in Local Storage
@@ -60,11 +60,11 @@ export const AuthContextProvider = ({ children }) => {
           history.push("/");
         }
       })
-      .catch((error) => console.log(`Message:`, error.message));
+      .catch((error) => console.log(`Message:`, error.response.data));
   };
 
   /////////////////////////////////
-  // Login Google
+  // Google Authentication
   /////////////////////////////////
 
   const loginGoogle = () => {
@@ -76,9 +76,9 @@ export const AuthContextProvider = ({ children }) => {
       .catch((error) => console.log(`Message:`, error.message));
   };
 
-  /////////////////////////////////
-  // User SignIn via GoogleAccount
-  /////////////////////////////////
+  /////////////////////////////////////////
+  // SignIn via authenticated GoogleAccount
+  /////////////////////////////////////////
 
   const googleSignInUser = (loadingState) => {
     axios
@@ -98,7 +98,7 @@ export const AuthContextProvider = ({ children }) => {
           loadingState(false);
         }
       })
-      .catch((error) => console.log(`Message:`, error.message));
+      .catch((error) => console.log(`Message:`, error.response.data));
   };
 
   /////////////////////////////////

@@ -50,7 +50,7 @@ const BottomNavigationCustom = () => {
         icon={<HomeMiniIcon color="secondary" />}
       />
       <BottomNavigationAction
-        href="/search"
+        href="/userSearch"
         onClick={handleOnClickPush}
         icon={<SearchIcon color="secondary" />}
       />

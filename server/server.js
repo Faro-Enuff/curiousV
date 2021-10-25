@@ -22,10 +22,11 @@ import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
 import hobbyRoutes from "./routes/hobbyRoute.js";
 import creationRoutes from "./routes/creationRoute.js";
+import chatRoutes from "./routes/chatRoute.js";
 
 // Import Socket.IO
 import { Server } from "socket.io";
-import { createServer } from "http";
+import http from "http";
 
 ////////////////////////
 ////////////////////////
@@ -108,6 +109,10 @@ app.use("/api/hobbies", hobbyRoutes);
 
 app.use("/api/creations", creationRoutes);
 
+// Back-End Route to chatrooms collection
+
+app.use("/api/chatrooms", chatRoutes);
+
 ////////////////////////////////////////////////////////////////
 // !!! Provide Static files - Divide into different Local Storages !!!
 ////////////////////////////////////////////////////////////////
@@ -131,7 +136,7 @@ const port = process.env.PORT || 5000;
 
 // TODO eventually put this listen function into the connect function of mongoDB, makes more sense to wait until the connection is set (async function for mongoose connect. Netninja min 13 of mongoDB video)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log("Server is running on " + port + "port");
 });
 
@@ -143,7 +148,35 @@ app.listen(port, () => {
 ////////////////////////
 ////////////////////////
 
-// const io = new Server(3025, {});
+const httpServer = http.createServer(app);
 
-// io.on("connection", (socket) => {});
-// io.listen(3025);
+// Server instance
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log("User with ID:", socket.id, "joined room:", data);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+    console.log(data);
+  });
+
+  // Determine a disconnected User
+  socket.on("disconnect", () => {
+    console.log("User Disconnected:", socket.id);
+  });
+});
+
+httpServer.listen(3001, () => {
+  console.log("Server is running on 3001port");
+});
