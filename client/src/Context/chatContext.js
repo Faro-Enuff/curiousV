@@ -15,7 +15,16 @@ export const ChatContextProvider = ({ children }) => {
       .catch((error) => console.log(`Message:`, error.response.data));
   };
 
-  const value = { createChat };
+  const saveMessage = (message) => {
+    axios
+      .post("/chatrooms/saveMessages", message)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(`Message:`, error.response.data));
+  };
+
+  const value = { createChat, saveMessage };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };

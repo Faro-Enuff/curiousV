@@ -54,3 +54,23 @@ export const getChatroom = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+export const saveMessages = async (req, res) => {
+  try {
+    console.log("Save Message Req Body : >>", req.body);
+    const chatroom = chatroomModel.findOneAndUpdate(
+      { _id: req.body.room },
+      { $push: { messages: req.body } },
+      (err, res) => {
+        if (res) {
+          console.log("res Profile old (success): >>", res);
+        } else {
+          console.log("err profileImage : >>", err);
+        }
+      }
+    );
+    res.status(200).json({ chatroom });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};

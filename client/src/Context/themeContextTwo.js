@@ -40,6 +40,14 @@ export const ThemeProviderTwo = ({ children }) => {
           },
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontSize: "0.85rem",
+            borderRadius: "25%",
+          },
+        },
+      },
     },
     typography: {
       fontFamily: "Quicksand",

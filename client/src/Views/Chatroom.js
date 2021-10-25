@@ -1,16 +1,27 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-// Socket.IO
+
+// NPM Imports
 import io from "socket.io-client";
-// MUI Core Imports
-import { TextField, Box, Button, Typography } from "@mui/material";
-import { useFetch } from "../Utils/useFetch";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../Context/authContext";
-import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 
+// MUI Core Imports
+import { TextField, Box, Button, Typography, Avatar } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
 import SendIcon from "@mui/icons-material/Send";
 
+// Context Imports
+import { ChatContext } from "../Context/chatContext";
+
+// Internal Imports
+import { useFetch } from "../Utils/useFetch";
+import Enso from "../Images/Enso.png";
+
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+// !!! Connect Socket.IO to Back-End !!!
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 const socket = io.connect("http://localhost:3001");
 
 const useStyles = makeStyles((muiTheme) => ({
@@ -25,7 +36,7 @@ const useStyles = makeStyles((muiTheme) => ({
   chatFrame: {
     marginLeft: "5%",
     marginRight: "5%",
-    marginBottom: "5%",
+    marginBottom: "3%",
     position: "fixed",
     top: "15%",
     bottom: "15%",
@@ -58,8 +69,8 @@ const useStyles = makeStyles((muiTheme) => ({
   chatTextArea: {
     marginLeft: "5%",
     marginRight: "5%",
-    marginTop: "5%",
-    marginBottom: "1%",
+    marginTop: "3%",
+    marginBottom: "2%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -70,24 +81,20 @@ const useStyles = makeStyles((muiTheme) => ({
     flexDirection: "column",
     justifyContent: "flex-end",
   },
+  btn: {
+    borderRadius: "50%",
+  },
 }));
 
 const Chatroom = () => {
   const classes = useStyles();
 
-  // Get Profile Data of loggedIn User
-  const {
-    isLoading,
-    apiData: profile,
-    serverError,
-  } = useFetch("get", "http://localhost:5000/api/users/profile");
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Style -Make the scroll from bottom to top !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
 
-  // Params ArtistName
-  const { receiverName } = useParams();
-
-  console.log(receiverName);
-
-  // Make the scroll from bottom to top
   const dummy = useRef(null);
   const scrollToBottom = () => {
     dummy.current?.scrollIntoView({ behavior: "smooth" });
@@ -96,21 +103,55 @@ const Chatroom = () => {
     scrollToBottom();
   });
 
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Fetch -  Profile Data of loggedIn User !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  const {
+    isLoading,
+    apiData: profile,
+    serverError,
+  } = useFetch("get", "http://localhost:5000/api/users/profile");
+
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Params - Grab Receiver ArtistName URL !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+
+  const { receiverName } = useParams();
+
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Chat Context for saving messages in DB !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+
+  const { saveMessage } = useContext(ChatContext);
+
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Fetch -  Chatroom Data !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+
   const { apiData: chatroomData } = useFetch(
     "get",
     `http://localhost:5000/api/chatrooms/${receiverName}`
   );
 
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+  // console.log(chatroomData?.chatroom[0].messages);
 
-  const handleChange = (event) => {
-    setCurrentMessage(event.target.value);
-  };
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Socket.IO -  Join Room !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
 
-  console.log(chatroomData?.chatroom[0]._id);
-
+  // Grab Room ID of Chatroom Fetch to have an unique identifier
   const room = chatroomData?.chatroom[0]._id;
+  // console.log(chatroomData?.chatroom[0]._id);
 
   const joinRoom = () => {
     if (room) {
@@ -118,13 +159,32 @@ const Chatroom = () => {
       socket.emit("join_room", room);
     }
   };
+
+  // Call join room function
   useEffect(() => {
     joinRoom();
-    console.log("hey");
+    console.log("Joined room :>>");
   }, [chatroomData]);
 
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  // !!! Socket.IO -  Send Messages !!!
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+
+  // Use States for Messages / Message List
+
+  const [currentMessage, setCurrentMessage] = useState("");
+
+  const [messageList, setMessageList] = useState([]);
+
+  const handleChange = (event) => {
+    setCurrentMessage(event.target.value);
+  };
+
+  // Send Message Function
+
   const sendMessage = async () => {
-    // Here we need to check if the chatroom with this userId exists
     if (currentMessage !== "") {
       const messageData = {
         room: room,
@@ -133,15 +193,24 @@ const Chatroom = () => {
         time: Date.now(),
       };
 
+      // Socket.IO Emit function to the Back-End
       await socket.emit("send_message", messageData);
+
+      // set use State
       setMessageList((list) => [...list, messageData]);
+      // Reset the TextField
+      setCurrentMessage("");
+      // Send Message to Back-End
+      saveMessage(messageData);
     }
   };
+
+  // Listen to messages -
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
-      console.log(data);
+      // console.log(data);
     });
   }, [socket]);
 
@@ -154,28 +223,38 @@ const Chatroom = () => {
       </div>
       <div className={classes.chatFrame}>
         <div className={classes.chatBody}>
-          {messageList.map((messageContent, key) => {
-            return (
-              <Box
-                sx={{ borderRadius: 2, boxShadow: 2, mb: "10%", pl: 1 }}
-                className={classes.bodyContent}
-                key={key}
-                id={
-                  messageContent.author === receiverName ? "Receiver" : "Sender"
-                }
-              >
-                <Typography variant="h6">{messageContent.message}</Typography>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="subtitle2">
-                    {messageContent.author}
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{}}>
-                    {moment(messageContent.time).fromNow()}
-                  </Typography>
+          {messageList &&
+            messageList.map((messageContent, key) => {
+              return (
+                <Box
+                  sx={{ borderRadius: 2, boxShadow: 2, mb: "10%", p: 1 }}
+                  className={classes.bodyContent}
+                  key={key}
+                  id={
+                    messageContent.author === receiverName
+                      ? "Receiver"
+                      : "Sender"
+                  }
+                >
+                  <Avatar
+                    src={
+                      profile?.user.profileImage
+                        ? profile?.user.profileImage
+                        : Enso
+                    }
+                  />
+                  <Typography variant="h6">{messageContent.message}</Typography>
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="subtitle2">
+                      {messageContent.author}
+                    </Typography>
+                    <Typography variant="subtitle2" sx={{}}>
+                      {moment(messageContent.time).fromNow()}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            );
-          })}
+              );
+            })}
           <div ref={dummy} />
         </div>
       </div>
@@ -192,6 +271,7 @@ const Chatroom = () => {
           </div>
           <div className={classes.buttonDiv}>
             <Button
+              className={classes.btn}
               size="small"
               variant="contained"
               onClick={sendMessage}
