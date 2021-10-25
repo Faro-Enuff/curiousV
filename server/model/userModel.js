@@ -28,6 +28,9 @@ const usersSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    chatroomIds: {
+      type: Array,
+    },
     profileImage: {
       type: String,
     },

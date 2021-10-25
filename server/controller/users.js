@@ -170,7 +170,7 @@ export const profileDetail = async (req, res) => {
       .findById(userId)
       .select(["_id", "artistName", "email", "firstName", "profileImage"]);
 
-    console.log("User : >>", user);
+    // console.log("User : >>", user);
 
     res.json({ user: user });
   } catch (error) {
@@ -180,7 +180,10 @@ export const profileDetail = async (req, res) => {
 
 export const userArray = async (req, res) => {
   try {
-    const users = await userModel.find({}, "_id artistName profileImage");
+    const users = await userModel.find(
+      {},
+      "_id artistName profileImage chatroomIds"
+    );
     // console.log("Array of Users : >>", users);
 
     res.status(200).json({ users });

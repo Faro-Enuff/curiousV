@@ -5,6 +5,7 @@ import { AuthContext } from "../Context/authContext";
 import { useFetch } from "../Utils/useFetch";
 import { ChatContext } from "../Context/chatContext";
 import { useHistory } from "react-router-dom";
+import Loader from "../Utils/Loader";
 
 const UserSearch = () => {
   let history = useHistory();
@@ -19,6 +20,7 @@ const UserSearch = () => {
   if (apiData) {
     console.log(apiData);
   }
+  //
 
   const onClickHandler = async (event) => {
     console.log(event.target.id);
@@ -28,36 +30,40 @@ const UserSearch = () => {
     );
 
     await createChat(userReceiver);
+
     history.push(`/chatRoom/${receiverName}`);
   };
 
   return (
-    <Box sx={{ mt: 8 }} className="userSearch">
-      <Box sx={{ ml: 4 }}>
-        <Typography variant="h4">User Search: </Typography>
+    <div>
+      {isLoading && <Loader />}
+      <Box sx={{ mt: 8 }} className="userSearch">
+        <Box sx={{ ml: 4 }}>
+          <Typography variant="h4">User Search: </Typography>
+        </Box>
+        <ul>
+          {apiData?.users &&
+            apiData?.users.map((user) => (
+              <li key={user._id}>
+                <Box sx={{ display: "flex", mt: 3, mb: 3 }}>
+                  <Box sx={{ mr: 2 }}>
+                    <Avatar src={user.profileImage} />
+                  </Box>
+                  <Box sx={{ ml: 2 }}>
+                    <Typography
+                      variant="h6"
+                      id={user.artistName}
+                      onClick={onClickHandler}
+                    >
+                      {user.artistName}
+                    </Typography>
+                  </Box>
+                </Box>
+              </li>
+            ))}
+        </ul>
       </Box>
-      <ul>
-        {apiData?.users &&
-          apiData?.users.map((user) => (
-            <li key={user._id}>
-              <Box sx={{ display: "flex", mt: 3, mb: 3 }}>
-                <Box sx={{ mr: 2 }}>
-                  <Avatar src={user.profileImage} />
-                </Box>
-                <Box sx={{ ml: 2 }}>
-                  <Typography
-                    variant="h6"
-                    id={user.artistName}
-                    onClick={onClickHandler}
-                  >
-                    {user.artistName}
-                  </Typography>
-                </Box>
-              </Box>
-            </li>
-          ))}
-      </ul>
-    </Box>
+    </div>
   );
 };
 

@@ -16,6 +16,7 @@ import { ChatContext } from "../Context/chatContext";
 // Internal Imports
 import { useFetch } from "../Utils/useFetch";
 import Enso from "../Images/Enso.png";
+import Loader from "../Utils/Loader";
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
@@ -136,7 +137,7 @@ const Chatroom = () => {
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
 
-  const { apiData: chatroomData } = useFetch(
+  const { apiData: chatroomData, isLoading: chatLoader } = useFetch(
     "get",
     `http://localhost:5000/api/chatrooms/${receiverName}`
   );
@@ -178,6 +179,10 @@ const Chatroom = () => {
 
   const [messageList, setMessageList] = useState([]);
 
+  useEffect(() => {
+    setMessageList(chatroomData?.chatroom[0].messages);
+  }, [chatLoader]);
+
   const handleChange = (event) => {
     setCurrentMessage(event.target.value);
   };
@@ -216,6 +221,7 @@ const Chatroom = () => {
 
   return (
     <div className={classes.chatroom}>
+      {chatLoader && <Loader />}
       <div className={classes.chatHeader}>
         <Box sx={{ pt: 1, pb: 1 }}>
           <h2>{`Private chat with ${receiverName}`}</h2>
