@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
-
+import { useHistory } from "react-router-dom";
 // Context Imports
 import { AuthContext } from "../Context/authContext";
 import { SummonsContext } from "../Context/summonsContext";
@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 
 const SummonBuild = () => {
   const classes = useStyles();
+  let history = useHistory();
   const { getSummons, postSummon } = useContext(SummonsContext);
   const { loggedInUser } = useContext(AuthContext);
   const source = [
@@ -65,6 +66,8 @@ const SummonBuild = () => {
 
     // Post Data to the API
     postSummon(formData);
+    setSummonInput({});
+    history.push("/");
   };
 
   const fileSelectedHandler = (event) => {
@@ -83,10 +86,10 @@ const SummonBuild = () => {
     });
   };
 
-  console.log(summonInput);
+  // console.log(summonInput);
   return (
     <div className={classes.buildDiv}>
-      <Box>
+      <Box m={2}>
         <TextfieldShort
           title={"NAME YOUR CURSIGNMENT"}
           value={"assignmentTitle"}

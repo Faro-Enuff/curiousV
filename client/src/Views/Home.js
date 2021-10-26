@@ -19,6 +19,9 @@ const useStyles = makeStyles(
   (muiTheme) => (
     console.log(muiTheme),
     {
+      profilePaper: {
+        marginTop: "10%",
+      },
       timeline: {
         maxHeight: "58%",
         overflow: "scroll",
@@ -40,7 +43,12 @@ const Home = () => {
     serverError,
   } = useFetch("get", "http://localhost:5000/api/hobbies/getUserHobby");
 
-  console.log(hobbies);
+  const { apiData: userSummons } = useFetch(
+    "get",
+    "http://localhost:5000/api/summons/"
+  );
+  // console.log(userSummons);
+  // console.log(hobbies);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -56,7 +64,7 @@ const Home = () => {
               mb: "10%",
             }}
           >
-            <Paper>
+            <Paper className={classes.profilePaper}>
               {hobbies?.userHobby[0] && (
                 <Typography variant="h5">{`My ${hobbies?.userHobby[0]?.hobby} cV`}</Typography>
               )}
@@ -79,7 +87,14 @@ const Home = () => {
                 header={"Equipment"}
                 body={hobbies?.userHobby[0]?.equipment}
               />
-              <AssEqCard header={"Assignment"} />
+              {userSummons &&
+                userSummons.userSummons.map((summon) => {
+                  return (
+                    <div key={summon._id}>
+                      <AssEqCard header={summon.assignmentTitle} />
+                    </div>
+                  );
+                })}
             </Box>
             <Box sx={{ flexGrow: 3, ml: 2 }}>
               <Card>

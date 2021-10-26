@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 // MUI Core
-import { FormControl, Slider } from "@mui/material";
-import { Box } from "@mui/system";
+import { Button, Box, FormControl, Slider } from "@mui/material";
 
 const SetUpSlider = ({ hobbyInput, setHobbyInput }) => {
   const handleChange = (event) => {
@@ -18,6 +17,7 @@ const SetUpSlider = ({ hobbyInput, setHobbyInput }) => {
   return (
     <Box>
       <FormControl>
+        <Button>Curiosity</Button>
         <Slider
           value={hobbyInput.curiosity}
           step={1}

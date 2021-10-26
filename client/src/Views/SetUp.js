@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 // Context Import
 import { HobbiesContext } from "../Context/hobbiesContext";
 import { AuthContext } from "../Context/authContext";
@@ -15,6 +15,7 @@ import EquipmentTextfield from "../Components/SetUpComponents/EquipmentTextfield
 import { Box, Button } from "@mui/material";
 
 const SetUp = () => {
+  let history = useHistory();
   const { postHobbies } = useContext(HobbiesContext);
   const { loggedInUser } = useContext(AuthContext);
   const genre = [
@@ -40,16 +41,17 @@ const SetUp = () => {
 
   const onClickHandler = () => {
     postHobbies(hobbyInput);
+    history.push("/");
   };
 
-  console.log("SetUp: Hobby Input:", hobbyInput);
+  // console.log("SetUp: Hobby Input:", hobbyInput);
 
   return (
     <div className="">
-      <Box m={3}>
+      <Box m={2}>
         <h1>{loggedInUser?.artistName}</h1>
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <Dropdown
           title={"CHOOSE YOUR HOBBY GENRE "}
           data={genre}
@@ -57,7 +59,7 @@ const SetUp = () => {
           setInput={setHobbyInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <TextfieldShort
           title={"NAME YOUR HOBBY"}
           value={"hobby"}
@@ -69,7 +71,7 @@ const SetUp = () => {
           setHobbyInput={setHobbyInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <Dropdown
           title={"CHOOSE YOUR HOBBY LEVEL"}
           data={level}
@@ -77,19 +79,19 @@ const SetUp = () => {
           setInput={setHobbyInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <StartDatepicker
           hobbyInput={hobbyInput}
           setHobbyInput={setHobbyInput}
         />
       </Box>
-      <Box m={5}>
+      <Box m={2}>
         <CuriositySlider
           hobbyInput={hobbyInput}
           setHobbyInput={setHobbyInput}
         />
       </Box>
-      <Box m={3}>
+      <Box m={2}>
         <Button onClick={onClickHandler} variant="outlined">
           Create Your Curiosity
         </Button>

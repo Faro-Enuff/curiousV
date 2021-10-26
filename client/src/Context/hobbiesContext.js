@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 // import axios from "../Utils/axios";
-import axios from "axios";
+import axios from "../Utils/axios";
 import { AuthContext } from "./authContext";
 
 export const HobbiesContext = createContext();

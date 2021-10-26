@@ -78,7 +78,7 @@ const MenuCostum = ({ profile, logout }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem id={"/"} onClick={handleClickHistory}>
+        <MenuItem id={"/getStarted"} onClick={handleClickHistory}>
           <Avatar src={profile} /> Profile
         </MenuItem>
         <MenuItem id={"/createSummon"} onClick={handleClickHistory}>

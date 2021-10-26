@@ -86,8 +86,12 @@ router.get(
   profileDetail
 );
 
-// Array of all Users
-router.get("/allUsers", userArray);
+// Array of all Users !!! besides the logged in user !!!
+router.get(
+  "/allUsers",
+  passport.authenticate("jwt", { session: false }),
+  userArray
+);
 ////////////////////////////
 ////////////////////////////
 

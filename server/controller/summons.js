@@ -2,15 +2,18 @@ import summonModel from "../model/summonModel.js";
 
 export const getSummon = async (req, res) => {
   try {
-    const summons = await summonModel.find();
     const user = await req.user;
 
-    // Filtering for the authenticated user
-    const userSummon = summons.filter(
-      (summon) => summon.userId === user.user.id
-    );
+    const userSummons = await summonModel.find({
+      userId: { $in: user.user.id },
+    });
 
-    res.send({ userSummon });
+    // Filtering for the authenticated user
+    // const userSummon = summons.filter(
+    //   (summon) => summon.userId === user.user.id
+    // );
+
+    res.send({ userSummons });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

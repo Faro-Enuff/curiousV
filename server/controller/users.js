@@ -180,8 +180,9 @@ export const profileDetail = async (req, res) => {
 
 export const userArray = async (req, res) => {
   try {
+    const userId = req.user.user._id;
     const users = await userModel.find(
-      {},
+      { _id: { $nin: userId } },
       "_id artistName profileImage chatroomIds"
     );
     // console.log("Array of Users : >>", users);

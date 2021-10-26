@@ -232,33 +232,37 @@ const Chatroom = () => {
           {messageList &&
             messageList.map((messageContent, key) => {
               return (
-                <Box
-                  sx={{ borderRadius: 2, boxShadow: 2, mb: "10%", p: 1 }}
-                  className={classes.bodyContent}
-                  key={key}
-                  id={
-                    messageContent.author === receiverName
-                      ? "Receiver"
-                      : "Sender"
-                  }
-                >
-                  <Avatar
-                    src={
-                      profile?.user.profileImage
-                        ? profile?.user.profileImage
-                        : Enso
+                key >= 1 && (
+                  <Box
+                    sx={{ borderRadius: 2, boxShadow: 2, mb: "10%", p: 1 }}
+                    className={classes.bodyContent}
+                    key={key}
+                    id={
+                      messageContent.author === receiverName
+                        ? "Receiver"
+                        : "Sender"
                     }
-                  />
-                  <Typography variant="h6">{messageContent.message}</Typography>
-                  <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="subtitle2">
-                      {messageContent.author}
+                  >
+                    <Avatar
+                      src={
+                        profile?.user.profileImage
+                          ? profile?.user.profileImage
+                          : Enso
+                      }
+                    />
+                    <Typography variant="h6">
+                      {messageContent.message}
                     </Typography>
-                    <Typography variant="subtitle2" sx={{}}>
-                      {moment(messageContent.time).fromNow()}
-                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography variant="subtitle2">
+                        {messageContent.author}
+                      </Typography>
+                      <Typography variant="subtitle2" sx={{}}>
+                        {moment(messageContent.time).fromNow()}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
+                )
               );
             })}
           <div ref={dummy} />
