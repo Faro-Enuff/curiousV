@@ -1,6 +1,6 @@
 import creationModel from "../model/creationModel.js";
 
-export const getCreation = async (req, res) => {
+const getCreation = async (req, res) => {
   try {
     const creations = await hobbyModel.find();
     const user = await req.user;
@@ -16,7 +16,7 @@ export const getCreation = async (req, res) => {
   }
 };
 
-export const createCreation = async (req, res) => {
+const createCreation = async (req, res) => {
   const {
     userId,
     summonId,
@@ -43,3 +43,5 @@ export const createCreation = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export { getCreation, createCreation };

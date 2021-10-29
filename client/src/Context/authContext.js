@@ -136,6 +136,16 @@ export const AuthContextProvider = ({ children }) => {
   };
   console.log("Logged in User : >>", loggedInUser);
 
+  /////////////////////////////////
+  // Update Hobby
+  /////////////////////////////////
+  const postHobbies = (hobby) => {
+    axios
+      .post("/users/addHobby", hobby)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.message));
+  };
+
   // Values
   const value = {
     registerUser,
@@ -144,6 +154,7 @@ export const AuthContextProvider = ({ children }) => {
     logout,
     loginGoogle,
     googleSignInUser,
+    postHobbies,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

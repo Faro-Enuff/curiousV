@@ -4,18 +4,8 @@ import mongoose from "mongoose";
 // Import Schema
 const { Schema } = mongoose;
 
-const hobbiesSchema = new Schema(
+export const hobbiesSchema = new Schema(
   {
-    userId: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    artistName: {
-      type: String,
-      unique: true,
-      required: true,
-    },
     genre: {
       type: String,
       required: true,
@@ -40,8 +30,14 @@ const hobbiesSchema = new Schema(
       type: Number,
       required: true,
     },
+    current: {
+      type: Boolean,
+      required: true,
+    },
+    summons: [{ type: Schema.Types.ObjectId, ref: "summon" }],
   },
-  { timestamps: true }
+  { timestamps: true },
+  { strict: "throw" }
 );
 
-export default mongoose.model("Hobby", hobbiesSchema);
+export default mongoose.model("hobby", hobbiesSchema);

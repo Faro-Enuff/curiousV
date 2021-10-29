@@ -1,31 +1,25 @@
 import hobbyModel from "../model/hobbyModel.js";
+import mongoose from "mongoose";
 
-export const getHobby = async (req, res) => {
+const getHobby = async (req, res) => {
   const userId = req.user.user._id;
   try {
-    const userHobby = await hobbyModel.find({ userId: userId });
-    console.log(`getUserHobby : >> `, userHobby);
+    const userHobby = await hobbyModel.find({
+      userId: mongoose.Types.ObjectId(userId),
+    });
+    // console.log(`getUserHobby : >> `, userHobby);
     res.send({ userHobby });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    // console.log(error);
+    res.status(400).json({ message: error.message });
   }
 };
 
-export const createHobby = async (req, res) => {
-  const {
-    userId,
-    artistName,
-    genre,
-    hobby,
-    start,
-    level,
-    equipment,
-    curiosity,
-  } = req.body;
+const createHobby = async (req, res) => {
+  const { userId, genre, hobby, start, level, equipment, curiosity } = req.body;
 
   let newHobby = new hobbyModel({
     userId,
-    artistName,
     genre,
     hobby,
     start,
@@ -41,3 +35,5 @@ export const createHobby = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export { createHobby, getHobby };

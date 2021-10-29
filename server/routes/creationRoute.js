@@ -3,12 +3,12 @@ import express from "express";
 // Import Passport
 import passport from "passport";
 // Import Controller functions
-import { createCreation, getCreation } from "../controller/creations.js";
+import * as creationController from "../controller/creations.js";
 
 const router = express.Router();
 
-router.get("/", getCreation);
+router.get("/", creationController.getCreation);
 
-router.post("/addCreation", createCreation);
+router.post("/addCreation", creationController.createCreation);
 
 export default router;

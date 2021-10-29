@@ -3,7 +3,7 @@ import express from "express";
 // Import Passport
 import passport from "passport";
 // Import Controller functions
-import { addChat, getChatroom, saveMessages } from "../controller/chats.js";
+import * as chatController from "../controller/chats.js";
 // Create Instance of the Express Router
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
 router.post(
   "/addChat",
   passport.authenticate("jwt", { session: false }),
-  addChat
+  chatController.addChat
 );
 
 // Get a specific Chatroom
@@ -20,13 +20,13 @@ router.post(
 router.get(
   "/:receiverName",
   passport.authenticate("jwt", { session: false }),
-  getChatroom
+  chatController.getChatroom
 );
 
 router.post(
   "/saveMessages",
   passport.authenticate("jwt", { session: false }),
-  saveMessages
+  chatController.saveMessages
 );
 
 export default router;

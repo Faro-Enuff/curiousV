@@ -9,9 +9,9 @@ export const HobbiesContextProvider = ({ children }) => {
   const { loggedInUser } = useContext(AuthContext);
   const [userHobby, setUserHobby] = useState(null);
 
-  const postHobbies = (hobbies) => {
+  const postHobbies = (hobby) => {
     axios
-      .post("/hobbies/add", hobbies)
+      .post("/users/addHobby", hobby)
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };

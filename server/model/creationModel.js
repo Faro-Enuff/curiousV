@@ -1,36 +1,29 @@
 // Import Mongoose
 import mongoose from "mongoose";
+// Import Subdocument (mongoose expression)
+import { commentsSchema } from "./commentModel.js";
 
 // Import Schema
 const { Schema } = mongoose;
 
-const creationsSchema = new Schema({
-  userId: {
-    type: String,
-    unique: true,
-    required: true,
+export const creationsSchema = new Schema(
+  {
+    file: {
+      type: String,
+      required: true,
+    },
+    funFactor: {
+      type: Number,
+      required: true,
+    },
+    approxTimeInvestment: {
+      type: Number,
+      required: true,
+    },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    comments: [commentsSchema],
   },
-  summonId: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  summonTitle: {
-    type: String,
-    required: true,
-  },
-  funFactor: {
-    type: Number,
-    required: true,
-  },
-  approxTimeInvestment: {
-    type: Number,
-    required: true,
-  },
-  file: {
-    date: Buffer,
-    contentType: String,
-  },
-});
+  { timestamps: true }
+);
 
-export default mongoose.model("Creation", creationsSchema);
+export default mongoose.model("creation", creationsSchema);

@@ -5,17 +5,22 @@ import passport from "passport";
 // Import Multer Upload Config
 import { uploadSummonFiles } from "../Middleware/MulterConfig.js";
 // Import Controller functions
-import { createSummon, getSummon } from "../controller/summons.js";
+import * as summonController from "../controller/summons.js";
 
 // Create Instance of the express router
 const router = express.Router();
 
-router.get("/", passport.authenticate("jwt", { session: false }), getSummon);
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  summonController.getSummon
+);
 
 router.post(
   "/addSummon",
+  passport.authenticate("jwt", { session: false }),
   uploadSummonFiles.single("learningFile"),
-  createSummon
+  summonController.createSummon
 );
 
 // Export summon route

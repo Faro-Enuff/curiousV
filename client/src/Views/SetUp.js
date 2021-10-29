@@ -16,8 +16,8 @@ import { Box, Button } from "@mui/material";
 
 const SetUp = () => {
   let history = useHistory();
-  const { postHobbies } = useContext(HobbiesContext);
-  const { loggedInUser } = useContext(AuthContext);
+
+  const { loggedInUser, postHobbies } = useContext(AuthContext);
   const genre = [
     "genre",
     "Music",
@@ -29,8 +29,6 @@ const SetUp = () => {
   ];
   const level = ["level", "Beginner", "Advanced", "Intermediate", "Profession"];
   const [hobbyInput, setHobbyInput] = useState({
-    userId: loggedInUser?._id,
-    artistName: loggedInUser?.artistName,
     genre: "",
     hobby: "",
     level: "",

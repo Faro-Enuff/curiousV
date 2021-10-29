@@ -2,16 +2,10 @@
 import userModel from "../model/userModel.js";
 // Import Passport Utils -> Password Generate function
 import { genPassword, validPassword } from "../lib/passwordUtils.js";
+// Import Services
+import { updateArray } from "../service/service_provider.js";
 // Import JWT
 import jwt from "jsonwebtoken";
-
-export const isUserAuthenticated = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send("You must login first!");
-  }
-};
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -21,7 +15,7 @@ export const isUserAuthenticated = (req, res, next) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-export const registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     userModel.findOne({ artistName: req.body.artistName }, (err, user) => {
       if (err) {
@@ -72,7 +66,7 @@ export const registerUser = async (req, res) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-export const signInUser = async (req, res) => {
+const signInUser = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -130,7 +124,7 @@ export const signInUser = async (req, res) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-export const googleUser = async (req, res) => {
+const googleUser = async (req, res) => {
   try {
     let user = req.user;
     const payload = { id: user._id };
@@ -162,13 +156,14 @@ export const googleUser = async (req, res) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-export const profileDetail = async (req, res) => {
+const profileDetail = async (req, res) => {
   const userId = req.user.user._id;
   const payload = req.user.payload;
   try {
     const user = await userModel
       .findById(userId)
-      .select(["_id", "artistName", "email", "firstName", "profileImage"]);
+      .select(["_id", "artistName", "email", "firstName", "profileImage"])
+      .populate("hobbies");
 
     // console.log("User : >>", user);
 
@@ -178,7 +173,15 @@ export const profileDetail = async (req, res) => {
   }
 };
 
-export const userArray = async (req, res) => {
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+// !!! Specific functions !!!
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+const userArray = async (req, res) => {
   try {
     const userId = req.user.user._id;
     const users = await userModel.find(
@@ -193,7 +196,7 @@ export const userArray = async (req, res) => {
   }
 };
 
-export const updateImage = async (req, res) => {
+const updateImage = async (req, res) => {
   // File Req
   console.log("File : >>", req.file);
   // User Req
@@ -227,4 +230,56 @@ export const updateImage = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+};
+
+const isUserAuthenticated = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send("You must login first!");
+  }
+};
+
+const updateHobby = async (req, res) => {
+  // User Req
+
+  const user = req.user;
+  // console.log("user : >>", user);
+
+  const userId = user.user._id;
+  // console.log("userId : >>", userId);
+
+  const { genre, hobby, level, start, equipment, curiosity } = req.body;
+
+  try {
+    const hobbies = {
+      genre,
+      hobby,
+      level,
+      start,
+      equipment,
+      curiosity,
+      current: true,
+    };
+
+    const data = await updateArray(userModel, userId, "hobbies", hobbies);
+
+    console.log("Data : >>", data);
+
+    res.status(200).json({ data });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: error.message });
+  }
+};
+
+export {
+  registerUser,
+  signInUser,
+  googleUser,
+  updateImage,
+  profileDetail,
+  isUserAuthenticated,
+  userArray,
+  updateHobby,
 };

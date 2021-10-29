@@ -1,5 +1,7 @@
 // Import Mongoose
 import mongoose from "mongoose";
+// Import Subdocument (mongoose expression)
+import { hobbiesSchema } from "./hobbyModel.js";
 
 // Destructure Schema form mongoose
 const { Schema } = mongoose;
@@ -40,7 +42,9 @@ const usersSchema = new Schema(
     salt: {
       type: String,
     },
+    hobbies: [hobbiesSchema],
   },
+  { strict: "throw" },
   { timestamps: true }
 );
 

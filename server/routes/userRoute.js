@@ -5,15 +5,7 @@ import passport from "passport";
 // Import Multer Upload Config
 import { uploadProfileImages } from "../Middleware/MulterConfig.js";
 // Import Controller Functions
-import {
-  isUserAuthenticated,
-  profileDetail,
-  registerUser,
-  signInUser,
-  googleUser,
-  updateImage,
-  userArray,
-} from "../controller/users.js";
+import * as userController from "../controller/users.js";
 // Import .env
 import dotenv from "dotenv";
 dotenv.config();
@@ -28,7 +20,7 @@ const router = express.Router();
 ////////////////////////////
 ////////////////////////////
 
-router.post("/register", registerUser);
+router.post("/register", userController.registerUser);
 
 ////////////////////////////
 ////////////////////////////
@@ -38,7 +30,7 @@ router.post("/register", registerUser);
 ////////////////////////////
 ////////////////////////////
 
-router.post("/signin", signInUser);
+router.post("/signin", userController.signInUser);
 
 ////////////////////////////
 ////////////////////////////
@@ -69,7 +61,11 @@ router.get(
 
 // Authorize authenticated Google account -> create JWT Token
 
-router.get("/google/signIn", isUserAuthenticated, googleUser);
+router.get(
+  "/google/signIn",
+  userController.isUserAuthenticated,
+  userController.googleUser
+);
 
 ////////////////////////////
 ////////////////////////////
@@ -83,14 +79,14 @@ router.get("/google/signIn", isUserAuthenticated, googleUser);
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
-  profileDetail
+  userController.profileDetail
 );
 
 // Array of all Users !!! besides the logged in user !!!
 router.get(
   "/allUsers",
   passport.authenticate("jwt", { session: false }),
-  userArray
+  userController.userArray
 );
 ////////////////////////////
 ////////////////////////////
@@ -104,25 +100,22 @@ router.post(
   "/uploadProfileImage",
   passport.authenticate("jwt", { session: false }),
   uploadProfileImages.single("profileImage"),
-  updateImage
+  userController.updateImage
+);
+
+////////////////////////////
+////////////////////////////
+
+// Update Hobby
+
+////////////////////////////
+////////////////////////////
+
+router.post(
+  "/addHobby",
+  passport.authenticate("jwt", { session: false }),
+  userController.updateHobby
 );
 
 // Export Users Route
 export default router;
-
-// ////////////////////
-// // Test Route -> Maybe modify later if there is any UseCase for Client
-// ////////////////////
-
-// router.get(
-//   "/loggedIn",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     userModel
-//       .findOne({ _id: id })
-//       .then((files) => {
-//         res.send(files);
-//       })
-//       .catch((err) => console.log(err));
-//   }
-// );

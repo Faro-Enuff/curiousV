@@ -36,7 +36,6 @@ const SummonBuild = () => {
   const complexity = ["complexity", "LOW", "MEDIUM", "HIGH"];
 
   const [summonInput, setSummonInput] = useState({
-    userId: loggedInUser.id,
     assignmentTitle: "",
     timeFrame: [null, null],
     startDate: "",
@@ -45,7 +44,6 @@ const SummonBuild = () => {
     learningMaterial: "",
     learningFile: "",
     complexity: "",
-    summonToCreate: false,
   });
 
   const onClickHandler = () => {

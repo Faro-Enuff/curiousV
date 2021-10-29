@@ -2,7 +2,7 @@
 import chatroomModel from "../model/chatModal.js";
 import userModel from "../model/userModel.js";
 
-export const addChat = async (req, res) => {
+const addChat = async (req, res) => {
   //   console.log(
   //     "Chatroom req : >>",
   //     "Sender Artist Name:>>",
@@ -92,7 +92,7 @@ export const addChat = async (req, res) => {
   }
 };
 
-export const getChatroom = async (req, res) => {
+const getChatroom = async (req, res) => {
   try {
     // console.log("User / Message Author : >>", req.user);
     // console.log("Text Message Receiver :>>", req.params);
@@ -119,7 +119,7 @@ export const getChatroom = async (req, res) => {
   }
 };
 
-export const saveMessages = async (req, res) => {
+const saveMessages = async (req, res) => {
   try {
     console.log("Save Message Req Body : >>", req.body);
     const chatroom = chatroomModel.findOneAndUpdate(
@@ -138,3 +138,5 @@ export const saveMessages = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+export { addChat, getChatroom, saveMessages };

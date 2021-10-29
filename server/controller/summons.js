@@ -1,6 +1,8 @@
 import summonModel from "../model/summonModel.js";
+import userModel from "../model/userModel.js";
+import { updateArray } from "../service/service_provider.js";
 
-export const getSummon = async (req, res) => {
+const getSummon = async (req, res) => {
   try {
     const user = await req.user;
 
@@ -15,45 +17,82 @@ export const getSummon = async (req, res) => {
 
     res.send({ userSummons });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    // console.log("Error : >>", error);
+    res.status(400).json({ message: error.message });
   }
 };
 
-export const createSummon = async (req, res) => {
+const createSummon = async (req, res) => {
   // File
-  console.log(req.file);
+  // console.log("File : >>", req.file);
   // Body
-  console.log(req.body);
-
-  const {
-    userId,
-    assignmentTitle,
-    startDate,
-    endDate,
-    learningSource,
-    learningMaterial,
-    complexity,
-    summonToCreate,
-  } = req.body;
-
-  let newSummon = new summonModel({
-    userId,
-    assignmentTitle,
-    startDate,
-    endDate,
-    learningSource,
-    learningMaterial,
-    learningFile: req.file.filename,
-    complexity,
-    summonToCreate,
-  });
-
-  console.log(newSummon);
+  console.log("Summon Req Body : >>", req.body);
 
   try {
-    await newSummon.save();
+    const user = await req.user;
+
+    const userId = await user.user._id;
+
+    const {
+      assignmentTitle,
+      startDate,
+      endDate,
+      learningSource,
+      learningMaterial,
+      complexity,
+    } = req.body;
+
+    let newSummon = new summonModel({
+      author: userId,
+      assignmentTitle,
+      startDate,
+      endDate,
+      learningSource,
+      learningMaterial,
+      // learningFile: req.file.filename,
+      complexity,
+    });
+
+    const summon = await newSummon.save();
+
+    await updateArraySpecial(
+      userModel,
+      userId,
+      "hobbies.$[].summons",
+      summon._id
+    );
+
     res.status(201).json(newSummon);
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    // console.log("Error : >>", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export { getSummon, createSummon };
+
+const updateArraySpecial = async (model, userId, key, value) => {
+  try {
+    return await model
+      .findByIdAndUpdate(
+        {
+          _id: userId,
+          hobbies: {
+            $elemMatch: {
+              current: "true",
+            },
+          },
+        },
+        {
+          $push: {
+            [key]: value,
+          },
+        },
+        // !!! Run validators is important -> Checks also subdocuments for valid data !!!
+        { runValidators: true, new: true }
+      )
+      .exec();
+  } catch (error) {
+    console.log(error);
   }
 };

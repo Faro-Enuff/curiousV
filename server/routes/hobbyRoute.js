@@ -3,7 +3,7 @@ import express from "express";
 // Import Passport
 import passport from "passport";
 // Import Controller functions
-import { getHobby, createHobby } from "../controller/hobbies.js";
+import * as hobbyController from "../controller/hobbies.js";
 
 // Create Instance of the Express Router
 const router = express.Router();
@@ -13,11 +13,11 @@ const router = express.Router();
 router.get(
   "/getUserHobby",
   passport.authenticate("jwt", { session: false }),
-  getHobby
+  hobbyController.getHobby
 );
 
 // POST -> Adding data to DB - call back function 'createHobby' is in "hobbies"
 
-router.post("/add", createHobby);
+router.post("/add", hobbyController.createHobby);
 
 export default router;
