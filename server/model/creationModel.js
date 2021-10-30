@@ -8,6 +8,11 @@ const { Schema } = mongoose;
 
 export const creationsSchema = new Schema(
   {
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "user",
+    },
     file: {
       type: String,
       required: true,

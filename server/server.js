@@ -20,8 +20,6 @@ import cors from "cors";
 // Import Back-End Routes
 import userRoutes from "./routes/userRoute.js";
 import summonRoutes from "./routes/summonRoute.js";
-import hobbyRoutes from "./routes/hobbyRoute.js";
-import creationRoutes from "./routes/creationRoute.js";
 import chatRoutes from "./routes/chatRoute.js";
 
 // Import Socket.IO
@@ -100,14 +98,6 @@ app.use("/api/users", userRoutes);
 // Back-End Route to summons collection
 
 app.use("/api/summons", summonRoutes);
-
-// Back-End Route to hobbies collection
-
-app.use("/api/hobbies", hobbyRoutes);
-
-// Back-End Route to creations collection
-
-app.use("/api/creations", creationRoutes);
 
 // Back-End Route to chatrooms collection
 

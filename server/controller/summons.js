@@ -55,7 +55,7 @@ const createSummon = async (req, res) => {
 
     const summon = await newSummon.save();
 
-    await updateArraySpecial(
+    await updateArrayHobbies(
       userModel,
       userId,
       "hobbies.$[].summons",
@@ -69,9 +69,56 @@ const createSummon = async (req, res) => {
   }
 };
 
-export { getSummon, createSummon };
+const getCreations = async (req, res) => {
+  try {
+    const creations = await hobbyModel.find();
+    const user = await req.user;
 
-const updateArraySpecial = async (model, userId, key, value) => {
+    // Filtering for the authenticated user
+    const userCreation = creations.filter(
+      (creation) => creation.userId === user.user.id
+    )[0];
+
+    res.send({ userCreation });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+const createCreation = async (req, res) => {
+  const user = await req.user;
+  const userId = await user.user._id;
+
+  const { summonId, funFactor, approxTimeInvestment, file } = req.body;
+
+  const creation = {
+    author: userId,
+    funFactor,
+    approxTimeInvestment,
+    file,
+  };
+
+  try {
+    const summonCreation = await updateArray(
+      summonModel,
+      summonId,
+      "summonCreation",
+      creation
+    );
+
+    console.log("Summon/Creation Data : >>", summonCreation);
+
+    res.status(200).json({ summonCreation });
+  } catch (error) {
+    console.log("Summon/Creation Error : >>", error);
+
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export { getSummon, createSummon, getCreations, createCreation };
+
+const updateArrayHobbies = async (model, userId, key, value) => {
   try {
     return await model
       .findByIdAndUpdate(

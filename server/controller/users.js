@@ -252,7 +252,7 @@ const updateHobby = async (req, res) => {
   const { genre, hobby, level, start, equipment, curiosity } = req.body;
 
   try {
-    const hobbies = {
+    const hobby = {
       genre,
       hobby,
       level,
@@ -262,13 +262,13 @@ const updateHobby = async (req, res) => {
       current: true,
     };
 
-    const data = await updateArray(userModel, userId, "hobbies", hobbies);
+    const userHobby = await updateArray(userModel, userId, "hobbies", hobby);
 
-    console.log("Data : >>", data);
+    console.log("User/Hobby Data : >>", userHobby);
 
     res.status(200).json({ data });
   } catch (error) {
-    console.log(error);
+    console.log("User/Hobby Error : >>", error);
     res.json({ message: error.message });
   }
 };

@@ -40,7 +40,7 @@ const summonsSchema = new Schema(
       type: String,
       required: true,
     },
-    summonToCreate: [creationsSchema],
+    summonCreation: [creationsSchema],
     reposts: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     comments: [commentsSchema],
   },

@@ -23,5 +23,18 @@ router.post(
   summonController.createSummon
 );
 
+// Creations
+router.get(
+  "/getCreations",
+  passport.authenticate("jwt", { session: false }),
+  summonController.getCreations
+);
+
+router.post(
+  "/addCreation",
+  passport.authenticate("jwt", { session: false }),
+  summonController.createCreation
+);
+
 // Export summon route
 export default router;
