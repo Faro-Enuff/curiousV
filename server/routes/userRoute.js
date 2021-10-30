@@ -106,7 +106,7 @@ router.post(
 ////////////////////////////
 ////////////////////////////
 
-// Update Hobby
+// Add Hobby & Get Hobby (incl. populated Summons)
 
 ////////////////////////////
 ////////////////////////////
@@ -115,6 +115,12 @@ router.post(
   "/addHobby",
   passport.authenticate("jwt", { session: false }),
   userController.updateHobby
+);
+
+router.get(
+  "/getUserHobby",
+  passport.authenticate("jwt", { session: false }),
+  userController.getUserHobby
 );
 
 // Export Users Route

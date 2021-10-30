@@ -2,7 +2,7 @@ import summonModel from "../model/summonModel.js";
 import userModel from "../model/userModel.js";
 import { updateArray } from "../service/service_provider.js";
 
-const getSummon = async (req, res) => {
+const getSummons = async (req, res) => {
   try {
     const user = await req.user;
 
@@ -10,12 +10,9 @@ const getSummon = async (req, res) => {
       userId: { $in: user.user.id },
     });
 
-    // Filtering for the authenticated user
-    // const userSummon = summons.filter(
-    //   (summon) => summon.userId === user.user.id
-    // );
+    console.log("Summons : >>", userSummons);
 
-    res.send({ userSummons });
+    res.status(200).send({ userSummons });
   } catch (error) {
     // console.log("Error : >>", error);
     res.status(400).json({ message: error.message });
@@ -116,7 +113,7 @@ const createCreation = async (req, res) => {
   }
 };
 
-export { getSummon, createSummon, getCreations, createCreation };
+export { getSummons, createSummon, getCreations, createCreation };
 
 const updateArrayHobbies = async (model, userId, key, value) => {
   try {

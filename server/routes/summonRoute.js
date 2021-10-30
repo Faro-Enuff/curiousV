@@ -10,10 +10,18 @@ import * as summonController from "../controller/summons.js";
 // Create Instance of the express router
 const router = express.Router();
 
+////////////////////////////
+////////////////////////////
+
+// Summon to Create Routes
+
+////////////////////////////
+////////////////////////////
+
 router.get(
-  "/",
+  "/getSummons",
   passport.authenticate("jwt", { session: false }),
-  summonController.getSummon
+  summonController.getSummons
 );
 
 router.post(
@@ -23,7 +31,14 @@ router.post(
   summonController.createSummon
 );
 
-// Creations
+////////////////////////////
+////////////////////////////
+
+// Creations Routes
+
+////////////////////////////
+////////////////////////////
+
 router.get(
   "/getCreations",
   passport.authenticate("jwt", { session: false }),

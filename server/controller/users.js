@@ -3,7 +3,10 @@ import userModel from "../model/userModel.js";
 // Import Passport Utils -> Password Generate function
 import { genPassword, validPassword } from "../lib/passwordUtils.js";
 // Import Services
-import { updateArray } from "../service/service_provider.js";
+import {
+  updateArray,
+  getAuthenticatedUser,
+} from "../service/service_provider.js";
 // Import JWT
 import jwt from "jsonwebtoken";
 
@@ -157,7 +160,8 @@ const googleUser = async (req, res) => {
 ////////////////////////////////////////////////
 
 const profileDetail = async (req, res) => {
-  const userId = req.user.user._id;
+  const userId = getAuthenticatedUser(req);
+  // console.log("userId : >>", userId);
   const payload = req.user.payload;
   try {
     const user = await userModel
@@ -181,9 +185,12 @@ const profileDetail = async (req, res) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
+// Get Array of all Users in Application
+
 const userArray = async (req, res) => {
   try {
-    const userId = req.user.user._id;
+    const userId = getAuthenticatedUser(req);
+    // console.log("userId : >>", userId);
     const users = await userModel.find(
       { _id: { $nin: userId } },
       "_id artistName profileImage chatroomIds"
@@ -196,15 +203,14 @@ const userArray = async (req, res) => {
   }
 };
 
+// Update User Profile Image
+
 const updateImage = async (req, res) => {
   // File Req
   console.log("File : >>", req.file);
   // User Req
-  const user = req.user;
-  console.log("user : >>", user);
-
-  const userId = user.user._id;
-  console.log("userId : >>", userId);
+  const userId = getAuthenticatedUser(req);
+  // console.log("userId : >>", userId);
 
   try {
     // Find User by ID and Update Profile Image
@@ -240,19 +246,16 @@ const isUserAuthenticated = (req, res, next) => {
   }
 };
 
+// Update Users Hobby
+
 const updateHobby = async (req, res) => {
   // User Req
-
-  const user = req.user;
-  // console.log("user : >>", user);
-
-  const userId = user.user._id;
+  const userId = getAuthenticatedUser(req);
   // console.log("userId : >>", userId);
-
   const { genre, hobby, level, start, equipment, curiosity } = req.body;
 
   try {
-    const hobby = {
+    const hobbies = {
       genre,
       hobby,
       level,
@@ -262,7 +265,7 @@ const updateHobby = async (req, res) => {
       current: true,
     };
 
-    const userHobby = await updateArray(userModel, userId, "hobbies", hobby);
+    const userHobby = await updateArray(userModel, userId, "hobbies", hobbies);
 
     console.log("User/Hobby Data : >>", userHobby);
 
@@ -270,6 +273,25 @@ const updateHobby = async (req, res) => {
   } catch (error) {
     console.log("User/Hobby Error : >>", error);
     res.json({ message: error.message });
+  }
+};
+
+// Get Users Hobby including populated summons
+
+const getUserHobby = async (req, res) => {
+  // User Req
+  const userId = getAuthenticatedUser(req);
+  console.log("userId : >>", userId);
+
+  try {
+    const userHobby = await userModel
+      .findById(userId)
+      .populate({ path: "hobbies", populate: { path: "summons" } })
+      .select("hobbies");
+    console.log("UserHobby : >> ", userHobby);
+    res.json({ userHobby });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -282,4 +304,5 @@ export {
   isUserAuthenticated,
   userArray,
   updateHobby,
+  getUserHobby,
 };

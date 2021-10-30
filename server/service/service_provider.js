@@ -17,4 +17,8 @@ const updateArray = async (model, userId, key, value) => {
   }
 };
 
-export { updateArray };
+const getAuthenticatedUser = (request) => {
+  return request.user.user._id;
+};
+
+export { updateArray, getAuthenticatedUser };
