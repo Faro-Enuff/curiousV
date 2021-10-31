@@ -1,14 +1,12 @@
 // Import Model
-import userModel from "../model/userModel.js";
+import userModel from '../model/userModel.js';
 // Import Passport Utils -> Password Generate function
-import { genPassword, validPassword } from "../lib/passwordUtils.js";
+import { genPassword, validPassword } from '../lib/passwordUtils.js';
 // Import Services
-import {
-  updateArray,
-  getAuthenticatedUser,
-} from "../service/service_provider.js";
+import * as services from '../service/service_provider.js';
 // Import JWT
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import summonModel from '../model/summonModel.js';
 
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
@@ -25,7 +23,7 @@ const registerUser = async (req, res) => {
         res.json({ error: err });
       }
       if (user) {
-        res.send("Artist name exists already!");
+        res.send('Artist name exists already!');
       } else {
         const saltHash = genPassword(req.body.password);
 
@@ -47,7 +45,7 @@ const registerUser = async (req, res) => {
           .then((user) => {
             const payload = { id: user._id };
             const token = jwt.sign(payload, process.env.SECRET, {
-              expiresIn: "30d",
+              expiresIn: '30d',
             });
             res.json({ success: true, user: user, token: token });
           })
@@ -74,7 +72,7 @@ const signInUser = async (req, res) => {
   const password = req.body.password;
 
   // Clg Email & Password coming from the Req
-  console.log("email : >>", email, "password : >>", password);
+  console.log('email : >>', email, 'password : >>', password);
   try {
     userModel.findOne({ email: email }, (err, user) => {
       if (err) {
@@ -83,12 +81,12 @@ const signInUser = async (req, res) => {
       if (!user) {
         res
           .status(401)
-          .json({ success: false, message: "Could not finde user!" });
+          .json({ success: false, message: 'Could not finde user!' });
       } else {
         const isValid = validPassword(password, user.hash, user.salt);
         if (isValid) {
           const payload = { id: user._id };
-          const expiresIn = "30d";
+          const expiresIn = '30d';
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: expiresIn,
           });
@@ -105,11 +103,11 @@ const signInUser = async (req, res) => {
               profileImage: user.profileImage,
             },
           });
-          console.log("token :>>", token);
+          console.log('token :>>', token);
         } else {
           res.status(401).json({
             success: false,
-            message: "Password does not match, please try again!",
+            message: 'Password does not match, please try again!',
           });
         }
       }
@@ -131,7 +129,7 @@ const googleUser = async (req, res) => {
   try {
     let user = req.user;
     const payload = { id: user._id };
-    const expiresIn = "30d";
+    const expiresIn = '30d';
     const token = jwt.sign(payload, process.env.SECRET, {
       expiresIn: expiresIn,
     });
@@ -160,14 +158,14 @@ const googleUser = async (req, res) => {
 ////////////////////////////////////////////////
 
 const profileDetail = async (req, res) => {
-  const userId = getAuthenticatedUser(req);
+  const userId = services.getAuthenticatedUser(req);
   // console.log("userId : >>", userId);
   const payload = req.user.payload;
   try {
     const user = await userModel
       .findById(userId)
-      .select(["_id", "artistName", "email", "firstName", "profileImage"])
-      .populate("hobbies");
+      .select(['_id', 'artistName', 'email', 'firstName', 'profileImage'])
+      .populate('hobbies');
 
     // console.log("User : >>", user);
 
@@ -189,11 +187,11 @@ const profileDetail = async (req, res) => {
 
 const userArray = async (req, res) => {
   try {
-    const userId = getAuthenticatedUser(req);
+    const userId = services.getAuthenticatedUser(req);
     // console.log("userId : >>", userId);
     const users = await userModel.find(
       { _id: { $nin: userId } },
-      "_id artistName profileImage chatroomIds"
+      '_id artistName profileImage chatroomIds'
     );
     // console.log("Array of Users : >>", users);
 
@@ -207,9 +205,9 @@ const userArray = async (req, res) => {
 
 const updateImage = async (req, res) => {
   // File Req
-  console.log("File : >>", req.file);
+  console.log('File : >>', req.file);
   // User Req
-  const userId = getAuthenticatedUser(req);
+  const userId = services.getAuthenticatedUser(req);
   // console.log("userId : >>", userId);
 
   try {
@@ -218,39 +216,31 @@ const updateImage = async (req, res) => {
       userId,
       {
         profileImage: `${
-          "http://localhost:5000/" +
+          'http://localhost:5000/' +
           req.file.fieldname +
-          "/" +
+          '/' +
           req.file.filename
         }`,
       },
       (err, res) => {
         if (res) {
-          console.log("res Profile old (success): >>", res);
+          console.log('res Profile old (success): >>', res);
         } else {
-          console.log("err profileImage : >>", err);
+          console.log('err profileImage : >>', err);
         }
       }
     );
-    res.status(200).send("Profile Image successfully updated!");
+    res.status(200).send('Profile Image successfully updated!');
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-const isUserAuthenticated = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send("You must login first!");
-  }
-};
-
 // Update Users Hobby
 
-const updateHobby = async (req, res) => {
+const addHobby = async (req, res) => {
   // User Req
-  const userId = getAuthenticatedUser(req);
+  const userId = services.getAuthenticatedUser(req);
   // console.log("userId : >>", userId);
   const { genre, hobby, level, start, equipment, curiosity } = req.body;
 
@@ -265,13 +255,50 @@ const updateHobby = async (req, res) => {
       current: true,
     };
 
-    const userHobby = await updateArray(userModel, userId, "hobbies", hobbies);
+    ////////////////////////////
+    // Update old, existing Hobby Model to current = false
+    userModel.findById(
+      {
+        _id: userId,
+        hobbies: {
+          $elemMatch: {
+            current: 'true',
+          },
+        },
+      },
+      (err, doc) => {
+        if (doc) {
+          const oldUserHobby = doc.hobbies[0];
+          // Change
+          oldUserHobby.current = false;
+          // Save Changes
+          doc.save((err) => {
+            if (err) {
+              console.log('Hobbies Current Change Error : >>', err);
+            }
+            console.log('Hobbies was updated succesfully');
+            // res.json({ Success: 'The Hobby was updated successfully!!!' });
+          });
+        }
+        if (err) {
+          console.log('Error:There is no Hobby to update!!');
+        }
+      }
+    );
+    ////////////////////////
 
-    console.log("User/Hobby Data : >>", userHobby);
+    const userHobby = await services.updateArray(
+      userModel,
+      userId,
+      'hobbies',
+      hobbies
+    );
 
-    res.status(200).json({ data });
+    console.log('User/Hobby Data : >>', userHobby);
+
+    res.status(200).json({ userHobby });
   } catch (error) {
-    console.log("User/Hobby Error : >>", error);
+    console.log('User/Hobby Error : >>', error);
     res.json({ message: error.message });
   }
 };
@@ -280,15 +307,15 @@ const updateHobby = async (req, res) => {
 
 const getUserHobby = async (req, res) => {
   // User Req
-  const userId = getAuthenticatedUser(req);
-  console.log("userId : >>", userId);
+  const userId = services.getAuthenticatedUser(req);
+  console.log('userId : >>', userId);
 
   try {
     const userHobby = await userModel
       .findById(userId)
-      .populate({ path: "hobbies", populate: { path: "summons" } })
-      .select("hobbies");
-    console.log("UserHobby : >> ", userHobby);
+      .populate({ path: 'hobbies', populate: { path: 'summons' } })
+      .select('hobbies');
+    console.log('UserHobby : >> ', userHobby);
     res.json({ userHobby });
   } catch (error) {
     console.log(error);
@@ -301,8 +328,7 @@ export {
   googleUser,
   updateImage,
   profileDetail,
-  isUserAuthenticated,
   userArray,
-  updateHobby,
+  addHobby,
   getUserHobby,
 };

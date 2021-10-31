@@ -11,7 +11,7 @@ export const commentsSchema = new Schema(
       ref: "user",
       required: true,
     },
-    text: {
+    message: {
       type: String,
       required: true,
     },

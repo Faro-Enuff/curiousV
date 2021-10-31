@@ -4,6 +4,8 @@ import express from "express";
 import passport from "passport";
 // Import Multer Upload Config
 import { uploadProfileImages } from "../Middleware/MulterConfig.js";
+// Import Services
+import * as services from "../service/service_provider.js";
 // Import Controller Functions
 import * as userController from "../controller/users.js";
 // Import .env
@@ -63,7 +65,7 @@ router.get(
 
 router.get(
   "/google/signIn",
-  userController.isUserAuthenticated,
+  services.isUserAuthenticated,
   userController.googleUser
 );
 
@@ -114,7 +116,7 @@ router.post(
 router.post(
   "/addHobby",
   passport.authenticate("jwt", { session: false }),
-  userController.updateHobby
+  userController.addHobby
 );
 
 router.get(

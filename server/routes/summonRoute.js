@@ -31,6 +31,12 @@ router.post(
   summonController.createSummon
 );
 
+router.post(
+  "/deleteSummon",
+  passport.authenticate("jwt", { session: false }),
+  summonController.deleteSummon
+);
+
 ////////////////////////////
 ////////////////////////////
 
@@ -48,7 +54,28 @@ router.get(
 router.post(
   "/addCreation",
   passport.authenticate("jwt", { session: false }),
+  uploadSummonFiles.single("learningFile"),
   summonController.createCreation
+);
+
+////////////////////////////
+////////////////////////////
+
+// Comment Route
+
+////////////////////////////
+////////////////////////////
+
+router.post(
+  "/createComment",
+  passport.authenticate("jwt", { session: false }),
+  summonController.createComment
+);
+
+router.post(
+  "/deleteComment",
+  passport.authenticate("jwt", { session: false }),
+  summonController.deleteComment
 );
 
 // Export summon route

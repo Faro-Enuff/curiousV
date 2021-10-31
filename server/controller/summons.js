@@ -1,6 +1,9 @@
 import summonModel from "../model/summonModel.js";
 import userModel from "../model/userModel.js";
-import { updateArray } from "../service/service_provider.js";
+import commentModel from "../model/commentModel.js";
+import * as services from "../service/service_provider.js";
+
+// SUMMONS
 
 const getSummons = async (req, res) => {
   try {
@@ -66,6 +69,85 @@ const createSummon = async (req, res) => {
   }
 };
 
+const deleteSummon = async (req, res) => {
+  try {
+    const userId = services.getAuthenticatedUser(req);
+    const { summonId } = req.body;
+
+    summonModel.findOneAndDelete(
+      { author: userId, _id: summonId },
+      (err, result) => {
+        if (result) {
+          console.log("Summon deleted");
+          res.status(200).json({ Success: "Summon deleted!!!" });
+        }
+        if (err) {
+          res.status(400).json({ Error: "Cannot delete the summon!!!" });
+        }
+      }
+    );
+  } catch (error) {
+    console.log("Delete Summon Error : >>", error);
+  }
+};
+
+// Create and Delete Comments for Summons
+
+const createComment = async (req, res) => {
+  try {
+    const userId = services.getAuthenticatedUser(req);
+    const { summonId, message } = req.body;
+    const comment = { userId, message };
+
+    // Push new Comment into Array
+    const userComment = await services.updateArray(
+      summonModel,
+      summonId,
+      "comments",
+      comment
+    );
+
+    console.log("User comment : >>", userComment);
+    res.status(200).json({ userComment });
+  } catch (error) {
+    console.log("Comment Error : >>", error);
+  }
+};
+
+const deleteComment = async (req, res) => {
+  try {
+    const userId = services.getAuthenticatedUser(req);
+    const { summonId, commentId } = req.body;
+    console.log(commentId);
+
+    // Find the right Summon by Id
+    summonModel.findById(summonId, (err, doc) => {
+      if (doc) {
+        // Find the comment
+        const comment = doc.comments.id(commentId);
+        // Check if the User is Author of the Comment => Right to delete
+        if (String(comment.userId) === String(userId)) {
+          // Remove
+          comment.remove();
+          // Save Changes
+          doc.save((err) => {
+            if (err) {
+              console.log("Comment Delete Erorr : >>", err);
+              res.json({ Error: "You weren't able to delete the comment!!!" });
+            }
+            console.log("The Subdoc was removed");
+            res.json({ Success: "The Subdoc was removed!!!" });
+          });
+        }
+      }
+    });
+  } catch (error) {
+    console.log("Comment Error : >>", error);
+  }
+};
+
+// CREATIONS
+
 const getCreations = async (req, res) => {
   try {
     const creations = await hobbyModel.find();
@@ -96,7 +178,7 @@ const createCreation = async (req, res) => {
   };
 
   try {
-    const summonCreation = await updateArray(
+    const summonCreation = await services.updateArray(
       summonModel,
       summonId,
       "summonCreation",
@@ -113,7 +195,15 @@ const createCreation = async (req, res) => {
   }
 };
 
-export { getSummons, createSummon, getCreations, createCreation };
+export {
+  getSummons,
+  createSummon,
+  deleteSummon,
+  getCreations,
+  createCreation,
+  createComment,
+  deleteComment,
+};
 
 const updateArrayHobbies = async (model, userId, key, value) => {
   try {

@@ -1,8 +1,16 @@
-const updateArray = async (model, userId, key, value) => {
+const isUserAuthenticated = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send("You must login first!");
+  }
+};
+
+const updateArray = async (model, id, key, value) => {
   try {
     return await model
       .findByIdAndUpdate(
-        { _id: userId },
+        id,
         {
           $push: {
             [key]: value,
@@ -21,4 +29,4 @@ const getAuthenticatedUser = (request) => {
   return request.user.user._id;
 };
 
-export { updateArray, getAuthenticatedUser };
+export { updateArray, getAuthenticatedUser, isUserAuthenticated };
