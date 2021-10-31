@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "front-ts": "npm --prefix client-ts run start",
     "front": "npm --prefix client run start",
     "back": "npm --prefix server run server"
   },
