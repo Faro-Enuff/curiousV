@@ -1,32 +1,32 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from 'react';
 
 // Custom Hooks
-import { useFetch } from "../Utils/useFetch";
+import { useFetch } from '../Utils/useFetch';
 
 // Internal Imports
-import Loader from "../Utils/Loader";
-import Timeline from "../Components/Timeline Creative TIM/Timeline";
-import stories from "../Components/Timeline Creative TIM/stories";
-import Enso from "../Images/Enso.png";
+import Loader from '../Utils/Loader';
+import Timeline from '../Components/Timeline Creative TIM/Timeline';
+import stories from '../Components/Timeline Creative TIM/stories';
+import Enso from '../Images/Enso.png';
 
 // MUI Core Imports
-import { Card, Typography, Box, Container, Paper, Grid } from "@mui/material";
-import Profile from "../Components/Profile";
-import AssEqCard from "../Components/AssEqCard";
-import { makeStyles } from "@material-ui/core/styles";
+import { Card, Typography, Box, Container, Paper } from '@mui/material';
+import Profile from '../Components/Profile';
+import AssEqCard from '../Components/AssEqCard';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(
   (muiTheme) => (
     console.log(muiTheme),
     {
       profilePaper: {
-        marginTop: "10%",
+        marginTop: '10%',
       },
       timeline: {
-        maxHeight: "58%",
-        overflow: "scroll",
+        maxHeight: '58%',
+        overflow: 'scroll',
         webkitScrollbar: {
-          display: "none",
+          display: 'none',
         },
       },
     }
@@ -37,15 +37,14 @@ const Home = () => {
   const classes = useStyles();
 
   // Hobbies useFetch API
-  const {
-    isLoading,
-    apiData: hobbies,
-    serverError,
-  } = useFetch("get", "http://localhost:5000/api/hobbies/getUserHobby");
+  const { isLoading, apiData: hobbies } = useFetch(
+    'get',
+    'http://localhost:5000/api/hobbies/getUserHobby'
+  );
 
   const { apiData: userSummons } = useFetch(
-    "get",
-    "http://localhost:5000/api/summons/"
+    'get',
+    'http://localhost:5000/api/summons/'
   );
   // console.log(userSummons);
   // console.log(hobbies);
@@ -57,11 +56,11 @@ const Home = () => {
         <Box sx={{}}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              mt: "5%",
-              mb: "10%",
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              mt: '5%',
+              mb: '10%',
             }}
           >
             <Paper className={classes.profilePaper}>
@@ -75,16 +74,16 @@ const Home = () => {
             </Paper>
           </Box>
           <Box
-            sx={{ display: "flex", flexDirection: "row", overflow: "hidden" }}
+            sx={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}
           >
-            <Box sx={{ flexGrow: 1, textAlign: "center" }}>
+            <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
               <Card color="text.primary">
-                <Typography variant="h5" textAlign={"center"}>
+                <Typography variant="h5" textAlign={'center'}>
                   Cursignments
                 </Typography>
               </Card>
               <AssEqCard
-                header={"Equipment"}
+                header={'Equipment'}
                 body={hobbies?.userHobby[0]?.equipment}
               />
               {userSummons &&
@@ -98,7 +97,7 @@ const Home = () => {
             </Box>
             <Box sx={{ flexGrow: 3, ml: 2 }}>
               <Card>
-                <Typography variant="h5" textAlign={"center"}>
+                <Typography variant="h5" textAlign={'center'}>
                   Timeline
                 </Typography>
               </Card>

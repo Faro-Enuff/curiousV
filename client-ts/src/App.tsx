@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthContextProvider } from './Context/authContext';
 // Internal Imports
-
+import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 
@@ -13,7 +13,7 @@ const App: FC = () => {
       <Router>
         <AuthContextProvider>
           <Switch>
-            {/* <Route path="/" exact component={Home} /> */}
+            <Route path="/" exact component={Home} />
             <Route path="/signin" exact component={SignIn} />
             <Route path="/signup" exact component={SignUp} />
           </Switch>

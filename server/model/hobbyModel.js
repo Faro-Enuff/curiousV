@@ -1,5 +1,5 @@
 // Import Mongoose
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Import Schema
 const { Schema } = mongoose;
@@ -10,7 +10,7 @@ export const hobbiesSchema = new Schema(
       type: String,
       required: true,
     },
-    hobby: {
+    hobbyTitle: {
       type: String,
       required: true,
     },
@@ -34,10 +34,10 @@ export const hobbiesSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    summons: [{ type: Schema.Types.ObjectId, ref: "summon" }],
+    summons: [{ type: Schema.Types.ObjectId, ref: 'summon' }],
   },
   { timestamps: true },
-  { strict: "throw" }
+  { strict: 'throw' }
 );
 
-export default mongoose.model("hobby", hobbiesSchema);
+export default mongoose.model('hobby', hobbiesSchema);

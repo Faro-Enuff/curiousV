@@ -23,7 +23,6 @@ interface ProviderValues {
   registerUser: (user: RegisterUser) => void;
   loginUser: (user: LoginUser) => void;
   googleSignInUser: (loadingState: Dispatch<SetStateAction<boolean>>) => void;
-  loginGoogle: () => void;
   loggedInUser: User | null;
 }
 interface Props {}
@@ -42,9 +41,6 @@ const initialProviderValue: ProviderValues = {
     throw new Error("LoginUser-Function hasn't been provided");
   },
   googleSignInUser: () => {
-    throw new Error("LoginUser-Function hasn't been provided");
-  },
-  loginGoogle: () => {
     throw new Error("LoginUser-Function hasn't been provided");
   },
   loggedInUser: null,
@@ -105,19 +101,6 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
       .catch((error) => console.log(`Message:`, error.response.data));
   };
 
-  /////////////////////////////////
-  // Google Authentication
-  /////////////////////////////////
-
-  const loginGoogle = () => {
-    axios
-      .get('/users/google')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => console.log(`Message:`, error.message));
-  };
-
   /////////////////////////////////////////
   // SignIn via authenticated GoogleAccount
   /////////////////////////////////////////
@@ -151,7 +134,6 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
     registerUser,
     loginUser,
     googleSignInUser,
-    loginGoogle,
     loggedInUser,
   };
 

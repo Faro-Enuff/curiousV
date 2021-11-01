@@ -242,12 +242,12 @@ const addHobby = async (req, res) => {
   // User Req
   const userId = services.getAuthenticatedUser(req);
   // console.log("userId : >>", userId);
-  const { genre, hobby, level, start, equipment, curiosity } = req.body;
+  const { genre, hobbyTitle, level, start, equipment, curiosity } = req.body;
 
   try {
     const hobbies = {
       genre,
-      hobby,
+      hobbyTitle,
       level,
       start,
       equipment,
@@ -268,6 +268,7 @@ const addHobby = async (req, res) => {
       },
       (err, doc) => {
         if (doc) {
+          // console.log(doc);
           const oldUserHobby = doc.hobbies[0];
           // Change
           oldUserHobby.current = false;
@@ -311,12 +312,19 @@ const getUserHobby = async (req, res) => {
   console.log('userId : >>', userId);
 
   try {
-    const userHobby = await userModel
-      .findById(userId)
+    const data = await userModel
+      .findById({
+        _id: userId,
+        hobbies: {
+          $elemMatch: {
+            current: 'true',
+          },
+        },
+      })
       .populate({ path: 'hobbies', populate: { path: 'summons' } })
       .select('hobbies');
-    console.log('UserHobby : >> ', userHobby);
-    res.json({ userHobby });
+    console.log('UserHobby : >> ', data);
+    res.json({ data });
   } catch (error) {
     console.log(error);
   }
