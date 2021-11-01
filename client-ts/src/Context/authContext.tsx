@@ -23,6 +23,7 @@ interface ProviderValues {
   registerUser: (user: RegisterUser) => void;
   loginUser: (user: LoginUser) => void;
   googleSignInUser: (loadingState: Dispatch<SetStateAction<boolean>>) => void;
+  logout: () => void;
   loggedInUser: User | null;
 }
 interface Props {}
@@ -34,14 +35,17 @@ interface LoggedInUserResponse {
 }
 
 const initialProviderValue: ProviderValues = {
+  logout: () => {
+    throw new Error("Logout Function hasn't been provided");
+  },
   registerUser: () => {
-    throw new Error("LoginUser-Function hasn't been provided");
+    throw new Error("Register User-Function hasn't been provided");
   },
   loginUser: () => {
     throw new Error("LoginUser-Function hasn't been provided");
   },
   googleSignInUser: () => {
-    throw new Error("LoginUser-Function hasn't been provided");
+    throw new Error("Google Sign In User-Function hasn't been provided");
   },
   loggedInUser: null,
 };
@@ -130,11 +134,21 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
       .catch((error) => console.log(`Message:`, error.response.data));
   };
 
+  /////////////////////////////////
+  // User LogOut
+  /////////////////////////////////
+  const logout = () => {
+    localStorage.removeItem('token');
+    setLoggedInUser(null);
+    history.push('/signin');
+  };
+
   const value: null | ProviderValues = {
     registerUser,
     loginUser,
     googleSignInUser,
     loggedInUser,
+    logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

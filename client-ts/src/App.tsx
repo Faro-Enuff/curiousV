@@ -6,12 +6,16 @@ import { AuthContextProvider } from './Context/authContext';
 import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
+import AppBarCostum from './Components/Navigation/AppBarCustom';
 
 const App: FC = () => {
   return (
     <div className="App">
       <Router>
         <AuthContextProvider>
+          <Route exact path={['/']}>
+            <AppBarCostum />
+          </Route>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/signin" exact component={SignIn} />
