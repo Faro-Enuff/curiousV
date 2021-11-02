@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 // MUI Core Imports
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 // MUI Icon Imports
@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     bottom: 0,
     position: 'fixed',
   },
+  navBackground: {},
 });
 
 interface Props {}
@@ -22,25 +23,27 @@ const BottomNavigationCustom: FC = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <BottomNavigation
-      sx={{ width: '100%' }}
-      className={classes.bottomNav}
-      showLabels
-      component={BottomNavigation}
-    >
-      <BottomNavigationAction
-        href="/createSummon"
-        icon={<AssignmentIcon color="secondary" />}
-      />
-      <BottomNavigationAction
-        href="/"
-        icon={<HomeMiniIcon color="secondary" />}
-      />
-      <BottomNavigationAction
-        href="/userSearch"
-        icon={<SearchIcon color="secondary" />}
-      />
-    </BottomNavigation>
+    <Box className={classes.navBackground}>
+      <BottomNavigation
+        sx={{ width: '100%' }}
+        className={classes.bottomNav}
+        showLabels
+        component={BottomNavigation}
+      >
+        <BottomNavigationAction
+          href="/createSummon"
+          icon={<AssignmentIcon color="secondary" />}
+        />
+        <BottomNavigationAction
+          href="/"
+          icon={<HomeMiniIcon color="secondary" />}
+        />
+        <BottomNavigationAction
+          href="/userSearch"
+          icon={<SearchIcon color="secondary" />}
+        />
+      </BottomNavigation>
+    </Box>
   );
 };
 

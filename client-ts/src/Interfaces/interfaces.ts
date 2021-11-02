@@ -9,4 +9,17 @@ interface LoginUser {
   email: string;
   password: string;
 }
-export type { RegisterUser, LoginUser };
+
+// Summon Build - View Component
+interface Summon {
+  assignmentTitle: string;
+  timeFrame: any;
+  startDate: string;
+  endDate: string;
+  learningSource: string;
+  learningMaterial: string;
+  learningFile: string;
+  complexity: string;
+}
+
+export type { RegisterUser, LoginUser, Summon };
