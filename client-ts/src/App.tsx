@@ -7,6 +7,7 @@ import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
+import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
 
 const App: FC = () => {
   return (
@@ -21,6 +22,9 @@ const App: FC = () => {
             <Route path="/signin" exact component={SignIn} />
             <Route path="/signup" exact component={SignUp} />
           </Switch>
+          <Route exact path={['/']}>
+            <BottomNavigationCustom />
+          </Route>
         </AuthContextProvider>
       </Router>
     </div>
