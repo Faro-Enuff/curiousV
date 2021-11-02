@@ -1,4 +1,4 @@
-import { FC, SetStateAction, Dispatch, useState, ChangeEvent } from 'react';
+import { FC, SetStateAction, Dispatch, ChangeEvent } from 'react';
 // MUI Imports
 import { FormControl, TextField, Button } from '@mui/material';
 // Interface Imports
@@ -12,23 +12,13 @@ interface Props {
 }
 
 const TextfieldShort: FC<Props> = ({ title, value, input, setInput }) => {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 
   return (
     <div>
-      <Button onClick={handleOpen}>{title}</Button>
+      <Button>{title}</Button>
       <FormControl>
         <TextField
           helperText=" "
