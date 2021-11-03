@@ -9,14 +9,14 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 // Interface Imports
-import { Summon } from '../../Interfaces/interfaces';
+import { Summon, hobbyPostInput } from '../../Interfaces/interfaces';
 
 interface Props {
   title: string;
   value: string;
   data: string[];
-  input: Summon;
-  setInput: Dispatch<SetStateAction<Summon>>;
+  input: Summon | hobbyPostInput;
+  setInput: any;
 }
 
 const Dropdown: FC<Props> = ({ title, value, data, input, setInput }) => {

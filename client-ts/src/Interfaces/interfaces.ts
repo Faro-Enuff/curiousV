@@ -10,6 +10,17 @@ interface LoginUser {
   password: string;
 }
 
+// SetUp - Hobby add
+
+interface hobbyPostInput {
+  genre: string;
+  hobby: string;
+  level: string;
+  start: Date;
+  equipment: string;
+  curiosity: number;
+}
+
 // Summon Build - View Component
 interface Summon {
   assignmentTitle: string;
@@ -22,4 +33,4 @@ interface Summon {
   complexity: string;
 }
 
-export type { RegisterUser, LoginUser, Summon };
+export type { RegisterUser, LoginUser, hobbyPostInput, Summon };

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
+import SetUp from './Views/SetUp';
 import SummonBuild from './Views/SummonBuild';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
@@ -35,7 +36,7 @@ const App: FC = () => {
       <AuthContextProvider>
         <SummonContextProvider>
           <div className={classes.app}>
-            <Route exact path={['/', '/createSummon']}>
+            <Route exact path={['/', '/createSummon', '/setUp']}>
               <AppBarCostum />
             </Route>
             <div className={classes.content}>
@@ -43,10 +44,11 @@ const App: FC = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/signin" exact component={SignIn} />
                 <Route path="/signup" exact component={SignUp} />
+                <Route path="/setUp" exact component={SetUp} />
                 <Route path="/createSummon" exact component={SummonBuild} />
               </Switch>
             </div>
-            <Route exact path={['/', '/createSummon']}>
+            <Route exact path={['/', '/createSummon', '/setUp']}>
               <BottomNavigationCustom />
             </Route>
           </div>

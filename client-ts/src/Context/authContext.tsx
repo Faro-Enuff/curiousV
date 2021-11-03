@@ -10,7 +10,11 @@ import axios from '../Utils/axios';
 // Import React Router Dom
 import { useHistory } from 'react-router-dom';
 // Import Interfaces
-import { RegisterUser, LoginUser } from '../Interfaces/interfaces';
+import {
+  RegisterUser,
+  LoginUser,
+  hobbyPostInput,
+} from '../Interfaces/interfaces';
 
 interface User {
   _id: string;
@@ -24,6 +28,7 @@ interface ProviderValues {
   loginUser: (user: LoginUser) => void;
   googleSignInUser: (loadingState: Dispatch<SetStateAction<boolean>>) => void;
   logout: () => void;
+  postHobbies: (hobby: hobbyPostInput) => void;
   loggedInUser: User | null;
 }
 interface Props {}
@@ -45,7 +50,10 @@ const initialProviderValue: ProviderValues = {
     throw new Error("LoginUser-Function hasn't been provided");
   },
   googleSignInUser: () => {
-    throw new Error("Google Sign In User-Function hasn't been provided");
+    throw new Error("Google Sign In-Function hasn't been provided");
+  },
+  postHobbies: () => {
+    throw new Error("Post Hobbies-Function hasn't been provided");
   },
   loggedInUser: null,
 };
@@ -143,12 +151,23 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
     history.push('/signin');
   };
 
+  /////////////////////////////////
+  // Update Hobby
+  /////////////////////////////////
+  const postHobbies = (hobby: hobbyPostInput) => {
+    axios
+      .post('/users/addHobby', hobby)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.message));
+  };
+
   const value: null | ProviderValues = {
     registerUser,
     loginUser,
     googleSignInUser,
     loggedInUser,
     logout,
+    postHobbies,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

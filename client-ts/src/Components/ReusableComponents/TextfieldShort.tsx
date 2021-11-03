@@ -2,13 +2,13 @@ import { FC, SetStateAction, Dispatch, ChangeEvent } from 'react';
 // MUI Imports
 import { FormControl, TextField, Button } from '@mui/material';
 // Interface Imports
-import { Summon } from '../../Interfaces/interfaces';
+import { Summon, hobbyPostInput } from '../../Interfaces/interfaces';
 
 interface Props {
   title: string;
   value: string;
-  input: Summon;
-  setInput: Dispatch<SetStateAction<Summon>>;
+  input: Summon | hobbyPostInput;
+  setInput: any;
 }
 
 const TextfieldShort: FC<Props> = ({ title, value, input, setInput }) => {
