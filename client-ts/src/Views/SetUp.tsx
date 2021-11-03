@@ -56,9 +56,6 @@ const SetUp: FC = (props: Props) => {
     <div className="">
       <Paper>
         <Box m={2}>
-          <h1>User</h1>
-        </Box>
-        <Box m={2}>
           <Dropdown
             title={'CHOOSE YOUR HOBBY GENRE '}
             value={'genre'}
