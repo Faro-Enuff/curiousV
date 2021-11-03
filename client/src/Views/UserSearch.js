@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import { Avatar, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { AuthContext } from "../Context/authContext";
-import { useFetch } from "../Utils/useFetch";
-import { ChatContext } from "../Context/chatContext";
-import { useHistory } from "react-router-dom";
-import Loader from "../Utils/Loader";
+import { useContext } from 'react';
+import { Avatar, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { AuthContext } from '../Context/authContext';
+import { useFetch } from '../Utils/useFetch';
+import { ChatContext } from '../Context/chatContext';
+import { useHistory } from 'react-router-dom';
+import Loader from '../Utils/Loader';
 
 const UserSearch = () => {
   let history = useHistory();
@@ -13,8 +13,8 @@ const UserSearch = () => {
 
   // Fetch All Users
   const { isLoading, apiData, serverError } = useFetch(
-    "get",
-    "http://localhost:5000/api/users/allUsers"
+    'get',
+    'http://localhost:5000/api/users/allUsers'
   );
 
   if (apiData) {
@@ -45,7 +45,7 @@ const UserSearch = () => {
           {apiData?.users &&
             apiData?.users.map((user) => (
               <li key={user._id}>
-                <Box sx={{ display: "flex", mt: 3, mb: 3 }}>
+                <Box sx={{ display: 'flex', mt: 3, mb: 3 }}>
                   <Box sx={{ mr: 2 }}>
                     <Avatar src={user.profileImage} />
                   </Box>

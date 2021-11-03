@@ -1,29 +1,35 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-
+import React, {
+  FC,
+  ChangeEvent,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 // NPM Imports
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
+import { formatDistance } from 'date-fns';
 import moment from 'moment';
-
 // MUI Core Imports
 import { TextField, Box, Button, Typography, Avatar } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import SendIcon from '@mui/icons-material/Send';
-
 // Context Imports
 import { ChatContext } from '../Context/chatContext';
-
 // Internal Imports
 import { useFetch } from '../Utils/useFetch';
 import Enso from '../Images/Enso.png';
 import Loader from '../Utils/Loader';
+// Interface Imports
+import { CurrentMessage } from '../Interfaces/interfaces';
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 // !!! Connect Socket.IO to Back-End !!!
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
-const socket = io.connect('http://localhost:3001');
+const socket = io('http://localhost:3001');
 
 const useStyles = makeStyles((muiTheme) => ({
   chatroom: {
@@ -87,7 +93,7 @@ const useStyles = makeStyles((muiTheme) => ({
   },
 }));
 
-const Chatroom = () => {
+const Chatroom: FC = () => {
   const classes = useStyles();
 
   ////////////////////////////////////////////////////////
@@ -96,11 +102,12 @@ const Chatroom = () => {
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
 
-  const dummy = useRef(null);
-  const scrollToBottom = () => {
-    dummy.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const dummy = useRef<null | HTMLDivElement>(null);
+
   useEffect(() => {
+    const scrollToBottom = () => {
+      dummy.current?.scrollIntoView({ behavior: 'smooth' });
+    };
     scrollToBottom();
   });
 
@@ -109,11 +116,10 @@ const Chatroom = () => {
   // !!! Fetch -  Profile Data of loggedIn User !!!
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
-  const {
-    isLoading,
-    apiData: profile,
-    serverError,
-  } = useFetch('get', 'http://localhost:5000/api/users/profile');
+  const { apiData: profile } = useFetch(
+    'get',
+    'http://localhost:5000/api/users/profile'
+  );
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -121,7 +127,7 @@ const Chatroom = () => {
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
 
-  const { receiverName } = useParams();
+  const { receiverName } = useParams<{ receiverName?: string }>();
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -150,19 +156,17 @@ const Chatroom = () => {
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
 
-  // Grab Room ID of Chatroom Fetch to have an unique identifier
-  const room = chatroomData?.chatroom[0]._id;
-  // console.log(chatroomData?.chatroom[0]._id);
-
-  const joinRoom = () => {
-    if (room) {
-      console.log('Join Room');
-      socket.emit('join_room', room);
-    }
-  };
-
   // Call join room function
   useEffect(() => {
+    // Grab Room ID of Chatroom Fetch to have an unique identifier
+    const room: string = chatroomData?.chatroom[0]._id;
+    // console.log(chatroomData?.chatroom[0]._id);
+    const joinRoom = () => {
+      if (room) {
+        console.log('Join Room');
+        socket.emit('join_room', room);
+      }
+    };
     joinRoom();
     console.log('Joined room :>>');
   }, [chatroomData]);
@@ -175,15 +179,16 @@ const Chatroom = () => {
 
   // Use States for Messages / Message List
 
-  const [currentMessage, setCurrentMessage] = useState('');
+  const [currentMessage, setCurrentMessage] = useState<string>('');
 
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState<CurrentMessage[]>([]);
 
   useEffect(() => {
-    setMessageList(chatroomData?.chatroom[0].messages);
+    const chatroom = chatroomData.chatroom[0];
+    setMessageList(chatroom.messages);
   }, [chatLoader]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentMessage(event.target.value);
   };
 
@@ -191,8 +196,8 @@ const Chatroom = () => {
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
-      const messageData = {
-        room: room,
+      const messageData: CurrentMessage = {
+        room: chatroomData?.chatroom[0]._id,
         author: profile?.user.artistName,
         message: currentMessage,
         time: Date.now(),
@@ -203,7 +208,7 @@ const Chatroom = () => {
 
       // set use State
       setMessageList((list) => [...list, messageData]);
-      // Reset the TextField
+      // Reset Current Message
       setCurrentMessage('');
       // Send Message to Back-End
       saveMessage(messageData);
@@ -270,7 +275,7 @@ const Chatroom = () => {
       </div>
       <div className={classes.chatFooter}>
         <div className={classes.chatTextArea}>
-          <div className={classes.chatTextFieldDiv}>
+          <div>
             <TextField
               id="standard-multiline-static"
               multiline

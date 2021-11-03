@@ -11,7 +11,6 @@ interface LoginUser {
 }
 
 // SetUp - Hobby add
-
 interface hobbyPostInput {
   genre: string;
   hobby: string;
@@ -33,4 +32,13 @@ interface Summon {
   complexity: string;
 }
 
-export type { RegisterUser, LoginUser, hobbyPostInput, Summon };
+// Chatroom - messages
+
+interface CurrentMessage {
+  room: string;
+  author: string;
+  message: string;
+  time: number;
+}
+
+export type { RegisterUser, LoginUser, hobbyPostInput, Summon, CurrentMessage };

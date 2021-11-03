@@ -1,6 +1,6 @@
 // Import Models
-import chatroomModel from "../model/chatModal.js";
-import userModel from "../model/userModel.js";
+import chatroomModel from '../model/chatModal.js';
+import userModel from '../model/userModel.js';
 
 const addChat = async (req, res) => {
   //   console.log(
@@ -19,18 +19,18 @@ const addChat = async (req, res) => {
 
   const messageReceiver = req.body[0];
 
-  console.log("Hey");
-  console.log("Message Sender : >>", messageSender);
-  console.log("Message Receiver : >>", messageReceiver);
+  console.log('Hey');
+  console.log('Message Sender : >>', messageSender);
+  console.log('Message Receiver : >>', messageReceiver);
 
   try {
-    console.log("Hey");
+    console.log('Hey');
 
     const commonChatroom = messageSender.chatroomIds.filter((id) =>
       messageReceiver.chatroomIds.includes(String(id))
     );
 
-    console.log("Common Chatroom:", commonChatroom);
+    console.log('Common Chatroom:', commonChatroom);
 
     // const existingChatroomSender = await chatroomModel.find({
     //   _id: { $in: messageSender?.chatroomIds },
@@ -45,9 +45,9 @@ const addChat = async (req, res) => {
         messages: [{}],
       });
 
-      console.log("message receiver : >>", messageReceiver);
-      console.log("message sender : >>", messageSender);
-      console.log("chatroom id : >>", newChatroom._id);
+      console.log('message receiver : >>', messageReceiver);
+      console.log('message sender : >>', messageSender);
+      console.log('chatroom id : >>', newChatroom._id);
       //   const chatroomId = `${messageSender._id + String(messageReceiver._id)}`;
 
       userModel.findOneAndUpdate(
@@ -59,9 +59,9 @@ const addChat = async (req, res) => {
         },
         (err, res) => {
           if (res) {
-            console.log("res old profile (success): >>", res);
+            console.log('res old profile (success): >>', res);
           } else {
-            console.log("err profile chatroom Id : >>", err);
+            console.log('err profile chatroom Id : >>', err);
           }
         }
       );
@@ -74,9 +74,9 @@ const addChat = async (req, res) => {
         },
         (err, res) => {
           if (res) {
-            console.log("res old profile (success): >>", res);
+            console.log('res old profile (success): >>', res);
           } else {
-            console.log("err profile chatroom Id : >>", err);
+            console.log('err profile chatroom Id : >>', err);
           }
         }
       );
@@ -85,7 +85,7 @@ const addChat = async (req, res) => {
 
       res.status(200).json({ newChatroom });
     } else {
-      res.status(201).json("Chatroom already exists");
+      res.status(201).json('Chatroom already exists');
     }
   } catch (error) {
     res.json({ message: error.message });
@@ -105,12 +105,12 @@ const getChatroom = async (req, res) => {
       },
     });
 
-    console.log("Selected Chatroom : >> ", chatroom);
+    console.log('Selected Chatroom : >> ', chatroom);
 
     if (!chatroom) {
       res
         .status(400)
-        .json({ success: false, message: "There is no chatroom available!!" });
+        .json({ success: false, message: 'There is no chatroom available!!' });
     } else {
       res.status(200).json({ chatroom });
     }
@@ -121,15 +121,15 @@ const getChatroom = async (req, res) => {
 
 const saveMessages = async (req, res) => {
   try {
-    console.log("Save Message Req Body : >>", req.body);
+    console.log('Save Message Req Body : >>', req.body);
     const chatroom = chatroomModel.findOneAndUpdate(
       { _id: req.body.room },
       { $push: { messages: req.body } },
       (err, res) => {
         if (res) {
-          console.log("res Profile old (success): >>", res);
+          console.log('res Profile old (success): >>', res);
         } else {
-          console.log("err profileImage : >>", err);
+          console.log('err profileImage : >>', err);
         }
       }
     );
