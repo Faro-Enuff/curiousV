@@ -32,10 +32,12 @@ const socket = io('http://localhost:3001');
 
 const useStyles = makeStyles((muiTheme) => ({
   chatroom: {
-    bottom: 0,
+    display: 'flex',
+    width: '100%',
   },
   chatHeader: {
-    top: 0,
+    position: 'absolute',
+    top: 70,
     marginLeft: '5%',
     marginRight: '5%',
   },
@@ -47,8 +49,7 @@ const useStyles = makeStyles((muiTheme) => ({
     top: '15%',
     bottom: '15%',
     width: '90%',
-    overflow: 'hidden',
-    overflowY: 'auto',
+    overflow: 'auto',
   },
   chatFooter: {
     width: '100%',
@@ -265,7 +266,7 @@ const Chatroom: FC = () => {
               return (
                 key >= 1 && (
                   <Box
-                    sx={{ borderRadius: 2, boxShadow: 2, mb: '10%', p: 1 }}
+                    sx={{ borderRadius: 7, boxShadow: 15, mb: '10%', p: 1 }}
                     className={classes.bodyContent}
                     key={key}
                     id={
