@@ -164,7 +164,14 @@ const profileDetail = async (req, res) => {
   try {
     const user = await userModel
       .findById(userId)
-      .select(['_id', 'artistName', 'email', 'firstName', 'profileImage'])
+      .select([
+        '_id',
+        'artistName',
+        'email',
+        'firstName',
+        'profileImage',
+        'chatroomIds',
+      ])
       .populate('hobbies');
 
     // console.log("User : >>", user);

@@ -41,4 +41,18 @@ interface CurrentMessage {
   time: number;
 }
 
-export type { RegisterUser, LoginUser, hobbyPostInput, Summon, CurrentMessage };
+interface ChatroomUser {
+  _id: string;
+  artistName: string;
+  profileImage: string;
+  chatroomIds: string[];
+}
+
+export type {
+  RegisterUser,
+  LoginUser,
+  hobbyPostInput,
+  Summon,
+  CurrentMessage,
+  ChatroomUser,
+};

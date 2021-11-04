@@ -2,7 +2,7 @@ import { FC, createContext } from 'react';
 // Import CostumHooks
 import axios from '../Utils/axios';
 // Import Interfaces
-import { CurrentMessage } from '../Interfaces/interfaces';
+import { CurrentMessage, ChatroomUser } from '../Interfaces/interfaces';
 
 interface ProviderValues {
   createChat: (chatReceiver: ChatroomUser) => void;
@@ -10,13 +10,6 @@ interface ProviderValues {
 }
 
 interface Props {}
-
-interface ChatroomUser {
-  _id: string;
-  artistName: string;
-  profileName: string;
-  chatroomIds: string[];
-}
 
 const initialProviderValue: ProviderValues = {
   createChat: () => {

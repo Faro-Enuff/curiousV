@@ -12,6 +12,7 @@ import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 import SetUp from './Views/SetUp';
+import UserSearch from './Views/UserSearch';
 import Chatroom from './Views/Chatroom';
 import SummonBuild from './Views/SummonBuild';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
@@ -40,7 +41,16 @@ const App: FC = () => {
         <SummonContextProvider>
           <ChatContextProvider>
             <div className={classes.app}>
-              <Route exact path={['/', '/createSummon', '/setUp']}>
+              <Route
+                exact
+                path={[
+                  '/',
+                  '/createSummon',
+                  '/setUp',
+                  '/userSearch',
+                  '/chatroom/:receiverId',
+                ]}
+              >
                 <AppBarCostum />
               </Route>
               <div className={classes.content}>
@@ -50,14 +60,24 @@ const App: FC = () => {
                   <Route path="/signup" exact component={SignUp} />
                   <Route path="/setUp" exact component={SetUp} />
                   <Route path="/createSummon" exact component={SummonBuild} />
+                  <Route path="/userSearch" exact component={UserSearch} />
                   <Route
-                    path="/chatroom/:receiverName"
+                    path="/chatroom/:receiverId"
                     exact
                     component={Chatroom}
                   />
                 </Switch>
               </div>
-              <Route exact path={['/', '/createSummon', '/setUp']}>
+              <Route
+                exact
+                path={[
+                  '/',
+                  '/createSummon',
+                  '/setUp',
+                  '/userSearch',
+                  '/chatroom/:receiverId',
+                ]}
+              >
                 <BottomNavigationCustom />
               </Route>
             </div>

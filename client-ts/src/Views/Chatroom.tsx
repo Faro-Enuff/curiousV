@@ -10,7 +10,6 @@ import React, {
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
-import moment from 'moment';
 // MUI Core Imports
 import { TextField, Box, Button, Typography, Avatar } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +21,7 @@ import { useFetch } from '../Utils/useFetch';
 import Enso from '../Images/Enso.png';
 import Loader from '../Utils/Loader';
 // Interface Imports
-import { CurrentMessage } from '../Interfaces/interfaces';
+import { CurrentMessage, ChatroomUser } from '../Interfaces/interfaces';
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
@@ -116,6 +115,7 @@ const Chatroom: FC = () => {
   // !!! Fetch -  Profile Data of loggedIn User !!!
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
+  // Sender
   const { apiData: profile } = useFetch(
     'get',
     'http://localhost:5000/api/users/profile'
@@ -127,7 +127,7 @@ const Chatroom: FC = () => {
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
 
-  const { receiverName } = useParams<{ receiverName?: string }>();
+  const { receiverId } = useParams<{ receiverId?: string }>();
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -145,10 +145,36 @@ const Chatroom: FC = () => {
 
   const { apiData: chatroomData, isLoading: chatLoader } = useFetch(
     'get',
-    `http://localhost:5000/api/chatrooms/${receiverName}`
+    `http://localhost:5000/api/chatrooms/${receiverId}`
   );
-
+  console.log(receiverId);
+  console.log(chatroomData);
   // console.log(chatroomData?.chatroom[0].messages);
+
+  // Receiver
+  const [receiver, setReceiver] = useState<ChatroomUser>({
+    _id: '',
+    artistName: '',
+    profileImage: '',
+    chatroomIds: [],
+  });
+
+  const filteredUser: any = chatroomData?.chatroom[0].artistNames.filter(
+    (artist: any) => artist._id === receiverId
+  )[0];
+
+  useEffect(() => {
+    setReceiver({
+      _id: filteredUser?._id,
+      artistName: filteredUser?.artistName,
+      profileImage: filteredUser?.profileImage
+        ? filteredUser?.profileImage
+        : Enso,
+      chatroomIds: filteredUser?.chatroomIds,
+    });
+  }, [filteredUser]);
+  console.log(filteredUser);
+  console.log(receiver);
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -184,8 +210,8 @@ const Chatroom: FC = () => {
   const [messageList, setMessageList] = useState<CurrentMessage[]>([]);
 
   useEffect(() => {
-    const chatroom = chatroomData.chatroom[0];
-    setMessageList(chatroom.messages);
+    const chatroom = chatroomData?.chatroom[0];
+    setMessageList(chatroom?.messages);
   }, [chatLoader]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -229,7 +255,7 @@ const Chatroom: FC = () => {
       {chatLoader && <Loader />}
       <div className={classes.chatHeader}>
         <Box sx={{ pt: 1, pb: 1 }}>
-          <h2>{`Private chat with ${receiverName}`}</h2>
+          <h2>{`Private chat with ${receiver.artistName}`}</h2>
         </Box>
       </div>
       <div className={classes.chatFrame}>
@@ -243,14 +269,16 @@ const Chatroom: FC = () => {
                     className={classes.bodyContent}
                     key={key}
                     id={
-                      messageContent.author === receiverName
+                      messageContent.author === receiver.artistName
                         ? 'Receiver'
                         : 'Sender'
                     }
                   >
                     <Avatar
                       src={
-                        profile?.user.profileImage
+                        messageContent.author === receiver.artistName
+                          ? receiver.profileImage
+                          : profile?.user.profileImage
                           ? profile?.user.profileImage
                           : Enso
                       }
@@ -263,7 +291,9 @@ const Chatroom: FC = () => {
                         {messageContent.author}
                       </Typography>
                       <Typography variant="subtitle2" sx={{}}>
-                        {moment(messageContent.time).fromNow()}
+                        {formatDistance(messageContent.time, new Date(), {
+                          addSuffix: true,
+                        })}
                       </Typography>
                     </Box>
                   </Box>

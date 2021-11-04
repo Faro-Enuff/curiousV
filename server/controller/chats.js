@@ -3,53 +3,36 @@ import chatroomModel from '../model/chatModal.js';
 import userModel from '../model/userModel.js';
 
 const addChat = async (req, res) => {
-  //   console.log(
-  //     "Chatroom req : >>",
-  //     "Sender Artist Name:>>",
-  //     req.user.user.artistName,
-  //     "///",
-  //     "Receiver Artist Name :>>",
-  //     req.body[0]
-  //   );
   const messageSender = {
-    _id: String(req.user.user._id),
+    _id: req.user.user._id,
     artistName: req.user.user.artistName,
     chatroomIds: req.user.user?.chatroomIds,
   };
 
-  const messageReceiver = req.body[0];
+  // console.log(req.body);
+  const messageReceiver = req.body;
 
-  console.log('Hey');
   console.log('Message Sender : >>', messageSender);
   console.log('Message Receiver : >>', messageReceiver);
 
   try {
-    console.log('Hey');
-
     const commonChatroom = messageSender.chatroomIds.filter((id) =>
       messageReceiver.chatroomIds.includes(String(id))
     );
 
-    console.log('Common Chatroom:', commonChatroom);
-
-    // const existingChatroomSender = await chatroomModel.find({
-    //   _id: { $in: messageSender?.chatroomIds },
-    // });
-
-    // console.log("Existing Chatroom", await existingChatroom);
-    // console.log("Existing Chatroom Id", await existingChatroom[0]._id);
+    console.log('Common Chatroom : >>', commonChatroom);
 
     if (commonChatroom.length === 0) {
       const newChatroom = new chatroomModel({
-        artistNames: [messageSender.artistName, messageReceiver.artistName],
+        artistNames: [messageSender._id, messageReceiver._id],
         messages: [{}],
       });
 
-      console.log('message receiver : >>', messageReceiver);
-      console.log('message sender : >>', messageSender);
+      // console.log('message receiver : >>', messageReceiver);
+      // console.log('message sender : >>', messageSender);
       console.log('chatroom id : >>', newChatroom._id);
-      //   const chatroomId = `${messageSender._id + String(messageReceiver._id)}`;
 
+      // User Update Sender
       userModel.findOneAndUpdate(
         { artistName: messageSender.artistName },
         {
@@ -57,14 +40,17 @@ const addChat = async (req, res) => {
             chatroomIds: newChatroom._id,
           },
         },
+        { new: true },
         (err, res) => {
           if (res) {
-            console.log('res old profile (success): >>', res);
+            console.log('Res new profile (success): >>', res);
           } else {
             console.log('err profile chatroom Id : >>', err);
           }
         }
       );
+
+      // User Update Receiver
       userModel.findOneAndUpdate(
         { artistName: messageReceiver.artistName },
         {
@@ -72,6 +58,7 @@ const addChat = async (req, res) => {
             chatroomIds: newChatroom._id,
           },
         },
+        { new: true },
         (err, res) => {
           if (res) {
             console.log('res old profile (success): >>', res);
@@ -81,6 +68,7 @@ const addChat = async (req, res) => {
         }
       );
 
+      // Save Chatroom
       newChatroom.save();
 
       res.status(200).json({ newChatroom });
@@ -94,16 +82,21 @@ const addChat = async (req, res) => {
 
 const getChatroom = async (req, res) => {
   try {
-    // console.log("User / Message Author : >>", req.user);
-    // console.log("Text Message Receiver :>>", req.params);
+    console.log('User / Message Author : >>', req.user);
+    console.log('Text Message Receiver :>>', req.params);
 
     // Check if there is a common chatroom
 
-    const chatroom = await chatroomModel.find({
-      artistNames: {
-        $all: [req.user.user.artistName, req.params.receiverName],
-      },
-    });
+    const chatroom = await chatroomModel
+      .find({
+        artistNames: {
+          $all: [req.user.user._id, req.params._id],
+        },
+      })
+      .populate(
+        'artistNames',
+        '_id artistName profileImage chatroomIds hobbies'
+      );
 
     console.log('Selected Chatroom : >> ', chatroom);
 
