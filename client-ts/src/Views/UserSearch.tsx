@@ -10,14 +10,20 @@ import Loader from '../Utils/Loader';
 import { ChatContext } from '../Context/chatContext';
 // Interface Imports
 import { ChatroomUser } from '../Interfaces/interfaces';
+import { Paper } from '@mui/material';
 interface Props {}
 
 const useStyles = makeStyles({
   searchDiv: {
-    width: '100%',
+    width: '90%',
     flexGrow: 1,
     overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '5%',
+    marginBottom: '5%',
   },
+  paperDiv: {},
 });
 
 const UserSearch: FC<Props> = () => {
@@ -51,31 +57,33 @@ const UserSearch: FC<Props> = () => {
   return (
     <div className={classes.searchDiv}>
       {isLoading && <Loader />}
-      <Box sx={{ mt: 8 }} className="userSearch">
-        <Box sx={{ ml: 4 }}>
-          <Typography variant="h4">User Search: </Typography>
-        </Box>
-        <ul>
-          {apiData?.users &&
-            apiData.users.map((user: ChatroomUser) => (
-              <li key={user._id}>
-                <Box sx={{ display: 'flex', mt: 3, mb: 3 }}>
-                  <Box sx={{ mr: 2 }}>
-                    <Avatar src={user.profileImage} />
-                  </Box>
-                  <Box sx={{ ml: 2 }}>
-                    <Typography
-                      variant="h6"
-                      id={user.artistName}
-                      onClick={onClickHandler}
-                    >
-                      {user.artistName}
-                    </Typography>
-                  </Box>
-                </Box>
-              </li>
-            ))}
-        </ul>
+      <Box className="userSearch">
+        <Paper className={classes.paperDiv}>
+          <Box sx={{ ml: 5, pt: 2, pb: 1 }}>
+            <Typography variant="h4">User Search: </Typography>
+            <ul>
+              {apiData?.users &&
+                apiData.users.map((user: ChatroomUser) => (
+                  <li key={user._id}>
+                    <Box sx={{ display: 'flex', mt: 5, mb: 5 }}>
+                      <Box>
+                        <Avatar src={user.profileImage} />
+                      </Box>
+                      <Box sx={{ ml: 2 }}>
+                        <Typography
+                          variant="h6"
+                          id={user.artistName}
+                          onClick={onClickHandler}
+                        >
+                          {user.artistName}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </li>
+                ))}
+            </ul>
+          </Box>
+        </Paper>
       </Box>
     </div>
   );

@@ -32,34 +32,27 @@ const socket = io('http://localhost:3001');
 
 const useStyles = makeStyles((muiTheme) => ({
   chatroom: {
-    display: 'flex',
-    width: '100%',
-  },
-  chatHeader: {
-    position: 'absolute',
-    top: 70,
-    marginLeft: '5%',
-    marginRight: '5%',
-  },
-  chatFrame: {
-    marginLeft: '5%',
-    marginRight: '5%',
-    marginBottom: '3%',
-    position: 'fixed',
-    top: '15%',
-    bottom: '15%',
     width: '90%',
-    overflow: 'auto',
-  },
-  chatFooter: {
-    width: '100%',
-    position: 'fixed',
-    bottom: '6.9%',
-    backgroundColor: 'lightgrey',
-  },
-  chatBody: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    overflowY: 'auto',
+    marginTop: '15%',
+    marginBottom: '20%',
+  },
+  chatHeader: {
+    position: 'fixed',
+    top: '8%',
+  },
+  chatFrame: {
+    flex: 1,
+  },
+  chatFooter: {
+    position: 'fixed',
+    width: '80%',
+    bottom: '8%',
+  },
+  chatBody: {
     '& #Sender': {
       backgroundColor: muiTheme.palette.primary.main,
       marginRight: '50%',
@@ -69,28 +62,14 @@ const useStyles = makeStyles((muiTheme) => ({
       marginLeft: '50%',
     },
   },
-  bodyContent: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
+  bodyContent: {},
   chatTextArea: {
-    marginLeft: '5%',
-    marginRight: '5%',
-    marginTop: '3%',
-    marginBottom: '2%',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: '',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  buttonDiv: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  btn: {
-    borderRadius: '50%',
-  },
+  buttonDiv: {},
+  btn: {},
 }));
 
 const Chatroom: FC = () => {

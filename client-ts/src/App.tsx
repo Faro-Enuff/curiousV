@@ -25,7 +25,7 @@ const useStyles = makeStyles((muiTheme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
 }));
 

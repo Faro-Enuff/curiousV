@@ -18,13 +18,15 @@ interface Props {}
 
 const useStyles = makeStyles((muiTheme) => ({
   setUpDiv: {
-    width: '100%',
+    width: '90%',
     flexGrow: 1,
     overflowY: 'auto',
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  paperDiv: {},
 }));
 
 const SetUp: FC = (props: Props) => {
@@ -67,7 +69,7 @@ const SetUp: FC = (props: Props) => {
 
   return (
     <div className={classes.setUpDiv}>
-      <Paper>
+      <Paper className={classes.paperDiv}>
         <Box m={2}>
           <Dropdown
             title={'CHOOSE YOUR HOBBY GENRE '}

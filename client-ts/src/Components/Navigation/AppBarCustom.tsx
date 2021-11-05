@@ -28,10 +28,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 const useStyles = makeStyles((muiTheme) => ({
   appBarBox: {
-    top: 0,
     width: '100%',
-    maxHeight: '15%',
-    position: 'fixed',
     zIndex: 150,
   },
   appBar: {
@@ -55,39 +52,41 @@ const AppBarCostum = () => {
 
   console.log(profile);
   return (
-    <Box sx={{ flexGrow: 1 }} className={classes.appBarBox}>
-      <AppBar position="static" color="primary" className={classes.appBar}>
-        <Toolbar>
-          <Box>
-            <Avatar src={Enso} />
-          </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          {profile && (
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: 'flex' }}
-            >
-              {profile.user.artistName}
-            </Typography>
-          )}
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex' }}>
-            <IconButton href="/chatRoom" size="large" color="inherit">
-              {/* <Badge badgeContent={4} color="error"> */}
-              <MailIcon />
-              {/* </Badge> */}
-            </IconButton>
-            <MenuCostum
-              profileImage={profile?.user.profileImage}
-              logout={logout}
-            />
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}></Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <div className={classes.appBarBox}>
+      <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Box>
+              <Avatar src={Enso} />
+            </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            {profile && (
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: 'flex' }}
+              >
+                {profile.user.artistName}
+              </Typography>
+            )}
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: 'flex' }}>
+              <IconButton href="/chatRoom" size="large" color="inherit">
+                {/* <Badge badgeContent={4} color="error"> */}
+                <MailIcon />
+                {/* </Badge> */}
+              </IconButton>
+              <MenuCostum
+                profileImage={profile?.user.profileImage}
+                logout={logout}
+              />
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}></Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </div>
   );
 };
 

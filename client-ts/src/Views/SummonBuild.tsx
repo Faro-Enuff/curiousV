@@ -18,9 +18,13 @@ interface Props {}
 
 const useStyles = makeStyles({
   buildDiv: {
-    width: '100%',
+    width: '90%',
     flexGrow: 1,
     overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -101,66 +105,70 @@ const SummonBuild = (props: Props) => {
   return (
     <div className={classes.buildDiv}>
       <Paper>
-        <Box m={2}>
-          <TextfieldShort
-            title={'NAME YOUR CURSIGNMENT'}
-            value={'assignmentTitle'}
-            input={summonInput}
-            setInput={setSummonInput}
-          />
-        </Box>
-        <Box m={2}>
-          <Dropdown
-            title={'CHOOSE YOUR LEARNING SOURCE'}
-            value={summonInput.learningSource}
-            data={source}
-            input={summonInput}
-            setInput={setSummonInput}
-          />
-        </Box>
-        <Box m={2}>
-          <TextfieldShort
-            title={'Specify YOUR SOURCE (e.g. URL)'}
-            value={'learningMaterial'}
-            input={summonInput}
-            setInput={setSummonInput}
-          />
-          <form method="post" encType="multipart/form-data">
-            <Input
-              required
-              type="file"
-              id="imageUpload"
-              name="learningFile"
-              onChange={fileSelectedHandler}
+        <Box sx={{ pt: 0.1, pb: 0.1 }}>
+          <Box m={2}>
+            <TextfieldShort
+              title={'NAME YOUR CURSIGNMENT'}
+              value={'assignmentTitle'}
+              input={summonInput}
+              setInput={setSummonInput}
             />
-            <label htmlFor="imageUpload">
-              <FileUploadIcon
-                color="secondary"
-                fontSize="large"
-                style={{ cursor: 'pointer' }}
+          </Box>
+          <Box m={2}>
+            <Dropdown
+              title={'CHOOSE YOUR LEARNING SOURCE'}
+              value={summonInput.learningSource}
+              data={source}
+              input={summonInput}
+              setInput={setSummonInput}
+            />
+          </Box>
+          <Box m={2}>
+            <TextfieldShort
+              title={'Specify YOUR SOURCE (e.g. URL)'}
+              value={'learningMaterial'}
+              input={summonInput}
+              setInput={setSummonInput}
+            />
+            <form method="post" encType="multipart/form-data">
+              <Input
+                required
+                type="file"
+                id="imageUpload"
+                name="learningFile"
+                onChange={fileSelectedHandler}
               />
-            </label>
-          </form>
+              <label htmlFor="imageUpload">
+                <FileUploadIcon
+                  color="secondary"
+                  fontSize="large"
+                  style={{ cursor: 'pointer' }}
+                />
+              </label>
+            </form>
+          </Box>
+          <Box m={2}>
+            <Dropdown
+              title={'RATE THE COMPLEXITY UPFRONT'}
+              value={summonInput.complexity}
+              data={complexity}
+              input={summonInput}
+              setInput={setSummonInput}
+            />
+          </Box>
+          <Box m={2}>
+            <DateRangePicker
+              title={'CHOOSE YOUR TIME FRAME'}
+              input={summonInput}
+              setInput={setSummonInput}
+            />
+          </Box>
+          <Box m={2}>
+            <Button onClick={onClickHandler} variant="outlined">
+              Create Your CURSIGNMENT
+            </Button>
+          </Box>
         </Box>
-        <Box m={2}>
-          <Dropdown
-            title={'RATE THE COMPLEXITY UPFRONT'}
-            value={summonInput.complexity}
-            data={complexity}
-            input={summonInput}
-            setInput={setSummonInput}
-          />
-        </Box>
-        <Box m={2}>
-          <DateRangePicker
-            title={'CHOOSE YOUR TIME FRAME'}
-            input={summonInput}
-            setInput={setSummonInput}
-          />
-        </Box>
-        <Button onClick={onClickHandler} variant="outlined">
-          Create Your CURSIGNMENT
-        </Button>
       </Paper>
     </div>
   );

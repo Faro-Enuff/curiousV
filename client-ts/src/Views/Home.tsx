@@ -18,7 +18,7 @@ interface Props {}
 
 const useStyles = makeStyles((muiTheme) => ({
   homeDiv: {
-    width: '100%',
+    width: '90%',
     flexGrow: 1,
     overflowY: 'auto',
   },
@@ -50,8 +50,6 @@ const Home: FC = (props: Props) => {
           display: 'flex',
           flexDirection: 'row',
           width: '100%',
-          mt: '5%',
-          mb: '10%',
         }}
       >
         <Paper>
@@ -80,7 +78,7 @@ const Home: FC = (props: Props) => {
       </Box>
       <div className={classes.timeline}>
         <div className={classes.timelineBody}>
-          <Box sx={{ flexGrow: 3, ml: 2 }}>
+          <Box sx={{ flexGrow: 3 }}>
             <Card>
               <Typography variant="h5" textAlign={'center'}>
                 Timeline
