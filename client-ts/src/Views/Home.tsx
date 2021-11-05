@@ -5,8 +5,8 @@ import { useFetch } from '../Utils/useFetch';
 
 // Internal Imports
 import Loader from '../Utils/Loader';
-// import Timeline from '../Components/Timeline Creative TIM/Timeline';
-// import stories from '../Components/Timeline Creative TIM/stories';
+import Timeline from '../Components/Timeline Creative TIM/Timeline';
+import Summons from '../Components/Timeline Creative TIM/Summons';
 
 // MUI Core Imports
 import { Card, Typography, Box, Container, Paper } from '@mui/material';
@@ -17,16 +17,13 @@ import { makeStyles } from '@material-ui/core/styles';
 interface Props {}
 
 const useStyles = makeStyles((muiTheme) => ({
-  profilePaper: {
-    marginTop: '10%',
+  homeDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
   },
-  timeline: {
-    maxHeight: '58%',
-    overflow: 'scroll',
-    webkitScrollbar: {
-      display: 'none',
-    },
-  },
+  timeline: {},
+  timelineBody: {},
 }));
 
 const Home: FC = (props: Props) => {
@@ -46,58 +43,57 @@ const Home: FC = (props: Props) => {
   console.log(userSummons);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div className={classes.homeDiv}>
       {isLoading && <Loader />}
-      <div>
-        <Box sx={{}}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              mt: '5%',
-              mb: '10%',
-            }}
-          >
-            <Paper className={classes.profilePaper}>
-              {user && <Typography variant="h5"> cV</Typography>}
-              <Typography variant="body1"></Typography>
-              {/* <Profile /> */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          mt: '5%',
+          mb: '10%',
+        }}
+      >
+        <Paper>
+          {user && <Typography variant="h5"> cV</Typography>}
+          <Typography variant="body1"></Typography>
+          {/* <Profile /> */}
+        </Paper>
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
+        <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+          <Card color="text.primary">
+            <Typography variant="h5" textAlign={'center'}>
+              Cursignments
+            </Typography>
+          </Card>
+          {/* <AssEqCard header={'Equipment'} body={user.hobbies.equipment} /> */}
+          {userSummons &&
+            userSummons.userSummons.map((summon: any) => {
+              return (
+                <div key={summon._id}>
+                  {/* <AssEqCard header={summon.assignmentTitle} /> */}
+                </div>
+              );
+            })}
+        </Box>
+      </Box>
+      <div className={classes.timeline}>
+        <div className={classes.timelineBody}>
+          <Box sx={{ flexGrow: 3, ml: 2 }}>
+            <Card>
+              <Typography variant="h5" textAlign={'center'}>
+                Timeline
+              </Typography>
+            </Card>
+
+            <Paper>
+              <Timeline Summons={Summons} />
             </Paper>
           </Box>
-          <Box
-            sx={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}
-          >
-            <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
-              <Card color="text.primary">
-                <Typography variant="h5" textAlign={'center'}>
-                  Cursignments
-                </Typography>
-              </Card>
-              {/* <AssEqCard header={'Equipment'} body={user.hobbies.equipment} /> */}
-              {userSummons &&
-                userSummons.userSummons.map((summon: any) => {
-                  return (
-                    <div key={summon._id}>
-                      {/* <AssEqCard header={summon.assignmentTitle} /> */}
-                    </div>
-                  );
-                })}
-            </Box>
-            <Box sx={{ flexGrow: 3, ml: 2 }}>
-              <Card>
-                <Typography variant="h5" textAlign={'center'}>
-                  Timeline
-                </Typography>
-              </Card>
-              <div className={classes.timeline}>
-                {/* <Timeline stories={stories} /> */}
-              </div>
-            </Box>
-          </Box>
-        </Box>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

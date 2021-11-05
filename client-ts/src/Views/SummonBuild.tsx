@@ -17,7 +17,11 @@ import { Summon } from '../Interfaces/interfaces';
 interface Props {}
 
 const useStyles = makeStyles({
-  buildDiv: {},
+  buildDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
+  },
 });
 
 const SummonBuild = (props: Props) => {

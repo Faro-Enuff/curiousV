@@ -27,7 +27,22 @@ import { LoginUser } from '../Interfaces/interfaces';
 
 interface Props {}
 
-const useStyles = makeStyles((muiTheme) => ({}));
+const useStyles = makeStyles((muiTheme) => ({
+  signInDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signInBody: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
 const SignIn: FC = (props: Props) => {
   const classes = useStyles();
@@ -88,10 +103,10 @@ const SignIn: FC = (props: Props) => {
   };
 
   return (
-    <div>
+    <div className={classes.signInDiv}>
       {loading && <Loader />}
       <Box>
-        <Paper>
+        <Paper className={classes.signInBody}>
           <Box m={2}>
             <label>Email:</label>
             <input

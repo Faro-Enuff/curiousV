@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MouseEvent, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 // Internal Imports
 import Enso from '../../Images/Enso.png';
 
@@ -80,10 +80,10 @@ const MenuCostum = ({ profileImage, logout }: Props) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem href={'/getStarted'}>
+        <MenuItem component={Link} to="/setUp">
           <Avatar src={profileImage ? profileImage : Enso} /> Profile
         </MenuItem>
-        <MenuItem href={'/createSummon'}>
+        <MenuItem component={Link} to="/createSummon">
           <Avatar src={Enso} /> Create Summon
         </MenuItem>
         <Divider />

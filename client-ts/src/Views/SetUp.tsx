@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../Context/authContext';
 // MUI Core Imports
 import { Paper, Box, Button } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
 // Internal Imports
 import CuriositySlider from '../Components/SetUp/CuriositySlider';
 import Dropdown from '../Components/ReusableComponents/Dropdown';
@@ -15,7 +16,19 @@ import { hobbyPostInput } from '../Interfaces/interfaces';
 
 interface Props {}
 
+const useStyles = makeStyles((muiTheme) => ({
+  setUpDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
+
 const SetUp: FC = (props: Props) => {
+  const classes = useStyles();
   let history = useHistory();
 
   const { postHobbies } = useContext(AuthContext);
@@ -53,7 +66,7 @@ const SetUp: FC = (props: Props) => {
   // console.log("SetUp: Hobby Input:", hobbyInput);
 
   return (
-    <div className="">
+    <div className={classes.setUpDiv}>
       <Paper>
         <Box m={2}>
           <Dropdown

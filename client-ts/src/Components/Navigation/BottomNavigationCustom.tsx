@@ -10,11 +10,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 const useStyles = makeStyles({
-  bottomNav: {
-    bottom: 0,
-    position: 'fixed',
+  navBackground: {
+    zIndex: 150,
+    width: '100%',
   },
-  navBackground: {},
+  bottomNav: {},
 });
 
 interface Props {}

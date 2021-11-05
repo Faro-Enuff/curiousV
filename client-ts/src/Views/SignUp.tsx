@@ -1,6 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useState, useContext } from 'react';
 // Import MUI
 import { Box, Paper } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
 // Import Context
 import { AuthContext } from '../Context/authContext';
 // React Router DOM
@@ -10,7 +11,25 @@ import { RegisterUser } from '../Interfaces/interfaces';
 
 interface Props {}
 
+const useStyles = makeStyles((muiTheme) => ({
+  signUpDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signUpBody: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
+
 const SignUp = (props: Props) => {
+  const classes = useStyles();
   let history = useHistory();
 
   const [user, setUser] = useState<RegisterUser>({
@@ -33,9 +52,9 @@ const SignUp = (props: Props) => {
   };
 
   return (
-    <div>
+    <div className={classes.signUpDiv}>
       <Box>
-        <Paper>
+        <Paper className={classes.signUpBody}>
           <Box>
             <label>Email:</label>
             <input

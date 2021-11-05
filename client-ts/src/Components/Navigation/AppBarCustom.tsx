@@ -32,10 +32,12 @@ const useStyles = makeStyles((muiTheme) => ({
     width: '100%',
     maxHeight: '15%',
     position: 'fixed',
+    zIndex: 150,
   },
   appBar: {
     minHeight: '15%',
-    cssHip9hqMuiPaperRootMuiAppBarRoot: {
+    zIndex: 150,
+    MuiPaperRootMuiAppBarRoot: {
       backgroundColor: muiTheme.palette.primary.main,
     },
   },

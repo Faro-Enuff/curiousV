@@ -20,17 +20,12 @@ import BottomNavigationCustom from './Components/Navigation/BottomNavigationCust
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
-    height: '100vh',
-    backgroundColor: 'rgba(181, 173, 207, 0.2)',
-  },
-  content: {
-    minHeight: '100%',
-    margin: 0,
     width: '100%',
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 }));
 
@@ -42,45 +37,47 @@ const App: FC = () => {
         <SummonContextProvider>
           <ChatContextProvider>
             <div className={classes.app}>
-              <Route
-                exact
-                path={[
-                  '/',
-                  '/createSummon',
-                  '/setUp',
-                  '/userSearch',
-                  '/chatroom/:receiverId',
-                ]}
-              >
-                <AppBarCostum />
-              </Route>
-              <div className={classes.content}>
-                <Switch>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/signin" exact component={SignIn} />
-                  <Route path="/signup" exact component={SignUp} />
-                  <Route path="/setUp" exact component={SetUp} />
-                  <Route path="/createSummon" exact component={SummonBuild} />
-                  <Route path="/userSearch" exact component={UserSearch} />
-                  <Route
-                    path="/chatroom/:receiverId"
-                    exact
-                    component={Chatroom}
-                  />
-                </Switch>
+              <div className={'header'}>
+                <Route
+                  exact
+                  path={[
+                    '/',
+                    '/createSummon',
+                    '/setUp',
+                    '/userSearch',
+                    '/chatroom/:receiverId',
+                  ]}
+                >
+                  <AppBarCostum />
+                </Route>
               </div>
-              <Route
-                exact
-                path={[
-                  '/',
-                  '/createSummon',
-                  '/setUp',
-                  '/userSearch',
-                  '/chatroom/:receiverId',
-                ]}
-              >
-                <BottomNavigationCustom />
-              </Route>
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/signin" exact component={SignIn} />
+                <Route path="/signup" exact component={SignUp} />
+                <Route path="/setUp" exact component={SetUp} />
+                <Route path="/createSummon" exact component={SummonBuild} />
+                <Route path="/userSearch" exact component={UserSearch} />
+                <Route
+                  path="/chatroom/:receiverId"
+                  exact
+                  component={Chatroom}
+                />
+              </Switch>
+              <div className={'footer'}>
+                <Route
+                  exact
+                  path={[
+                    '/',
+                    '/createSummon',
+                    '/setUp',
+                    '/userSearch',
+                    '/chatroom/:receiverId',
+                  ]}
+                >
+                  <BottomNavigationCustom />
+                </Route>
+              </div>
             </div>
           </ChatContextProvider>
         </SummonContextProvider>

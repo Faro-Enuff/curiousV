@@ -1,11 +1,25 @@
 * {
   margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 
 body {
   height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: auto;
+  display: flex;
+  background-color: rgba(181, 173, 207, 0.2);
+}
+
+.header,
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
 // @material-ui/core components
-import { Avatar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import Enso from '../../Images/Enso.png';
+import { Avatar, Dialog } from '@mui/material';
+import Badge from './Badge';
+import { makeStyles } from '@material-ui/core/styles';
+// import Enso from '../../Images/Enso.png';
 
 // core components
 
-import styles from './timelineStyle.js';
+import styles from './TimelineStyle';
 import TimelineDialog from './TimelineDialog';
 
-const useStyles = makeStyles(styles);
+interface Props {
+  Summons: any;
+  simple?: any;
+}
 
-export default function Timeline(props) {
+const useStyles = makeStyles<any | undefined>(styles);
+
+const Timeline: FC<Props> = (props) => {
+  const { Summons, simple } = props;
   const classes = useStyles();
-
-  const { stories, simple } = props;
 
   const timelineClass =
     classes.timeline +
@@ -28,21 +33,17 @@ export default function Timeline(props) {
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen: () => void = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose: () => void = () => {
     setOpen(false);
-  };
-
-  const handleClick = () => {
-    console.log('hey');
   };
 
   return (
     <ul className={timelineClass}>
-      {stories.map((prop, key) => {
+      {Summons.map((prop: any, key: number) => {
         const panelClasses =
           classes.timelinePanel +
           ' ' +
@@ -72,7 +73,7 @@ export default function Timeline(props) {
                   handleOpen={handleOpen}
                   handleClose={handleClose}
                 />
-                {/* <Dialog className={classes.assignmentDialog}>
+                {/* <Dialog open={open} className={classes.assignmentDialog}>
                   {prop.title ? (
                     <div className={classes.timelineHeading}>
                       <Badge color={prop.titleColor}>{prop.title}</Badge>
@@ -89,7 +90,7 @@ export default function Timeline(props) {
                 </Dialog> */}
               </div>
             ) : null}
-            {/* <div className={panelClasses}>
+            <div className={panelClasses}>
               {prop.title ? (
                 <div className={classes.timelineHeading}>
                   <Badge color={prop.titleColor}>{prop.title}</Badge>
@@ -103,15 +104,17 @@ export default function Timeline(props) {
               {prop.footer ? (
                 <div className={classes.timelineFooter}>{prop.footer}</div>
               ) : null}
-            </div> */}
+            </div>
           </li>
         );
       })}
     </ul>
   );
-}
+};
+
+export default Timeline;
 
 Timeline.propTypes = {
-  stories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  Summons: PropTypes.arrayOf(PropTypes.object).isRequired,
   simple: PropTypes.bool,
 };

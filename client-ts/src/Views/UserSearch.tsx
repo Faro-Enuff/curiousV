@@ -2,6 +2,7 @@ import { FC, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 // MUI Imports
 import { Box, Avatar, Typography } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
 // Internal Imports
 import { useFetch } from '../Utils/useFetch';
 import Loader from '../Utils/Loader';
@@ -11,7 +12,16 @@ import { ChatContext } from '../Context/chatContext';
 import { ChatroomUser } from '../Interfaces/interfaces';
 interface Props {}
 
+const useStyles = makeStyles({
+  searchDiv: {
+    width: '100%',
+    flexGrow: 1,
+    overflowY: 'auto',
+  },
+});
+
 const UserSearch: FC<Props> = () => {
+  const classes = useStyles();
   let history = useHistory();
   const { createChat } = useContext(ChatContext);
 
@@ -39,7 +49,7 @@ const UserSearch: FC<Props> = () => {
   };
 
   return (
-    <div>
+    <div className={classes.searchDiv}>
       {isLoading && <Loader />}
       <Box sx={{ mt: 8 }} className="userSearch">
         <Box sx={{ ml: 4 }}>
