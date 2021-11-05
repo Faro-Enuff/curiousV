@@ -21,10 +21,8 @@ const useStyles = makeStyles({
     width: '90%',
     flexGrow: 1,
     overflowY: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: '5%',
+    marginBottom: '5%',
   },
 });
 

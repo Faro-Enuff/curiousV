@@ -57,7 +57,11 @@ const AppBarCostum = () => {
         <AppBar position="static" color="primary">
           <Toolbar>
             <Box>
-              <Avatar src={Enso} />
+              <Avatar
+                src={
+                  profile?.user.profileImage ? profile.user.profileImage : Enso
+                }
+              />
             </Box>
             <Box sx={{ flexGrow: 1 }} />
             {profile && (

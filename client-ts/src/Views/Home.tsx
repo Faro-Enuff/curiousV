@@ -19,11 +19,20 @@ interface Props {}
 const useStyles = makeStyles((muiTheme) => ({
   homeDiv: {
     width: '90%',
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    marginTop: '5%',
+    marginBottom: '5%',
+  },
+  timeline: {
+    flex: 1,
     overflowY: 'auto',
   },
-  timeline: {},
-  timelineBody: {},
+  timelineBody: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+  },
 }));
 
 const Home: FC = (props: Props) => {
@@ -77,19 +86,19 @@ const Home: FC = (props: Props) => {
         </Box>
       </Box>
       <div className={classes.timeline}>
-        <div className={classes.timelineBody}>
-          <Box sx={{ flexGrow: 3 }}>
-            <Card>
-              <Typography variant="h5" textAlign={'center'}>
-                Timeline
-              </Typography>
-            </Card>
+        <Box sx={{ flexGrow: 3 }}>
+          <Card>
+            <Typography variant="h5" textAlign={'center'}>
+              Timeline
+            </Typography>
+          </Card>
 
-            <Paper>
+          <Paper>
+            <div className={classes.timelineBody}>
               <Timeline Summons={Summons} />
-            </Paper>
-          </Box>
-        </div>
+            </div>
+          </Paper>
+        </Box>
       </div>
     </div>
   );

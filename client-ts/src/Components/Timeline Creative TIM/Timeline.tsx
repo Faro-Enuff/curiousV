@@ -42,38 +42,39 @@ const Timeline: FC<Props> = (props) => {
   };
 
   return (
-    <ul className={timelineClass}>
-      {Summons.map((prop: any, key: number) => {
-        const panelClasses =
-          classes.timelinePanel +
-          ' ' +
-          cx({
-            [classes.timelinePanelInverted]: prop.inverted || simple,
-            [classes.timelineSimplePanel]: simple,
-          });
-        const timelineBadgeClasses =
-          classes.timelineBadge +
-          ' ' +
-          classes[prop.badgeColor] +
-          ' ' +
-          cx({
-            [classes.timelineSimpleBadge]: simple,
-          });
-        return (
-          <li className={classes.item} key={key}>
-            {prop.Avatar ? (
-              <div onClick={handleOpen}>
-                <Avatar className={timelineBadgeClasses} src={prop.Avatar} />
-              </div>
-            ) : null}
-            {open ? (
-              <div className={classes.assignmentClasses}>
-                <TimelineDialog
-                  open={open}
-                  handleOpen={handleOpen}
-                  handleClose={handleClose}
-                />
-                {/* <Dialog open={open} className={classes.assignmentDialog}>
+    <div className={classes.timeline}>
+      <ul className={timelineClass}>
+        {Summons.map((prop: any, key: number) => {
+          const panelClasses =
+            classes.timelinePanel +
+            ' ' +
+            cx({
+              [classes.timelinePanelInverted]: prop.inverted || simple,
+              [classes.timelineSimplePanel]: simple,
+            });
+          const timelineBadgeClasses =
+            classes.timelineBadge +
+            ' ' +
+            classes[prop.badgeColor] +
+            ' ' +
+            cx({
+              [classes.timelineSimpleBadge]: simple,
+            });
+          return (
+            <li className={classes.item} key={key}>
+              {prop.Avatar ? (
+                <div onClick={handleOpen}>
+                  <Avatar className={timelineBadgeClasses} src={prop.Avatar} />
+                </div>
+              ) : null}
+              {open ? (
+                <div className={classes.assignmentClasses}>
+                  <TimelineDialog
+                    open={open}
+                    handleOpen={handleOpen}
+                    handleClose={handleClose}
+                  />
+                  {/* <Dialog open={open} className={classes.assignmentDialog}>
                   {prop.title ? (
                     <div className={classes.timelineHeading}>
                       <Badge color={prop.titleColor}>{prop.title}</Badge>
@@ -88,27 +89,28 @@ const Timeline: FC<Props> = (props) => {
                     <div className={classes.timelineFooter}>{prop.footer}</div>
                   ) : null}
                 </Dialog> */}
-              </div>
-            ) : null}
-            <div className={panelClasses}>
-              {prop.title ? (
-                <div className={classes.timelineHeading}>
-                  <Badge color={prop.titleColor}>{prop.title}</Badge>
                 </div>
               ) : null}
-              <div className={classes.timelineBody}>{prop.body}</div>
-              {prop.footerTitle ? (
-                <h6 className={classes.footerTitle}>{prop.footerTitle}</h6>
-              ) : null}
-              {prop.footer ? <hr className={classes.footerLine} /> : null}
-              {prop.footer ? (
-                <div className={classes.timelineFooter}>{prop.footer}</div>
-              ) : null}
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+              <div className={panelClasses}>
+                {prop.title ? (
+                  <div className={classes.timelineHeading}>
+                    <Badge color={prop.titleColor}>{prop.title}</Badge>
+                  </div>
+                ) : null}
+                <div className={classes.timelineBody}>{prop.body}</div>
+                {prop.footerTitle ? (
+                  <h6 className={classes.footerTitle}>{prop.footerTitle}</h6>
+                ) : null}
+                {prop.footer ? <hr className={classes.footerLine} /> : null}
+                {prop.footer ? (
+                  <div className={classes.timelineFooter}>{prop.footer}</div>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 
