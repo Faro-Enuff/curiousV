@@ -1,19 +1,17 @@
-import summonModel from "../model/summonModel.js";
-import userModel from "../model/userModel.js";
-import commentModel from "../model/commentModel.js";
-import * as services from "../service/service_provider.js";
+import summonModel from '../model/summonModel.js';
+import collectionModel from '../model/collectionModel.js';
+import commentModel from '../model/commentModel.js';
+import * as services from '../service/service_provider.js';
 
-// SUMMONS
+// GET Summon
 
 const getSummons = async (req, res) => {
   try {
-    const user = await req.user;
+    const userId = services.getAuthenticatedUser(req);
 
-    const userSummons = await summonModel.find({
-      userId: { $in: user.user.id },
-    });
+    const userSummons = await summonModel.find({ author: userId });
 
-    console.log("Summons : >>", userSummons);
+    console.log('Summons : >>', userSummons);
 
     res.status(200).send({ userSummons });
   } catch (error) {
@@ -22,11 +20,13 @@ const getSummons = async (req, res) => {
   }
 };
 
+// CREATE Summon (incl. Collection model update)
+
 const createSummon = async (req, res) => {
   // File
   // console.log("File : >>", req.file);
   // Body
-  console.log("Summon Req Body : >>", req.body);
+  console.log('Summon Req Body : >>', req.body);
 
   try {
     const user = await req.user;
@@ -42,6 +42,8 @@ const createSummon = async (req, res) => {
       complexity,
     } = req.body;
 
+    // Create & Save new Summon
+
     let newSummon = new summonModel({
       author: userId,
       assignmentTitle,
@@ -55,19 +57,23 @@ const createSummon = async (req, res) => {
 
     const summon = await newSummon.save();
 
-    await updateArrayHobbies(
-      userModel,
+    // Update Collection Model
+    await services.updateArray(
+      collectionModel,
+      'author',
       userId,
-      "hobbies.$[].summons",
+      'summons',
       summon._id
     );
 
-    res.status(201).json(newSummon);
+    res.status(201).json({ newSummon });
   } catch (error) {
     // console.log("Error : >>", error);
     res.status(400).json({ message: error.message });
   }
 };
+
+// DELETE Summon (incl. Collection model update)
 
 const deleteSummon = async (req, res) => {
   try {
@@ -78,16 +84,25 @@ const deleteSummon = async (req, res) => {
       { author: userId, _id: summonId },
       (err, result) => {
         if (result) {
-          console.log("Summon deleted");
-          res.status(200).json({ Success: "Summon deleted!!!" });
+          console.log('Summon deleted');
+
+          res.status(200).json({ Success: 'Summon deleted!!!' });
         }
         if (err) {
-          res.status(400).json({ Error: "Cannot delete the summon!!!" });
+          res.status(400).json({ Error: 'Cannot delete the summon!!!' });
         }
       }
     );
+
+    await services.deleteArrayValue(
+      collectionModel,
+      'author',
+      userId,
+      'summons',
+      summonId
+    );
   } catch (error) {
-    console.log("Delete Summon Error : >>", error);
+    console.log('Delete Summon Error : >>', error);
   }
 };
 
@@ -102,15 +117,16 @@ const createComment = async (req, res) => {
     // Push new Comment into Array
     const userComment = await services.updateArray(
       summonModel,
+      '_id',
       summonId,
-      "comments",
+      'comments',
       comment
     );
 
-    console.log("User comment : >>", userComment);
+    console.log('User comment : >>', userComment);
     res.status(200).json({ userComment });
   } catch (error) {
-    console.log("Comment Error : >>", error);
+    console.log('Comment Error : >>', error);
   }
 };
 
@@ -132,101 +148,18 @@ const deleteComment = async (req, res) => {
           // Save Changes
           doc.save((err) => {
             if (err) {
-              console.log("Comment Delete Erorr : >>", err);
+              console.log('Comment Delete Erorr : >>', err);
               res.json({ Error: "You weren't able to delete the comment!!!" });
             }
-            console.log("The Subdoc was removed");
-            res.json({ Success: "The Subdoc was removed!!!" });
+            console.log('The Subdoc was removed');
+            res.json({ Success: 'The Subdoc was removed!!!' });
           });
         }
       }
     });
   } catch (error) {
-    console.log("Comment Error : >>", error);
+    console.log('Comment Error : >>', error);
   }
 };
 
-// CREATIONS
-
-const getCreations = async (req, res) => {
-  try {
-    const creations = await hobbyModel.find();
-    const user = await req.user;
-
-    // Filtering for the authenticated user
-    const userCreation = creations.filter(
-      (creation) => creation.userId === user.user.id
-    )[0];
-
-    res.send({ userCreation });
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-const createCreation = async (req, res) => {
-  const user = await req.user;
-  const userId = await user.user._id;
-
-  const { summonId, funFactor, approxTimeInvestment, file } = req.body;
-
-  const creation = {
-    author: userId,
-    funFactor,
-    approxTimeInvestment,
-    file,
-  };
-
-  try {
-    const summonCreation = await services.updateArray(
-      summonModel,
-      summonId,
-      "summonCreation",
-      creation
-    );
-
-    console.log("Summon/Creation Data : >>", summonCreation);
-
-    res.status(200).json({ summonCreation });
-  } catch (error) {
-    console.log("Summon/Creation Error : >>", error);
-
-    res.status(400).json({ message: error.message });
-  }
-};
-
-export {
-  getSummons,
-  createSummon,
-  deleteSummon,
-  getCreations,
-  createCreation,
-  createComment,
-  deleteComment,
-};
-
-const updateArrayHobbies = async (model, userId, key, value) => {
-  try {
-    return await model
-      .findByIdAndUpdate(
-        {
-          _id: userId,
-          hobbies: {
-            $elemMatch: {
-              current: "true",
-            },
-          },
-        },
-        {
-          $push: {
-            [key]: value,
-          },
-        },
-        // !!! Run validators is important -> Checks also subdocuments for valid data !!!
-        { runValidators: true, new: true }
-      )
-      .exec();
-  } catch (error) {
-    console.log(error);
-  }
-};
+export { getSummons, createSummon, deleteSummon, createComment, deleteComment };

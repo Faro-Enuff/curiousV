@@ -17,14 +17,15 @@ interface Props {
 const DateRangePicker: FC<Props> = ({ title, input, setInput }) => {
   const handleOnChange = (event: any) => {
     console.log(event);
+
     setInput({
       ...input,
-      [input.timeFrame]: event,
-      [input.startDate]: event[0],
-      [input.endDate]: event[1],
+      timeFrame: event,
+      startDate: event[0],
+      endDate: event[1],
     });
   };
-
+  console.log(input.timeFrame);
   return (
     <div>
       <Button>{title}</Button>

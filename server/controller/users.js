@@ -1,5 +1,6 @@
 // Import Model
 import userModel from '../model/userModel.js';
+import collectionModel from '../model/collectionModel.js';
 // Import Passport Utils -> Password Generate function
 import { genPassword, validPassword } from '../lib/passwordUtils.js';
 // Import Services
@@ -30,6 +31,8 @@ const registerUser = async (req, res) => {
         const salt = saltHash.salt;
         const hash = saltHash.hash;
 
+        // Create & Save User
+
         const newUser = new userModel({
           artistName: req.body.artistName,
           firstName: req.body.artistName,
@@ -50,6 +53,19 @@ const registerUser = async (req, res) => {
             res.json({ success: true, user: user, token: token });
           })
           .catch((err) => res.send(err));
+
+        // Create & Save Collection for summons
+
+        const newCollection = new collectionModel({
+          artist: newUser._id,
+        });
+
+        newCollection
+          .save()
+          .then((collection) => {
+            console.log('Collection Created : >>', collection);
+          })
+          .catch((err) => console.log('Collection Error : >> ', err));
 
         // res.redirect("/signin");
       }
@@ -190,7 +206,7 @@ const profileDetail = async (req, res) => {
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-// Get Array of all Users in Application
+// Get Array of all Users in Application (excl. logged in User)
 
 const userArray = async (req, res) => {
   try {
@@ -229,6 +245,7 @@ const updateImage = async (req, res) => {
           req.file.filename
         }`,
       },
+      { runValidators: true, new: true },
       (err, res) => {
         if (res) {
           console.log('res Profile old (success): >>', res);
@@ -275,10 +292,13 @@ const addHobby = async (req, res) => {
       },
       (err, doc) => {
         if (doc) {
-          // console.log(doc);
-          const oldUserHobby = doc.hobbies[0];
+          console.log(doc);
+          const oldUserHobby = doc.hobbies[doc.hobbies.length - 1];
           // Change
-          oldUserHobby.current = false;
+          if (doc.hobbies.length > 0) {
+            oldUserHobby.current = false;
+          }
+
           // Save Changes
           doc.save((err) => {
             if (err) {
@@ -289,7 +309,7 @@ const addHobby = async (req, res) => {
           });
         }
         if (err) {
-          console.log('Error:There is no Hobby to update!!');
+          console.log('Error: There is no Hobby to update!!');
         }
       }
     );
@@ -297,6 +317,7 @@ const addHobby = async (req, res) => {
 
     const userHobby = await services.updateArray(
       userModel,
+      '_id',
       userId,
       'hobbies',
       hobbies
@@ -310,6 +331,8 @@ const addHobby = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+// TODO create a Delete Hobby Controller incl. Route for that
 
 // Get Users Hobby including populated summons
 
@@ -328,8 +351,8 @@ const getUserHobby = async (req, res) => {
           },
         },
       })
-      .populate({ path: 'hobbies', populate: { path: 'summons' } })
-      .select('hobbies');
+      .select('artistName hobbies');
+
     console.log('UserHobby : >> ', data);
     res.json({ data });
   } catch (error) {

@@ -1,8 +1,7 @@
 // Import Mongoose
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 // Import Subdocument (mongoose expression)
-import { commentsSchema } from "./commentModel.js";
-import { creationsSchema } from "./creationModel.js";
+import { commentsSchema } from './commentModel.js';
 
 // Destructure Schema form mongoose
 const { Schema } = mongoose;
@@ -12,7 +11,7 @@ const summonsSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "user",
+      ref: 'user',
     },
     assignmentTitle: {
       type: String,
@@ -40,8 +39,7 @@ const summonsSchema = new Schema(
       type: String,
       required: true,
     },
-    summonCreation: [creationsSchema],
-    reposts: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    reposts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     comments: [commentsSchema],
   },
   { timestamps: true }
@@ -49,4 +47,4 @@ const summonsSchema = new Schema(
 
 // Export Module
 
-export default mongoose.model("summon", summonsSchema);
+export default mongoose.model('summon', summonsSchema);

@@ -1,7 +1,7 @@
 // Import Mongoose
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 // Import Subdocument (mongoose expression)
-import { commentsSchema } from "./commentModel.js";
+import { commentsSchema } from './commentModel.js';
 
 // Import Schema
 const { Schema } = mongoose;
@@ -11,7 +11,12 @@ export const creationsSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "user",
+      ref: 'user',
+    },
+    summon: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'summon',
     },
     file: {
       type: String,
@@ -25,10 +30,11 @@ export const creationsSchema = new Schema(
       type: Number,
       required: true,
     },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     comments: [commentsSchema],
   },
   { timestamps: true }
 );
 
-export default mongoose.model("creation", creationsSchema);
+export default mongoose.model('creation', creationsSchema);

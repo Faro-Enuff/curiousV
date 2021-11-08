@@ -34,7 +34,6 @@ export const hobbiesSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    summons: [{ type: Schema.Types.ObjectId, ref: 'summon' }],
   },
   { timestamps: true },
   { strict: 'throw' }

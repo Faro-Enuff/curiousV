@@ -1,11 +1,11 @@
 // Import Express
-import express from "express";
+import express from 'express';
 // Import Passport
-import passport from "passport";
+import passport from 'passport';
 // Import Multer Upload Config
-import { uploadSummonFiles } from "../Middleware/MulterConfig.js";
+import { uploadSummonFiles } from '../Middleware/MulterConfig.js';
 // Import Controller functions
-import * as summonController from "../controller/summons.js";
+import * as summonController from '../controller/summons.js';
 
 // Create Instance of the express router
 const router = express.Router();
@@ -19,43 +19,22 @@ const router = express.Router();
 ////////////////////////////
 
 router.get(
-  "/getSummons",
-  passport.authenticate("jwt", { session: false }),
+  '/getSummons',
+  passport.authenticate('jwt', { session: false }),
   summonController.getSummons
 );
 
 router.post(
-  "/addSummon",
-  passport.authenticate("jwt", { session: false }),
-  uploadSummonFiles.single("learningFile"),
+  '/addSummon',
+  passport.authenticate('jwt', { session: false }),
+  uploadSummonFiles.single('learningFile'),
   summonController.createSummon
 );
 
 router.post(
-  "/deleteSummon",
-  passport.authenticate("jwt", { session: false }),
+  '/deleteSummon',
+  passport.authenticate('jwt', { session: false }),
   summonController.deleteSummon
-);
-
-////////////////////////////
-////////////////////////////
-
-// Creations Routes
-
-////////////////////////////
-////////////////////////////
-
-router.get(
-  "/getCreations",
-  passport.authenticate("jwt", { session: false }),
-  summonController.getCreations
-);
-
-router.post(
-  "/addCreation",
-  passport.authenticate("jwt", { session: false }),
-  uploadSummonFiles.single("learningFile"),
-  summonController.createCreation
 );
 
 ////////////////////////////
@@ -67,14 +46,14 @@ router.post(
 ////////////////////////////
 
 router.post(
-  "/createComment",
-  passport.authenticate("jwt", { session: false }),
+  '/createComment',
+  passport.authenticate('jwt', { session: false }),
   summonController.createComment
 );
 
 router.post(
-  "/deleteComment",
-  passport.authenticate("jwt", { session: false }),
+  '/deleteComment',
+  passport.authenticate('jwt', { session: false }),
   summonController.deleteComment
 );
 
