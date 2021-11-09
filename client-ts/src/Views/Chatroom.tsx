@@ -32,7 +32,7 @@ const socket = io('http://localhost:3001');
 
 const useStyles = makeStyles((muiTheme) => ({
   chatroom: {
-    width: '90%',
+    width: '95%',
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -46,6 +46,8 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   chatFrame: {
     flex: 1,
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
   chatFooter: {
     position: 'fixed',

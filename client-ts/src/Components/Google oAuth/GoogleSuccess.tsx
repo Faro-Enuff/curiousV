@@ -24,14 +24,14 @@ const useStyles = makeStyles((muiTheme) => ({
     opacity: 0.1,
   },
 }));
-
+// TODO CSS Styling needs to be done in a better way => allocation of circle an message
 const GoogleSuccess: FC = (props: Props) => {
   const classes = useStyles();
 
   useEffect(() => {
     setTimeout(() => {
       window.close();
-    }, 1000);
+    }, 500);
   }, []);
 
   return (

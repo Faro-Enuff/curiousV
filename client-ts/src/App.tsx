@@ -15,6 +15,7 @@ import SetUp from './Views/SetUp';
 import UserSearch from './Views/UserSearch';
 import Chatroom from './Views/Chatroom';
 import SummonBuild from './Views/SummonBuild';
+import GoogleSuccess from './Components/Google oAuth/GoogleSuccess';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
 
@@ -63,6 +64,7 @@ const App: FC = () => {
                   exact
                   component={Chatroom}
                 />
+                <Route path="/google/success" exact component={GoogleSuccess} />
               </Switch>
               <div className={'footer'}>
                 <Route
