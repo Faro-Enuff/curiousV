@@ -20,7 +20,7 @@ const HobbyTextfield: FC<Props> = ({ hobbyPostInput, setHobbyPostInput }) => {
     <FormControl>
       <TextField
         helperText=" "
-        value={hobbyPostInput.hobby}
+        value={hobbyPostInput.hobbyTitle}
         onChange={handleOnChange}
         name="hobby"
         label="Hobby"

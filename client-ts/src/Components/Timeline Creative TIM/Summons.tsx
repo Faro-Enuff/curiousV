@@ -19,7 +19,7 @@ const stories = [
   {
     // First story
     inverted: true,
-    badgeColor: 'danger',
+    badgeColor: 'rose',
     Avatar: Enso,
   },
   {

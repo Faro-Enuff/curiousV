@@ -24,7 +24,7 @@ const TextfieldShort: FC<Props> = ({ title, value, input, setInput }) => {
           helperText=" "
           value={(input as any)[value]}
           onChange={handleOnChange}
-          name="assignmentTitle"
+          name={value}
           id="demo-helper-text-aligned-no-helper"
           label={
             value.charAt(0).toUpperCase() +

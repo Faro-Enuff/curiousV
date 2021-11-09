@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // import Enso from '../../Images/Enso.png';
 
 // core components
+import { useFetch } from '../../Utils/useFetch';
 
 import styles from './TimelineStyle';
 import TimelineDialog from './TimelineDialog';
@@ -23,6 +24,13 @@ const useStyles = makeStyles<any | undefined>(styles);
 const Timeline: FC<Props> = (props) => {
   const { Summons, simple } = props;
   const classes = useStyles();
+
+  const { apiData: creations } = useFetch(
+    'get',
+    'http://localhost:5000/api/creations/getCreations'
+  );
+
+  console.log('Creations : >>', creations);
 
   const timelineClass =
     classes.timeline +

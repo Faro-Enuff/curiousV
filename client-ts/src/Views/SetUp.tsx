@@ -53,7 +53,7 @@ const SetUp: FC = (props: Props) => {
   ];
   const [input, setInput] = useState<hobbyPostInput>({
     genre: '',
-    hobby: '',
+    hobbyTitle: '',
     level: '',
     start: new Date(),
     equipment: '',
@@ -65,7 +65,7 @@ const SetUp: FC = (props: Props) => {
     history.push('/');
   };
 
-  // console.log("SetUp: Hobby Input:", hobbyInput);
+  console.log('SetUp: Hobby Input:', input);
 
   return (
     <div className={classes.setUpDiv}>
@@ -73,7 +73,7 @@ const SetUp: FC = (props: Props) => {
         <Box m={2}>
           <Dropdown
             title={'CHOOSE YOUR HOBBY GENRE '}
-            value={'genre'}
+            value={input.genre}
             data={genre}
             input={input}
             setInput={setInput}
@@ -82,7 +82,7 @@ const SetUp: FC = (props: Props) => {
         <Box m={2}>
           <TextfieldShort
             title={'NAME YOUR HOBBY'}
-            value={'hobby'}
+            value={'hobbyTitle'}
             input={input}
             setInput={setInput}
           />
@@ -91,7 +91,7 @@ const SetUp: FC = (props: Props) => {
         <Box m={2}>
           <Dropdown
             title={'CHOOSE YOUR HOBBY LEVEL'}
-            value={'level'}
+            value={input.level}
             data={level}
             input={input}
             setInput={setInput}

@@ -13,7 +13,7 @@ interface LoginUser {
 // SetUp - Hobby add
 interface hobbyPostInput {
   genre: string;
-  hobby: string;
+  hobbyTitle: string;
   level: string;
   start: Date;
   equipment: string;

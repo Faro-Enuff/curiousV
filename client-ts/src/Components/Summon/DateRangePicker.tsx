@@ -25,7 +25,7 @@ const DateRangePicker: FC<Props> = ({ title, input, setInput }) => {
       endDate: event[1],
     });
   };
-  console.log(input.timeFrame);
+  // console.log(input.timeFrame);
   return (
     <div>
       <Button>{title}</Button>
