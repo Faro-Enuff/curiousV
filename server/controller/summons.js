@@ -24,14 +24,12 @@ const getSummons = async (req, res) => {
 
 const createSummon = async (req, res) => {
   // File
-  // console.log("File : >>", req.file);
+  console.log('File : >>', req.file);
   // Body
   console.log('Summon Req Body : >>', req.body);
 
   try {
-    const user = await req.user;
-
-    const userId = await user.user._id;
+    const userId = services.getAuthenticatedUser(req);
 
     const {
       assignmentTitle,
@@ -51,7 +49,7 @@ const createSummon = async (req, res) => {
       endDate,
       learningSource,
       learningMaterial,
-      // learningFile: req.file.filename,
+      learningFile: req.file.filename,
       complexity,
     });
 

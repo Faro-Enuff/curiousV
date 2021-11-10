@@ -7,31 +7,85 @@ import { useFetch } from '../Utils/useFetch';
 import Loader from '../Utils/Loader';
 import Timeline from '../Components/Timeline Creative TIM/Timeline';
 import Summons from '../Components/Timeline Creative TIM/Summons';
-
+import AssEqCard from '../Components/ReusableComponents/AssEqCard';
+import Enso from '../Images/EnsoTransparent.png';
 // MUI Core Imports
-import { Card, Typography, Box, Container, Paper } from '@mui/material';
+import { Card, Typography, Box, Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
 // import Profile from '../Components/Profile';
 // import AssEqCard from '../Components/AssEqCard';
 import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {}
 
+const CustomizedPaper = styled(Paper)`
+  border-radius: 15px;
+`;
+const CustomizedCard = styled(Card)`
+  border-radius: 8px;
+  margin-bottom: 5%;
+  box-shadow: 3px 1px 4px 4px #e0f7fa;
+`;
+
 const useStyles = makeStyles((muiTheme) => ({
+  home: {
+    width: '100%',
+    overflow: 'hidden',
+  },
+  backgroundImageTopDiv: {
+    opacity: 0.3,
+    height: '10%',
+    zIndex: 1,
+    position: 'absolute',
+  },
   homeDiv: {
     width: '90%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
+    overflowY: 'hidden',
     marginTop: '5%',
-    marginBottom: '5%',
+    marginBottom: '2%',
+    zIndex: 2,
+    position: 'relative',
+  },
+  test: {},
+  cursignment: {
+    flex: 1,
+    overflowY: 'auto',
+    maxHeight: '320px',
+    marginBottom: '10%',
+    borderRadius: '10px',
+    boxShadow: '3px 1px 4px 4px #e0f7fa',
+  },
+  cursignmentBody: {
+    flex: 1,
   },
   timeline: {
     flex: 1,
     overflowY: 'auto',
+    maxHeight: '200px',
+    marginBottom: '5%',
+    borderRadius: '10px',
+    boxShadow: '3px 1px 4px 4px #e0f7fa',
   },
   timelineBody: {
     paddingLeft: '5%',
     paddingRight: '5%',
+  },
+  backgroundImageDiv: {
+    opacity: 0.6,
+    height: '15%',
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  backgroundImage: {
+    width: '100%',
+    height: 'auto',
+    zIndex: 1,
   },
 }));
 
@@ -45,60 +99,55 @@ const Home: FC = (props: Props) => {
   );
   console.log(user);
 
-  const { apiData: userSummons } = useFetch(
+  const { apiData: collectionFetch } = useFetch(
     'get',
-    'http://localhost:5000/api/summons/getSummons'
+    'http://localhost:5000/api/collections/getUserCollection'
   );
-  console.log(userSummons);
+  console.log('Collection Fetch : >>', collectionFetch);
 
   return (
-    <div className={classes.homeDiv}>
+    <div className={classes.home}>
       {isLoading && <Loader />}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-        }}
-      >
-        <Paper>
-          {user && <Typography variant="h5"> cV</Typography>}
-          <Typography variant="body1"></Typography>
-          {/* <Profile /> */}
-        </Paper>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
-        <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
-          <Card color="text.primary">
-            <Typography variant="h5" textAlign={'center'}>
-              Cursignments
-            </Typography>
-          </Card>
-          {/* <AssEqCard header={'Equipment'} body={user.hobbies.equipment} /> */}
-          {userSummons &&
-            userSummons.userSummons.map((summon: any) => {
-              return (
-                <div key={summon._id}>
-                  {/* <AssEqCard header={summon.assignmentTitle} /> */}
-                </div>
-              );
-            })}
-        </Box>
-      </Box>
-      <div className={classes.timeline}>
-        <Box sx={{ flexGrow: 3 }}>
-          <Card>
-            <Typography variant="h5" textAlign={'center'}>
+      {/* <div className={classes.backgroundImageTopDiv}>
+        <img className={classes.backgroundImage} src={Enso} alt="Enso" />
+      </div> */}
+      <div className={classes.homeDiv}>
+        <div className={classes.test}>
+          <CustomizedCard>
+            <Typography variant="h4" textAlign={'center'}>
               Timeline
             </Typography>
-          </Card>
-
-          <Paper>
-            <div className={classes.timelineBody}>
-              <Timeline Summons={Summons} />
-            </div>
-          </Paper>
-        </Box>
+          </CustomizedCard>
+          <div className={classes.timeline}>
+            <Box sx={{ flexGrow: 3 }}>
+              <CustomizedPaper>
+                <div className={classes.timelineBody}>
+                  <Timeline Summons={Summons} />
+                </div>
+              </CustomizedPaper>
+            </Box>
+          </div>
+          <CustomizedCard>
+            <Typography variant="h4" textAlign={'center'}>
+              Cursignments
+            </Typography>
+          </CustomizedCard>
+          <div className={classes.cursignment}>
+            <Box sx={{ flexGrow: 3 }}>
+              <CustomizedPaper>
+                <div className={classes.cursignmentBody}>
+                  <AssEqCard
+                    header={'Cursignments'}
+                    body={collectionFetch?.userCollection[0].summons}
+                  />
+                </div>
+              </CustomizedPaper>
+            </Box>
+          </div>
+        </div>
+      </div>
+      <div className={classes.backgroundImageDiv}>
+        <img className={classes.backgroundImage} src={Enso} alt="Enso" />
       </div>
     </div>
   );

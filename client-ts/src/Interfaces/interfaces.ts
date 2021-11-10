@@ -28,7 +28,7 @@ interface Summon {
   endDate: string;
   learningSource: string;
   learningMaterial: string;
-  learningFile: string;
+  learningFile: File | null;
   complexity: string;
 }
 

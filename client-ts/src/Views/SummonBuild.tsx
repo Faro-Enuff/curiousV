@@ -49,7 +49,7 @@ const SummonBuild = (props: Props) => {
     endDate: '',
     learningSource: '',
     learningMaterial: '',
-    learningFile: '',
+    learningFile: null,
     complexity: '',
   });
 
@@ -80,7 +80,7 @@ const SummonBuild = (props: Props) => {
       endDate: '',
       learningSource: '',
       learningMaterial: '',
-      learningFile: '',
+      learningFile: null,
       complexity: '',
     });
     history.push('/');
@@ -93,12 +93,12 @@ const SummonBuild = (props: Props) => {
     console.log(event.target.files[0]);
   };
 
-  const handleUpload = (files: string[]) => {
-    const file = files[0];
+  const handleUpload = (files: File[]) => {
+    const file: File = files[0];
     console.log(file);
     setSummonInput({
       ...summonInput,
-      [summonInput.learningFile]: file,
+      learningFile: file,
     });
   };
 

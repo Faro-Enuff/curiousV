@@ -1,24 +1,64 @@
-import React, { ChangeEvent, MouseEvent, useState, useContext } from 'react';
+import React, { ChangeEvent, useState, useContext } from 'react';
 // Import MUI
-import { Box, Paper } from '@mui/material';
+import { Button, TextField, Box, Typography, Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
+// Internal Imports
+import Enso from '../Images/EnsoTransparent.png';
+import Loader from '../Utils/Loader';
+import TextfieldAuth from '../Components/AuthComponents/TextfieldAuth';
 // Import Context
 import { AuthContext } from '../Context/authContext';
 // React Router DOM
 import { useHistory } from 'react-router-dom';
 // Import Interfaces
 import { RegisterUser } from '../Interfaces/interfaces';
-
+// React Router DOM
+import { Link } from 'react-router-dom';
 interface Props {}
 
+const CustomizedPaper = styled(Paper)`
+  width: 325px;
+`;
+
 const useStyles = makeStyles((muiTheme) => ({
+  signUpWindow: {
+    overflow: 'hidden',
+  },
+  image: {
+    width: '300px',
+    height: 'auto',
+    maxHeight: '100vh',
+    zIndex: 100,
+  },
+  backgroundImageTopDiv: {
+    opacity: 0.6,
+    height: '150px',
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
+  },
+  backgroundImageDiv: {
+    backgroundImage: `url(${Enso})`,
+    opacity: 0.6,
+    zIndex: 1,
+    position: 'absolute',
+    height: '16.1%',
+    maxHeight: '100vh',
+    overflow: 'hidden',
+  },
   signUpDiv: {
+    zIndex: 2,
     width: '100%',
+    marginTop: '5%',
     flexGrow: 1,
     overflowY: 'auto',
+    position: 'relative',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
   signUpBody: {
     display: 'flex',
@@ -31,7 +71,7 @@ const useStyles = makeStyles((muiTheme) => ({
 const SignUp = (props: Props) => {
   const classes = useStyles();
   let history = useHistory();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<RegisterUser>({
     artistName: '',
     email: '',
@@ -41,61 +81,83 @@ const SignUp = (props: Props) => {
 
   const { registerUser } = useContext(AuthContext);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setUser({ ...user, [event.target.name]: event.target.value });
+  // };
 
-  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+  const handleOnSubmit = (event: any) => {
     event.preventDefault();
     registerUser(user);
     history.push('/signin');
   };
 
   return (
-    <div className={classes.signUpDiv}>
-      <Box>
-        <Paper className={classes.signUpBody}>
-          <Box>
-            <label>Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box>
-            <label>Artistname:</label>
-            <input
-              type="text"
-              name="artistName"
-              value={user.artistName}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box>
-            <label>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={user.firstName}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box>
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box>
-            <input type="submit" value="Register" onClick={handleClick} />
-          </Box>
-        </Paper>
-      </Box>
+    <div className={classes.signUpWindow}>
+      <div className={classes.backgroundImageTopDiv}>
+        <img className={classes.image} src={Enso} alt="Enso" />
+      </div>
+      <div className={classes.signUpDiv}>
+        {loading && <Loader />}
+        <Box>
+          <CustomizedPaper className={classes.signUpBody}>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="h4" component="h1">
+                . curiousV .
+              </Typography>
+            </Box>
+            <hr className="beautyHr" />
+            <Box sx={{ m: 2 }}>
+              <form className="form" noValidate onSubmit={handleOnSubmit}>
+                <TextfieldAuth
+                  name="email"
+                  label="Email Address"
+                  input={user}
+                  setInput={setUser}
+                />
+                <TextfieldAuth
+                  name="artistName"
+                  label="Artist Name"
+                  input={user}
+                  setInput={setUser}
+                />
+                <TextfieldAuth
+                  name="firstName"
+                  label="First Name"
+                  input={user}
+                  setInput={setUser}
+                />
+                <TextfieldAuth
+                  name="password"
+                  label="Password"
+                  input={user}
+                  setInput={setUser}
+                />
+                <Box sx={{ mb: 2 }} />
+                <hr className="beautyHr" />
+                <Box mt={2}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Register
+                  </Button>
+                </Box>
+              </form>
+            </Box>
+            <hr className="beautyHr" />
+            <Box m={2}>
+              <Link to="/signup">
+                Already registered? <b>Sign In</b>
+              </Link>
+            </Box>
+          </CustomizedPaper>
+        </Box>
+      </div>
+      <div className={classes.backgroundImageDiv}>
+        <img className={classes.image} src={Enso} alt="Enso" />
+      </div>
     </div>
   );
 };

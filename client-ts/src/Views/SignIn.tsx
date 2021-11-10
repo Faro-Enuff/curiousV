@@ -10,10 +10,12 @@ import React, {
 import GoogleButton from 'react-google-button';
 
 // Internal Imports
+import Enso from '../Images/EnsoTransparent.png';
 import Loader from '../Utils/Loader';
 
 // MUI Imports
-import { Box, Paper } from '@mui/material';
+import { Button, TextField, Box, Paper, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Import Context
@@ -27,14 +29,35 @@ import { LoginUser } from '../Interfaces/interfaces';
 
 interface Props {}
 
+const CustomizedPaper = styled(Paper)`
+  width: 325px;
+`;
+
 const useStyles = makeStyles((muiTheme) => ({
+  signInWindow: {
+    overflow: 'hidden',
+  },
+  backgroundImageTopDiv: {
+    opacity: 0.6,
+  },
+  backgroundImageDiv: {
+    backgroundImage: `url(${Enso})`,
+    opacity: 0.6,
+    marginTop: '10%',
+  },
+  image: {
+    width: '300px',
+  },
   signInDiv: {
     width: '100%',
+    marginTop: '5%',
     flexGrow: 1,
     overflowY: 'auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
   signInBody: {
     display: 'flex',
@@ -60,6 +83,12 @@ const SignIn: FC = (props: Props) => {
   ////////////////////////////////////////////////////////
   // Email & Password  Login
   ////////////////////////////////////////////////////////
+
+  const handleOnSubmit = (event: any) => {
+    event.preventDefault();
+    // Get request - Backend Router
+    loginUser(user);
+  };
 
   const handleClick = (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -103,42 +132,77 @@ const SignIn: FC = (props: Props) => {
   };
 
   return (
-    <div className={classes.signInDiv}>
-      {loading && <Loader />}
-      <Box>
-        <Paper className={classes.signInBody}>
-          <Box m={2}>
-            <label>Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-            />
-          </Box>
+    <div className={classes.signInWindow}>
+      <div className={classes.backgroundImageTopDiv}>
+        <img className={classes.image} src={Enso} alt="Enso" />
+      </div>
+      <div className={classes.signInDiv}>
+        {loading && <Loader />}
+        <Box>
+          <CustomizedPaper className={classes.signInBody}>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="h4" component="h1">
+                . curiousV .
+              </Typography>
+            </Box>
+            <hr className="beautyHr" />
+            <Box m={2}>
+              <form className="form" noValidate onSubmit={handleOnSubmit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={handleChange}
+                  value={user.email}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  value={user.password}
+                />
+                <Box mt={2}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Sign In
+                  </Button>
+                </Box>
+              </form>
+            </Box>
+            <hr className="beautyHr" />
 
-          <Box m={2}>
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box m={2}>
-            <input type="submit" value="signin" onClick={handleClick} />
-          </Box>
-          <Box m={2}>
-            <Link to="/signup">
-              Don't have an account? <b>Sign Up</b>
-            </Link>
-          </Box>
-          <Box m={2}>
-            <GoogleButton type="dark" onClick={redirectToGoogleSSO} />
-          </Box>
-        </Paper>
-      </Box>
+            <Box m={2}>
+              <GoogleButton type="dark" onClick={redirectToGoogleSSO} />
+            </Box>
+
+            <Box m={2}>
+              <Link to="/signup">
+                Don't have an account? <b>Sign Up</b>
+              </Link>
+            </Box>
+          </CustomizedPaper>
+        </Box>
+      </div>
+      <div className={classes.backgroundImageDiv}>
+        <img className={classes.image} src={Enso} alt="Enso" />
+      </div>
     </div>
   );
 };

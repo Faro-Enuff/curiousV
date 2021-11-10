@@ -16,6 +16,12 @@ body {
   background-color: rgba(181, 173, 207, 0.2);
 }
 
+.beautyHr {
+  min-width: 80%;
+  border-radius: 50%;
+  box-shadow: 2px 0px 0.5px 4px #f3e5f5;
+}
+
 .header,
 .footer {
   width: 100%;

@@ -3,16 +3,26 @@ import { FC } from 'react';
 // MUI Core Imports
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 // MUI Icon Imports
 import HomeMiniIcon from '@mui/icons-material/HomeMini';
 import SearchIcon from '@mui/icons-material/Search';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
+const CustomizedBottomNavigation = styled(BottomNavigation)`
+  border-radius: 25px;
+  margin-left: 10px;
+  margin-bottom: 5%;
+  margin-right: 10px;
+  box-shadow: 3px 1px 4px 4px #f3e5f5;
+`;
+
 const useStyles = makeStyles({
   navBackground: {
     zIndex: 150,
-    width: '100%',
+    maxWidth: '100%',
+    minWidth: '95%',
   },
   bottomNav: {},
 });
@@ -24,11 +34,10 @@ const BottomNavigationCustom: FC = (props: Props) => {
 
   return (
     <Box className={classes.navBackground}>
-      <BottomNavigation
+      <CustomizedBottomNavigation
         sx={{ width: '100%' }}
         className={classes.bottomNav}
         showLabels
-        component={BottomNavigation}
       >
         <BottomNavigationAction
           href="/createSummon"
@@ -42,7 +51,7 @@ const BottomNavigationCustom: FC = (props: Props) => {
           href="/userSearch"
           icon={<SearchIcon color="secondary" />}
         />
-      </BottomNavigation>
+      </CustomizedBottomNavigation>
     </Box>
   );
 };
