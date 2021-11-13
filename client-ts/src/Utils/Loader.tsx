@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((muiTheme) => ({
   loaderDiv: {
     position: 'fixed',
-    zIndex: 150,
+    zIndex: 1000,
     top: 0,
     left: 0,
     width: '100%',

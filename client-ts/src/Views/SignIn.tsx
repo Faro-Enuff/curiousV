@@ -90,12 +90,6 @@ const SignIn: FC = (props: Props) => {
     loginUser(user);
   };
 
-  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    // Get request - Backend Router
-    loginUser(user);
-  };
-
   ////////////////////////////////////////////////////////
   // Google Login
   ////////////////////////////////////////////////////////

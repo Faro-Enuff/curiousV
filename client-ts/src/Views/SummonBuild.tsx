@@ -45,8 +45,8 @@ const SummonBuild = (props: Props) => {
   const [summonInput, setSummonInput] = useState<Summon>({
     assignmentTitle: '',
     timeFrame: [null, null],
-    startDate: '',
-    endDate: '',
+    startDate: new Date(0),
+    endDate: new Date(0),
     learningSource: '',
     learningMaterial: '',
     learningFile: null,
@@ -76,8 +76,8 @@ const SummonBuild = (props: Props) => {
     setSummonInput({
       assignmentTitle: '',
       timeFrame: [null, null],
-      startDate: '',
-      endDate: '',
+      startDate: new Date(0),
+      endDate: new Date(0),
       learningSource: '',
       learningMaterial: '',
       learningFile: null,

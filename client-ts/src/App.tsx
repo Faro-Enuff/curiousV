@@ -15,6 +15,7 @@ import SetUp from './Views/SetUp';
 import UserSearch from './Views/UserSearch';
 import Chatroom from './Views/Chatroom';
 import SummonBuild from './Views/SummonBuild';
+import CreationSubmit from './Views/CreationSubmit';
 import GoogleSuccess from './Components/Google oAuth/GoogleSuccess';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
@@ -47,6 +48,7 @@ const App: FC = () => {
                     '/setUp',
                     '/userSearch',
                     '/chatroom/:receiverId',
+                    '/creationSubmit/:id',
                   ]}
                 >
                   <AppBarCostum />
@@ -59,6 +61,11 @@ const App: FC = () => {
                 <Route path="/setUp" exact component={SetUp} />
                 <Route path="/createSummon" exact component={SummonBuild} />
                 <Route path="/userSearch" exact component={UserSearch} />
+                <Route
+                  path="/creationSubmit/:id"
+                  exact
+                  component={CreationSubmit}
+                />
                 <Route
                   path="/chatroom/:receiverId"
                   exact
@@ -75,6 +82,7 @@ const App: FC = () => {
                     '/setUp',
                     '/userSearch',
                     '/chatroom/:receiverId',
+                    '/creationSubmit/:id',
                   ]}
                 >
                   <BottomNavigationCustom />

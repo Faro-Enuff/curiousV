@@ -1,16 +1,17 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import {
   Button,
   Card,
+  Box,
   Typography,
-  CardActionArea,
   CardContent,
   CardActions,
-  CardMedia,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
+import SummonModal from '../Summon/SummonModal';
+import { Summon } from '../../Interfaces/interfaces';
 import Enso from '../../Images/Enso.png';
 
 interface Props {
@@ -21,8 +22,6 @@ interface Props {
 const CustomizedCard = styled(Card)`
   border-radius: 8px;
   box-shadow: 3px 1px 4px 4px #e0f7fa;
-  background-image: url(${Enso});
-  background-size: 1000px;
 `;
 
 const useStyles = makeStyles((muiTheme) => ({
@@ -44,18 +43,32 @@ const useStyles = makeStyles((muiTheme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '2%',
+    textAlign: 'center',
   },
   cardContent: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: '200px',
+    maxWidth: '300px',
     backgroundImage: `url(${Enso})`,
+  },
+  btnRow: {
+    marginTop: '5%',
   },
 }));
 
 const AssEqCard: FC<Props> = ({ header, body }) => {
   const classes = useStyles();
+
+  const [summon, setSummon] = useState<any>();
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleClick = (b: Summon): void => {
+    setSummon(b);
+    setOpen(true);
+  };
+  const handleClose = (): void => setOpen(false);
+
   console.log(body);
   return (
     <div className={classes.outerCard}>
@@ -66,66 +79,51 @@ const AssEqCard: FC<Props> = ({ header, body }) => {
               return (
                 <div className={classes.summonCards} key={key}>
                   <CustomizedCard>
-                    <CardActionArea>
-                      <div className={classes.heading}>
-                        <Typography variant="h6" key={key}>
-                          {b.assignmentTitle}
-                        </Typography>
+                    <div className={classes.heading}>
+                      <Typography variant="h6">{b.assignmentTitle}</Typography>
+                    </div>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <hr className="beautyHrSmall" />
+                    </Box>
+                    <CardActions className={classes.btnRow}>
+                      <Button variant="outlined" size="small" color="primary">
+                        Comment
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="primary"
+                        onClick={() => handleClick(b)}
+                      >
+                        See Details
+                      </Button>
+                      <Button variant="outlined" size="small" color="primary">
+                        Share
+                      </Button>
+                    </CardActions>
+                    <CardContent>
+                      <div className={classes.cardContent}>
+                        <ul>
+                          <li>
+                            <Typography variant="body1">
+                              {formatDistanceToNow(Date.parse(b.endDate))} left
+                            </Typography>
+                          </li>
+                        </ul>
                       </div>
-                      <CardActions>
-                        <Button variant="outlined" size="small" color="primary">
-                          Comment
-                        </Button>
-                        <Button variant="outlined" size="small" color="primary">
-                          See Details
-                        </Button>
-                        <Button variant="outlined" size="small" color="primary">
-                          Share
-                        </Button>
-                      </CardActions>
-                      <CardContent>
-                        <div className={classes.cardContent}>
-                          <ul>
-                            <li>
-                              <Typography variant="body1">
-                                {formatDistanceToNow(Date.parse(b.endDate))}{' '}
-                                left
-                              </Typography>
-                            </li>
-                            {/* <li>
-                              <Typography variant="body1">
-                                Start:{' '}
-                                {format(
-                                  Date.parse(b.startDate),
-                                  'dd. MMMM yyyy'
-                                )}
-                              </Typography>
-                            </li>
-                            <li>
-                              <Typography variant="body1">
-                                End:{' '}
-                                {format(Date.parse(b.endDate), 'dd. MMMM yyyy')}
-                              </Typography>
-                            </li> */}
-                          </ul>
-                        </div>
-                      </CardContent>
-                      {/* <CardMedia
-                        component="img"
-                        height="60"
-                        image={Enso}
-                        alt="enso"
-                      /> */}
-                    </CardActionArea>
+                    </CardContent>
                   </CustomizedCard>
                 </div>
               );
             })}
-          <Card>
-            <Typography variant="body1"></Typography>
-          </Card>
         </Card>
       </div>
+      <SummonModal input={open} setInput={handleClose} body={summon} />
     </div>
   );
 };

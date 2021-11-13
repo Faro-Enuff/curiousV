@@ -9,13 +9,13 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 // Interface Imports
-import { Summon, hobbyPostInput } from '../../Interfaces/interfaces';
+import { Creation, Summon, hobbyPostInput } from '../../Interfaces/interfaces';
 
 interface Props {
   title: string;
   value: string;
   data: string[];
-  input: Summon | hobbyPostInput;
+  input: Summon | hobbyPostInput | Creation;
   setInput: any;
 }
 

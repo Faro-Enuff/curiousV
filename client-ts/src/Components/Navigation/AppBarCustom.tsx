@@ -28,6 +28,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 const CustomizedAppBar = styled(AppBar)`
   background-color: #fafafa;
+  color: #e085c2;
   box-shadow: 3px 1px 4px 4px #f3e5f5;
 `;
 
@@ -42,6 +43,9 @@ const useStyles = makeStyles((muiTheme) => ({
     MuiPaperRootMuiAppBarRoot: {
       backgroundColor: muiTheme.palette.primary.main,
     },
+  },
+  avatarFrame: {
+    boxShadow: '1px 1px 3px 3px  #e085c2',
   },
 }));
 
@@ -61,13 +65,14 @@ const AppBarCostum = () => {
       <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
         <CustomizedAppBar position="static" color="primary">
           <Toolbar>
-            <Box>
+            <div>
               <Avatar
+                className={classes.avatarFrame}
                 src={
                   profile?.user.profileImage ? profile.user.profileImage : Enso
                 }
               />
-            </Box>
+            </div>
             <Box sx={{ flexGrow: 1 }} />
             {profile && (
               <Typography

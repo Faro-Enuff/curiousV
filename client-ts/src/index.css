@@ -16,8 +16,27 @@ body {
   background-color: rgba(181, 173, 207, 0.2);
 }
 
+hr {
+  color: #fff;
+}
+
 .beautyHr {
   min-width: 80%;
+  border-radius: 50%;
+  box-shadow: 2px 0px 0.5px 4px #f3e5f5;
+  color: #fafafa;
+}
+
+.beautyHrSmall {
+  min-width: 40%;
+  max-width: 70%;
+  border-radius: 50%;
+  box-shadow: 2px 0px 0.5px 4px #f3e5f5;
+}
+
+.beautyHrExtraSmall {
+  min-width: 10%;
+  max-width: 20%;
   border-radius: 50%;
   box-shadow: 2px 0px 0.5px 4px #f3e5f5;
 }
@@ -32,4 +51,30 @@ body {
 
 ul {
   list-style-type: none;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+/* Youtube */
+.video-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+
+.video-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.video-frame {
+  border: 1px;
+  border-radius: 15px;
+  box-shadow: 2px 0px 0.5px 4px #f3e5f5;
 }

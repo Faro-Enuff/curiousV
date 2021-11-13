@@ -30,6 +30,7 @@ const CustomizedCard = styled(Card)`
 const useStyles = makeStyles((muiTheme) => ({
   home: {
     width: '100%',
+    height: '100%',
     overflow: 'hidden',
   },
   backgroundImageTopDiv: {
@@ -138,7 +139,7 @@ const Home: FC = (props: Props) => {
                 <div className={classes.cursignmentBody}>
                   <AssEqCard
                     header={'Cursignments'}
-                    body={collectionFetch?.userCollection[0].summons}
+                    body={collectionFetch?.userCollection[0]?.summons}
                   />
                 </div>
               </CustomizedPaper>

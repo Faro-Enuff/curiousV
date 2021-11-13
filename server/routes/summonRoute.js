@@ -19,6 +19,12 @@ const router = express.Router();
 ////////////////////////////
 
 router.get(
+  '/getSummon/:id',
+  passport.authenticate('jwt', { session: false }),
+  summonController.getSummon
+);
+
+router.get(
   '/getSummons',
   passport.authenticate('jwt', { session: false }),
   summonController.getSummons

@@ -4,6 +4,7 @@ import { Button, TextField, Box, Typography, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
 // Internal Imports
+import BackgroundImage from '../Components/ReusableComponents/BackgroundImage';
 import Enso from '../Images/EnsoTransparent.png';
 import Loader from '../Utils/Loader';
 import TextfieldAuth from '../Components/AuthComponents/TextfieldAuth';
@@ -23,28 +24,6 @@ const CustomizedPaper = styled(Paper)`
 
 const useStyles = makeStyles((muiTheme) => ({
   signUpWindow: {
-    overflow: 'hidden',
-  },
-  image: {
-    width: '300px',
-    height: 'auto',
-    maxHeight: '100vh',
-    zIndex: 100,
-  },
-  backgroundImageTopDiv: {
-    opacity: 0.6,
-    height: '150px',
-    zIndex: 1,
-    position: 'absolute',
-    top: 0,
-  },
-  backgroundImageDiv: {
-    backgroundImage: `url(${Enso})`,
-    opacity: 0.6,
-    zIndex: 1,
-    position: 'absolute',
-    height: '16.1%',
-    maxHeight: '100vh',
     overflow: 'hidden',
   },
   signUpDiv: {
@@ -93,9 +72,6 @@ const SignUp = (props: Props) => {
 
   return (
     <div className={classes.signUpWindow}>
-      <div className={classes.backgroundImageTopDiv}>
-        <img className={classes.image} src={Enso} alt="Enso" />
-      </div>
       <div className={classes.signUpDiv}>
         {loading && <Loader />}
         <Box>
@@ -155,9 +131,7 @@ const SignUp = (props: Props) => {
           </CustomizedPaper>
         </Box>
       </div>
-      <div className={classes.backgroundImageDiv}>
-        <img className={classes.image} src={Enso} alt="Enso" />
-      </div>
+      <BackgroundImage />
     </div>
   );
 };

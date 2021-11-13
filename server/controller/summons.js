@@ -5,6 +5,19 @@ import * as services from '../service/service_provider.js';
 
 // GET Summon
 
+const getSummon = async (req, res) => {
+  try {
+    const paramsId = req.params.id;
+    ('    console.log(req.params.id);');
+    const userId = services.getAuthenticatedUser(req);
+
+    const userSummon = await summonModel.findById(paramsId);
+    res.status(200).send({ userSummon });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 const getSummons = async (req, res) => {
   try {
     const userId = services.getAuthenticatedUser(req);
@@ -160,4 +173,11 @@ const deleteComment = async (req, res) => {
   }
 };
 
-export { getSummons, createSummon, deleteSummon, createComment, deleteComment };
+export {
+  getSummon,
+  getSummons,
+  createSummon,
+  deleteSummon,
+  createComment,
+  deleteComment,
+};

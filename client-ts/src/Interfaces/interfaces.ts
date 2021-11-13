@@ -22,14 +22,26 @@ interface hobbyPostInput {
 
 // Summon Build - View Component
 interface Summon {
+  author?: string;
   assignmentTitle: string;
   timeFrame: any;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   learningSource: string;
   learningMaterial: string;
   learningFile: File | null;
   complexity: string;
+  _id?: string;
+}
+
+// Creations
+
+interface Creation {
+  approxTimeInvestment: string;
+  timeUnit: string;
+  funFactor: number | null;
+  file: File | null;
+  summonId: string;
 }
 
 // Chatroom - messages
@@ -53,6 +65,7 @@ export type {
   LoginUser,
   hobbyPostInput,
   Summon,
+  Creation,
   CurrentMessage,
   ChatroomUser,
 };

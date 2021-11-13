@@ -2,12 +2,12 @@ import { FC, SetStateAction, Dispatch, ChangeEvent } from 'react';
 // MUI Imports
 import { FormControl, TextField, Button } from '@mui/material';
 // Interface Imports
-import { Summon, hobbyPostInput } from '../../Interfaces/interfaces';
+import { Creation, Summon, hobbyPostInput } from '../../Interfaces/interfaces';
 
 interface Props {
   title: string;
   value: string;
-  input: Summon | hobbyPostInput;
+  input: Summon | hobbyPostInput | Creation;
   setInput: any;
 }
 

@@ -6,7 +6,7 @@ const getCollection = async (req, res) => {
     const userId = services.getAuthenticatedUser(req);
     console.log(userId);
     const userCollection = await collectionModel
-      .find({ author: userId })
+      .find({ artist: userId })
       .populate('summons')
       .exec();
 
