@@ -30,7 +30,10 @@ export const creationsSchema = new Schema(
       type: Number,
       required: true,
     },
-
+    timeUnit: {
+      type: String,
+      required: true,
+    },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     comments: [commentsSchema],
   },

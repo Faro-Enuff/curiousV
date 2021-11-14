@@ -27,7 +27,7 @@ const CustomRating: FC<Props> = ({ input, setInput }) => {
     <div>
       <Box
         sx={{
-          width: 200,
+          width: 300,
           display: 'flex',
           alignItems: 'center',
         }}
@@ -47,7 +47,7 @@ const CustomRating: FC<Props> = ({ input, setInput }) => {
           emptyIcon={<EnsoIcon />}
         />
         {value !== null && (
-          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+          <Box sx={{ ml: 3 }}>{labels[hover !== -1 ? hover : value]}</Box>
         )}
       </Box>
     </div>

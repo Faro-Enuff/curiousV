@@ -37,7 +37,7 @@ interface Summon {
 // Creations
 
 interface Creation {
-  approxTimeInvestment: string;
+  approxTimeInvestment: number;
   timeUnit: string;
   funFactor: number | null;
   file: File | null;

@@ -1,28 +1,40 @@
 // Import Multer
-import multer from "multer";
+import multer from 'multer';
 
 // Define Multer Storage
 const storageProfileImages = multer.diskStorage({
   // Destination
   destination: (req, file, cb) => {
-    cb(null, "./UploadProfileImages");
+    cb(null, './UploadProfileImages');
   },
 
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + "-" + file.originalname);
+    cb(null, uniqueSuffix + '-' + file.originalname);
   },
 });
 
 const storageSummonFiles = multer.diskStorage({
   // Destination
   destination: (req, file, cb) => {
-    cb(null, "./UploadSummonFiles");
+    cb(null, './UploadSummonFiles');
   },
 
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + "-" + file.originalname);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  },
+});
+
+const storageCreationFiles = multer.diskStorage({
+  // Destination
+  destination: (req, file, cb) => {
+    cb(null, './UploadCreationFiles');
+  },
+
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + '-' + file.originalname);
   },
 });
 
@@ -35,5 +47,11 @@ export const uploadProfileImages = multer({
 // Upload Parameters for multer
 export const uploadSummonFiles = multer({
   storage: storageSummonFiles,
+  limits: { fieldSize: 1024 * 1024 * 3 },
+});
+
+// Upload Parameters for multer
+export const uploadCreationFiles = multer({
+  storage: storageCreationFiles,
   limits: { fieldSize: 1024 * 1024 * 3 },
 });

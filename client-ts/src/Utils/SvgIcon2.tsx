@@ -11,7 +11,7 @@ const EnsoIconFilled: FC<Props> = ({ children }): JSX.Element => {
     <SvgIcon
       {...children}
       fontSize="large"
-      color="#e085c2"
+      color="warning"
       opacity="1"
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"

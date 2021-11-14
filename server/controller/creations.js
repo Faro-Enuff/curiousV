@@ -5,26 +5,31 @@ import * as services from '../service/service_provider.js';
 // Create a Creation
 
 const createCreation = async (req, res) => {
-  const userId = await services.getAuthenticatedUser(req);
-
-  const { summonId, funFactor, approxTimeInvestment, file } = req.body;
-
-  const creationObj = {
-    author: userId,
-    summon: summonId,
-    funFactor,
-    approxTimeInvestment,
-    file,
-  };
-
+  // File
+  console.log('File : >>', req.file);
+  // Body
+  console.log('Summon Req Body : >>', req.body);
   try {
+    const userId = await services.getAuthenticatedUser(req);
+
+    const { summonId, funFactor, approxTimeInvestment, timeUnit } = req.body;
+
+    const creationObj = {
+      author: userId,
+      summon: summonId,
+      funFactor,
+      approxTimeInvestment,
+      timeUnit,
+      file: req.file.filename,
+    };
+
     const newCreation = new creationModel({ ...creationObj });
 
     await newCreation.save();
 
     res.status(200).json({ newCreation });
   } catch (error) {
-    console.log('Summon/Creation Error : >>', error);
+    console.log('Creation Error : >>', error);
 
     res.status(400).json({ message: error.message });
   }
