@@ -97,7 +97,7 @@ const CreationSubmit: FC<Props> = () => {
     approxTimeInvestment: 0,
     timeUnit: '',
     funFactor: 0,
-    file: null,
+    creationFile: null,
     summonId: summon?.userSummon._id,
   });
 
@@ -108,7 +108,12 @@ const CreationSubmit: FC<Props> = () => {
   // File Upload Handler
   const fileSelectedHandler = (event: any): void => {
     if (event.target.files) {
-      handleUpload(event.target.files, creationInput, setCreationInput);
+      handleUpload(
+        event.target.files,
+        creationInput,
+        'creationFile',
+        setCreationInput
+      );
     }
     console.log(event.target.files[0]);
   };
@@ -136,7 +141,7 @@ const CreationSubmit: FC<Props> = () => {
       approxTimeInvestment: 0,
       timeUnit: '',
       funFactor: 0,
-      file: null,
+      creationFile: null,
       summonId: '',
     });
     history.push('/');
@@ -156,7 +161,7 @@ const CreationSubmit: FC<Props> = () => {
           Title: {summon?.userSummon.assignmentTitle}
         </Typography>
         <Typography variant="body1">
-          Author: {summon?.userSummon.author}
+          Author: {summon?.userSummon.author.artistName}
         </Typography>
         <div className={classes.textfieldTimeInvestment}>
           <div className={classes.textfieldWidth}>
@@ -192,7 +197,7 @@ const CreationSubmit: FC<Props> = () => {
             required
             type="file"
             id="imageUpload"
-            name="learningFile"
+            name="creationFile"
             onChange={fileSelectedHandler}
           />
           <label htmlFor="imageUpload">
@@ -215,7 +220,9 @@ const CreationSubmit: FC<Props> = () => {
           variant="body1"
           sx={{ textAlign: 'center', mt: 2 }}
         >{`Chosen File: ${
-          creationInput?.file?.name ? creationInput?.file?.name : 'none'
+          creationInput?.creationFile?.name
+            ? creationInput?.creationFile?.name
+            : 'none'
         }`}</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Button

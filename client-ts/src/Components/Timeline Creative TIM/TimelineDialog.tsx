@@ -1,91 +1,72 @@
-import React, { FC, useState, useContext } from 'react';
+import { useState, FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TransitionProps } from '@mui/material/transitions';
-// Internal Imports
+import { Backdrop, Box, Modal, Fade, Button, Typography } from '@mui/material';
+import { TimelineCreation } from '../../Interfaces/interfaces';
 
-// Icons
-import CloseIcon from '@mui/icons-material/Close';
-
-// Core Imports
-import {
-  Slide,
-  DialogTitle,
-  DialogContentText,
-  DialogContent,
-  Dialog,
-  IconButton,
-} from '@mui/material';
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 250,
+  height: 500,
+  borderRadius: '20px',
+  bgcolor: '#fff',
+  border: '1px solid #c0b3c2',
+  boxShadow: '3px 1px 4px 4px #e0f7fa',
+  p: 4,
+};
 
 const useStyles = makeStyles(() => ({
-  dialog: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '100%',
+  dialogFrame: {
+    maxWidth: '100%',
   },
-  popup: {
-    position: 'absolute',
-    bottom: 0,
-    minwidth: '100%',
-    minHeight: '90%',
-    margin: 0,
-    color: '#fff',
+  creationImage: {
+    width: '200px',
+    height: 'auto',
   },
 }));
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 interface Props {
   open: boolean;
   handleOpen: () => void;
   handleClose: () => void;
+  creationData: any[];
 }
 
-const TimelineDialog: FC<Props> = ({ open, handleOpen, handleClose }) => {
+const TimelineModal: FC<Props> = ({
+  open,
+  handleOpen,
+  handleClose,
+  creationData,
+}) => {
   const classes = useStyles();
-
+  console.log(creationData);
   return (
-    <div className={classes.dialog}>
-      {/* <Box borderRadius={5} boxShadow={3}>
-        <Button
-          variant="outlined"
-          onClick={handleClickOpen}
-          size="large"
-          className={classes.btn}
-        >
-          Diet
-        </Button>
-      </Box> */}
-      <IconButton
-        edge="start"
-        color="secondary"
-        onClick={handleClose}
-        aria-label="close"
-      >
-        <CloseIcon />
-      </IconButton>
-      <Dialog
+    <div>
+      <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         open={open}
-        fullWidth={true}
-        TransitionComponent={Transition}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        classes={{ paper: classes.popup }}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <DialogTitle id="form-dialog-title">Summon to Create:</DialogTitle>
-        <DialogContent>
-          <DialogContentText></DialogContentText>
-        </DialogContent>
-      </Dialog>
+        <Fade in={open}>
+          <Box className={classes.dialogFrame} sx={style}>
+            <img
+              className={classes.creationImage}
+              src={creationData[0].creationFile}
+              alt="Creation"
+            />
+          </Box>
+        </Fade>
+      </Modal>
     </div>
   );
 };
 
-export default TimelineDialog;
+export default TimelineModal;

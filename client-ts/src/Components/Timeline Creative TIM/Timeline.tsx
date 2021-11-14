@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -7,28 +7,40 @@ import { Avatar, Dialog } from '@mui/material';
 import Badge from './Badge';
 import { makeStyles } from '@material-ui/core/styles';
 // import Enso from '../../Images/Enso.png';
-
+import { TimelineCreation } from '../../Interfaces/interfaces';
 // core components
 import { useFetch } from '../../Utils/useFetch';
+import { fillArray } from '../Timeline Creative TIM/Creations';
 
 import styles from './TimelineStyle';
 import TimelineDialog from './TimelineDialog';
 
 interface Props {
-  Summons: any;
   simple?: any;
 }
 
 const useStyles = makeStyles<any | undefined>(styles);
 
 const Timeline: FC<Props> = (props) => {
-  const { Summons, simple } = props;
+  const { simple } = props;
   const classes = useStyles();
 
   const { apiData: creations } = useFetch(
     'get',
     'http://localhost:5000/api/creations/getCreations'
   );
+
+  const [creationsArray, setCreationsArray] = useState<TimelineCreation[] | []>(
+    []
+  );
+
+  useEffect(() => {
+    if (creations) {
+      const array = fillArray(creations.userCreations);
+      setCreationsArray(array);
+      console.log('Creations Array : >>', array);
+    }
+  }, [creations]);
 
   console.log('Creations : >>', creations);
 
@@ -52,7 +64,7 @@ const Timeline: FC<Props> = (props) => {
   return (
     <div className={classes.timeline}>
       <ul className={timelineClass}>
-        {Summons.map((prop: any, key: number) => {
+        {creationsArray.map((prop: any, key: number) => {
           const panelClasses =
             classes.timelinePanel +
             ' ' +
@@ -81,22 +93,11 @@ const Timeline: FC<Props> = (props) => {
                     open={open}
                     handleOpen={handleOpen}
                     handleClose={handleClose}
+                    creationData={creations.userCreations.filter(
+                      (creation: any) =>
+                        creation.summon.assignmentTitle === prop.title
+                    )}
                   />
-                  {/* <Dialog open={open} className={classes.assignmentDialog}>
-                  {prop.title ? (
-                    <div className={classes.timelineHeading}>
-                      <Badge color={prop.titleColor}>{prop.title}</Badge>
-                    </div>
-                  ) : null}
-                  <div className={classes.timelineBody}>{prop.body}</div>
-                  {prop.footerTitle ? (
-                    <h6 className={classes.footerTitle}>{prop.footerTitle}</h6>
-                  ) : null}
-                  {prop.footer ? <hr className={classes.footerLine} /> : null}
-                  {prop.footer ? (
-                    <div className={classes.timelineFooter}>{prop.footer}</div>
-                  ) : null}
-                </Dialog> */}
                 </div>
               ) : null}
               <div className={panelClasses}>
@@ -125,6 +126,5 @@ const Timeline: FC<Props> = (props) => {
 export default Timeline;
 
 Timeline.propTypes = {
-  Summons: PropTypes.arrayOf(PropTypes.object).isRequired,
   simple: PropTypes.bool,
 };

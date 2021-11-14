@@ -6,7 +6,6 @@ import { useFetch } from '../Utils/useFetch';
 // Internal Imports
 import Loader from '../Utils/Loader';
 import Timeline from '../Components/Timeline Creative TIM/Timeline';
-import Summons from '../Components/Timeline Creative TIM/Summons';
 import AssEqCard from '../Components/ReusableComponents/AssEqCard';
 import Enso from '../Images/EnsoTransparent.png';
 // MUI Core Imports
@@ -94,21 +93,19 @@ const Home: FC = (props: Props) => {
   const classes = useStyles();
 
   // Hobbies useFetch API
-  const { isLoading, apiData: user } = useFetch(
+  const { isLoading: loaderUserHobby, apiData: user } = useFetch(
     'get',
     'http://localhost:5000/api/users/getUserHobby'
   );
   console.log(user);
 
-  const { apiData: collectionFetch } = useFetch(
-    'get',
-    'http://localhost:5000/api/collections/getUserCollection'
-  );
+  const { isLoading: loaderUserCollection, apiData: collectionFetch } =
+    useFetch('get', 'http://localhost:5000/api/collections/getUserCollection');
   console.log('Collection Fetch : >>', collectionFetch);
 
   return (
     <div className={classes.home}>
-      {isLoading && <Loader />}
+      {loaderUserHobby && loaderUserCollection && <Loader />}
       {/* <div className={classes.backgroundImageTopDiv}>
         <img className={classes.backgroundImage} src={Enso} alt="Enso" />
       </div> */}
@@ -123,7 +120,7 @@ const Home: FC = (props: Props) => {
             <Box sx={{ flexGrow: 3 }}>
               <CustomizedPaper>
                 <div className={classes.timelineBody}>
-                  <Timeline Summons={Summons} />
+                  <Timeline />
                 </div>
               </CustomizedPaper>
             </Box>

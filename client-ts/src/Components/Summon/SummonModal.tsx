@@ -93,7 +93,9 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
         <Box sx={style} className={classes.modal}>
           <div className={classes.modalHeading}>
             <Typography variant="h3">{body?.assignmentTitle}</Typography>
-            <Typography variant="h6">{body?.author}</Typography>
+            <Typography variant="h6">
+              Summon Author: {body?.author?.artistName}
+            </Typography>
             <Box sx={{ mt: 4, mb: 4 }}>
               <hr className="beautyHr" />
             </Box>

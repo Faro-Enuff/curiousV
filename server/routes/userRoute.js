@@ -1,15 +1,15 @@
 // Import Express
-import express from "express";
+import express from 'express';
 // Import Passport
-import passport from "passport";
+import passport from 'passport';
 // Import Multer Upload Config
-import { uploadProfileImages } from "../Middleware/MulterConfig.js";
+import { uploadProfileImages } from '../Middleware/MulterConfig.js';
 // Import Services
-import * as services from "../service/service_provider.js";
+import * as services from '../service/service_provider.js';
 // Import Controller Functions
-import * as userController from "../controller/users.js";
+import * as userController from '../controller/users.js';
 // Import .env
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 // Create Instance of the express router
 const router = express.Router();
@@ -22,7 +22,7 @@ const router = express.Router();
 ////////////////////////////
 ////////////////////////////
 
-router.post("/register", userController.registerUser);
+router.post('/register', userController.registerUser);
 
 ////////////////////////////
 ////////////////////////////
@@ -32,7 +32,7 @@ router.post("/register", userController.registerUser);
 ////////////////////////////
 ////////////////////////////
 
-router.post("/signin", userController.signInUser);
+router.post('/signin', userController.signInUser);
 
 ////////////////////////////
 ////////////////////////////
@@ -42,20 +42,20 @@ router.post("/signin", userController.signInUser);
 ////////////////////////////
 ////////////////////////////
 
-const successLoginUrl = "http://localhost:3000/google/success";
-const errorLoginUrl = "http://localhost:3000/google/failure";
+const successLoginUrl = 'http://localhost:3000/google/success';
+const errorLoginUrl = 'http://localhost:3000/google/failure';
 
 // Check for Google User - Authentication
 router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 // Callback
 router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureMessage: "Cannot login to Google, please try again later!",
-    successMessage: "You are successfully logged in !",
+  '/google/callback',
+  passport.authenticate('google', {
+    failureMessage: 'Cannot login to Google, please try again later!',
+    successMessage: 'You are successfully logged in !',
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
   })
@@ -64,7 +64,7 @@ router.get(
 // Authorize authenticated Google account -> create JWT Token
 
 router.get(
-  "/google/signIn",
+  '/google/signIn',
   services.isUserAuthenticated,
   userController.googleUser
 );
@@ -79,15 +79,15 @@ router.get(
 
 // Specific User
 router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
   userController.profileDetail
 );
 
 // Array of all Users !!! besides the logged in user !!!
 router.get(
-  "/allUsers",
-  passport.authenticate("jwt", { session: false }),
+  '/allUsers',
+  passport.authenticate('jwt', { session: false }),
   userController.userArray
 );
 ////////////////////////////
@@ -99,9 +99,9 @@ router.get(
 ////////////////////////////
 
 router.post(
-  "/uploadProfileImage",
-  passport.authenticate("jwt", { session: false }),
-  uploadProfileImages.single("profileImage"),
+  '/uploadProfileImage',
+  passport.authenticate('jwt', { session: false }),
+  uploadProfileImages.single('profileImage'),
   userController.updateImage
 );
 
@@ -114,14 +114,14 @@ router.post(
 ////////////////////////////
 
 router.post(
-  "/addHobby",
-  passport.authenticate("jwt", { session: false }),
+  '/addHobby',
+  passport.authenticate('jwt', { session: false }),
   userController.addHobby
 );
 
 router.get(
-  "/getUserHobby",
-  passport.authenticate("jwt", { session: false }),
+  '/getUserHobby',
+  passport.authenticate('jwt', { session: false }),
   userController.getUserHobby
 );
 

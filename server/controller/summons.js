@@ -11,7 +11,9 @@ const getSummon = async (req, res) => {
     ('    console.log(req.params.id);');
     const userId = services.getAuthenticatedUser(req);
 
-    const userSummon = await summonModel.findById(paramsId);
+    const userSummon = await summonModel
+      .findById(paramsId)
+      .populate({ path: 'author', select: 'artistName' });
     res.status(200).send({ userSummon });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -62,7 +64,9 @@ const createSummon = async (req, res) => {
       endDate,
       learningSource,
       learningMaterial,
-      learningFile: req.file.filename,
+      learningFile: `${
+        'http://localhost:5000/' + req.file.fieldname + '/' + req.file.filename
+      }`,
       complexity,
     });
 

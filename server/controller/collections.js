@@ -4,10 +4,20 @@ import * as services from '../service/service_provider.js';
 const getCollection = async (req, res) => {
   try {
     const userId = services.getAuthenticatedUser(req);
+
     console.log(userId);
+
+    const populateQuery = [
+      {
+        path: 'summons',
+        populate: { path: 'author', select: 'artistName' },
+        strictPopulate: false,
+      },
+    ];
+
     const userCollection = await collectionModel
       .find({ artist: userId })
-      .populate('summons')
+      .populate(populateQuery)
       .exec();
 
     console.log('User Collection : >>', userCollection);

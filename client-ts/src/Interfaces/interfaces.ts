@@ -21,8 +21,13 @@ interface hobbyPostInput {
 }
 
 // Summon Build - View Component
+
+interface Author {
+  id: string;
+  artistName: string;
+}
 interface Summon {
-  author?: string;
+  author?: Author;
   assignmentTitle: string;
   timeFrame: any;
   startDate: Date;
@@ -40,8 +45,17 @@ interface Creation {
   approxTimeInvestment: number;
   timeUnit: string;
   funFactor: number | null;
-  file: File | null;
+  creationFile: File | null;
   summonId: string;
+}
+
+interface TimelineCreation {
+  inverted: boolean;
+  badgeColor: string;
+  Avatar: string;
+  title: string;
+  titleColor: string;
+  body: JSX.Element;
 }
 
 // Chatroom - messages
@@ -68,4 +82,5 @@ export type {
   Creation,
   CurrentMessage,
   ChatroomUser,
+  TimelineCreation,
 };

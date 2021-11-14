@@ -18,7 +18,7 @@ export const creationsSchema = new Schema(
       required: true,
       ref: 'summon',
     },
-    file: {
+    creationFile: {
       type: String,
       required: true,
     },

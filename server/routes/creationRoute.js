@@ -14,7 +14,7 @@ const router = express.Router();
 router.post(
   '/createCreation',
   passport.authenticate('jwt', { session: false }),
-  uploadCreationFiles.single('file'),
+  uploadCreationFiles.single('creationFile'),
   creationController.createCreation
 );
 

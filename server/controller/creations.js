@@ -8,7 +8,7 @@ const createCreation = async (req, res) => {
   // File
   console.log('File : >>', req.file);
   // Body
-  console.log('Summon Req Body : >>', req.body);
+  console.log('Creation Req Body : >>', req.body);
   try {
     const userId = await services.getAuthenticatedUser(req);
 
@@ -20,7 +20,9 @@ const createCreation = async (req, res) => {
       funFactor,
       approxTimeInvestment,
       timeUnit,
-      file: req.file.filename,
+      creationFile: `${
+        'http://localhost:5000/' + req.file.fieldname + '/' + req.file.filename
+      }`,
     };
 
     const newCreation = new creationModel({ ...creationObj });

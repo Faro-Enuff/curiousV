@@ -120,7 +120,9 @@ app.use('/api/collections', collectionRoutes);
 // Local Storage for Profile Images
 app.use('/profileImage', express.static('UploadProfileImages'));
 // Local Storage for Summon Files
-app.use('/summonFile', express.static('UploadSummonFiles'));
+app.use('/learningFile', express.static('UploadSummonFiles'));
+// Local Storage for Creation files
+app.use('/creationFile', express.static('UploadCreationsFiles'));
 
 ////////////////////////
 ////////////////////////
