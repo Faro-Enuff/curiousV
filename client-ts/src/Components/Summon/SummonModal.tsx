@@ -124,7 +124,10 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
                 justifyContent: 'center',
               }}
             >
-              <Link to={`/creationSubmit/${body?._id}`}>
+              <Link
+                style={{ textDecoration: 'none' }}
+                to={`/creationSubmit/${body?._id}`}
+              >
                 <Button variant="contained">CREATE</Button>
               </Link>
             </Box>
