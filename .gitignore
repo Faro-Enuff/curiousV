@@ -7,6 +7,7 @@ node_modules/
 
 UploadProfileImages
 UploadSummonFiles
+UploadCreationsFiles
 
 # Connect MongoDB with Mongoose
 keys.js
