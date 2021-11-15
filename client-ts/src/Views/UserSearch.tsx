@@ -11,19 +11,24 @@ import { ChatContext } from '../Context/chatContext';
 // Interface Imports
 import { ChatroomUser } from '../Interfaces/interfaces';
 import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
 interface Props {}
 
+const CustomizedPaper = styled(Paper)`
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px 4px #c3d3d1;
+  margin: 15px;
+  margin-top: 10%;
+  padding: 20px;
+`;
+
 const useStyles = makeStyles({
-  searchDiv: {
-    width: '90%',
-    flexGrow: 1,
-    overflowY: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '5%',
-    marginBottom: '5%',
+  userSearchWindow: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    borderRadius: '15px',
   },
-  paperDiv: {},
 });
 
 const UserSearch: FC<Props> = () => {
@@ -55,36 +60,49 @@ const UserSearch: FC<Props> = () => {
   };
 
   return (
-    <div className={classes.searchDiv}>
+    <div className={classes.userSearchWindow}>
       {isLoading && <Loader />}
-      <Box className="userSearch">
-        <Paper className={classes.paperDiv}>
-          <Box sx={{ ml: 5, pt: 2, pb: 1 }}>
-            <Typography variant="h4">User Search: </Typography>
-            <ul>
-              {apiData?.users &&
-                apiData.users.map((user: ChatroomUser) => (
-                  <li key={user._id}>
-                    <Box sx={{ display: 'flex', mt: 5, mb: 5 }}>
-                      <Box>
-                        <Avatar src={user.profileImage} />
-                      </Box>
-                      <Box sx={{ ml: 2 }}>
-                        <Typography
-                          variant="h6"
-                          id={user.artistName}
-                          onClick={onClickHandler}
-                        >
-                          {user.artistName}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </li>
-                ))}
-            </ul>
+
+      <CustomizedPaper>
+        <Box>
+          <Typography
+            sx={{ textAlign: 'center' }}
+            color="secondary"
+            variant="h4"
+          >
+            User Search
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <hr className="beautyHr" />
           </Box>
-        </Paper>
-      </Box>
+          <ul>
+            {apiData?.users &&
+              apiData.users.map((user: ChatroomUser) => (
+                <li key={user._id}>
+                  <Box sx={{ display: 'flex', mt: 5, mb: 5 }}>
+                    <Box>
+                      <Avatar src={user.profileImage} />
+                    </Box>
+                    <Box sx={{ ml: 2 }}>
+                      <Typography
+                        variant="h6"
+                        id={user.artistName}
+                        onClick={onClickHandler}
+                      >
+                        {user.artistName}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </li>
+              ))}
+          </ul>
+        </Box>
+      </CustomizedPaper>
     </div>
   );
 };

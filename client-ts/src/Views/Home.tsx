@@ -20,10 +20,10 @@ interface Props {}
 const CustomizedPaper = styled(Paper)`
   border-radius: 15px;
 `;
+
 const CustomizedCard = styled(Card)`
-  border-radius: 8px;
-  margin-bottom: 5%;
-  margin-top: 3%;
+  border-radius: 150px;
+  margin: '5%';
   box-shadow: 2px 2px 4px 4px #c3d3d1;
 `;
 
@@ -57,7 +57,8 @@ const useStyles = makeStyles((muiTheme) => ({
     overflowY: 'auto',
     maxHeight: '320px',
     marginBottom: '10%',
-    borderRadius: '10px',
+    marginTop: '8%',
+    borderRadius: '15px',
     boxShadow: '2px 2px 4px 4px #c3d3d1',
   },
   cursignmentBody: {
@@ -66,9 +67,10 @@ const useStyles = makeStyles((muiTheme) => ({
   timeline: {
     flex: 1,
     overflowY: 'auto',
-    maxHeight: '200px',
+    maxHeight: '270px',
     marginBottom: '5%',
-    borderRadius: '10px',
+    marginTop: '3%',
+    borderRadius: '15px',
     boxShadow: '2px 2px 4px 4px #c3d3d1',
   },
   timelineBody: {
@@ -112,28 +114,53 @@ const Home: FC = (props: Props) => {
       </div> */}
       <div className={classes.homeDiv}>
         <div className={classes.test}>
-          <CustomizedCard>
-            <Typography variant="h4" textAlign={'center'}>
-              Timeline
-            </Typography>
-          </CustomizedCard>
           <div className={classes.timeline}>
             <Box sx={{ flexGrow: 3 }}>
               <CustomizedPaper>
+                <Typography
+                  color="secondary"
+                  variant="h4"
+                  textAlign={'center'}
+                  sx={{ p: 2 }}
+                >
+                  Timeline
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    pb: 1,
+                  }}
+                >
+                  <hr className="beautyHr" />
+                </Box>
                 <div className={classes.timelineBody}>
                   <Timeline />
                 </div>
               </CustomizedPaper>
             </Box>
           </div>
-          <CustomizedCard>
-            <Typography variant="h4" textAlign={'center'}>
-              Cursignments
-            </Typography>
-          </CustomizedCard>
+          <CustomizedCard></CustomizedCard>
           <div className={classes.cursignment}>
             <Box sx={{ flexGrow: 3 }}>
               <CustomizedPaper>
+                <Typography
+                  sx={{ p: 2 }}
+                  variant="h4"
+                  color="secondary"
+                  textAlign={'center'}
+                >
+                  Cursignments
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    pb: 1,
+                  }}
+                >
+                  <hr className="beautyHr" />
+                </Box>
                 <div className={classes.cursignmentBody}>
                   <AssEqCard
                     header={'Cursignments'}
@@ -143,6 +170,7 @@ const Home: FC = (props: Props) => {
               </CustomizedPaper>
             </Box>
           </div>
+          <CustomizedCard></CustomizedCard>
         </div>
       </div>
       <div className={classes.backgroundImageDiv}>

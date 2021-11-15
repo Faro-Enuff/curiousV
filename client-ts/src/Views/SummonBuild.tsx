@@ -7,8 +7,9 @@ import TextfieldShort from '../Components/ReusableComponents/TextfieldShort';
 import DateRangePicker from '../Components/Summon/DateRangePicker';
 import Dropdown from '../Components/ReusableComponents/Dropdown';
 // MUI Imports
+import { Paper, Box, Button, Input, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Box, Button, Input } from '@mui/material';
 // MUI Icons Import
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 // Interface Imports
@@ -19,12 +20,19 @@ interface Props {}
 const useStyles = makeStyles({
   buildDiv: {
     width: '90%',
+    height: '80%',
     flexGrow: 1,
     overflowY: 'auto',
     marginTop: '5%',
     marginBottom: '5%',
+    borderRadius: '15px',
+    boxShadow: '2px 2px 4px 4px #c3d3d1',
   },
 });
+
+const CustomizedPaper = styled(Paper)`
+  border-radius: 15px;
+`;
 
 const SummonBuild = (props: Props) => {
   const classes = useStyles();
@@ -104,8 +112,25 @@ const SummonBuild = (props: Props) => {
 
   return (
     <div className={classes.buildDiv}>
-      <Paper>
+      <CustomizedPaper>
         <Box sx={{ pt: 0.1, pb: 0.1 }}>
+          <Box m={2}>
+            <Typography
+              color="secondary"
+              variant="h4"
+              sx={{ textAlign: 'center' }}
+            >
+              Build Your Cursignment
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <hr className="beautyHr" />
+          </Box>
           <Box m={2}>
             <TextfieldShort
               title={'NAME YOUR CURSIGNMENT'}
@@ -139,13 +164,26 @@ const SummonBuild = (props: Props) => {
                 onChange={fileSelectedHandler}
               />
               <label htmlFor="imageUpload">
-                <FileUploadIcon
-                  color="secondary"
-                  fontSize="large"
-                  style={{ cursor: 'pointer' }}
-                />
+                <Button
+                  variant="contained"
+                  size="small"
+                  component="span"
+                  color={'secondary'}
+                >
+                  <FileUploadIcon
+                    color="primary"
+                    fontSize="medium"
+                    style={{ cursor: 'pointer' }}
+                  />
+                  {`   File Upload`}
+                </Button>
               </label>
             </form>
+            <Typography variant="body1" sx={{ mt: 2 }}>{`Chosen File: ${
+              summonInput?.learningFile?.name
+                ? summonInput?.learningFile?.name
+                : 'none'
+            }`}</Typography>
           </Box>
           <Box m={2}>
             <Dropdown
@@ -156,20 +194,36 @@ const SummonBuild = (props: Props) => {
               setInput={setSummonInput}
             />
           </Box>
-          <Box m={2}>
+          <Box sx={{ ml: 2, mb: 5, mr: 2 }}>
             <DateRangePicker
               title={'CHOOSE YOUR TIME FRAME'}
               input={summonInput}
               setInput={setSummonInput}
             />
           </Box>
-          <Box m={2}>
-            <Button onClick={onClickHandler} variant="outlined">
-              Create Your CURSIGNMENT
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <hr className="beautyHr" />
+          </Box>
+          <Box
+            sx={{
+              mt: 3,
+              mb: 3,
+              ml: 2,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Button onClick={onClickHandler} size="large" variant="contained">
+              CREATE
             </Button>
           </Box>
         </Box>
-      </Paper>
+      </CustomizedPaper>
     </div>
   );
 };

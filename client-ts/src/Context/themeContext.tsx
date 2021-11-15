@@ -66,6 +66,12 @@ export const ThemeContextProvider: FC<Props> = ({ children }) => {
         dark: '#c0b3c2',
         contrastText: '#fff',
       },
+      info: {
+        light: 'EFE3D0',
+        main: '#D9CAB3',
+        dark: '#6c6559',
+        contrastText: '#fff',
+      },
     },
   });
 

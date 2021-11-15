@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { styled, Box } from '@mui/system';
-import { Button, IconButton, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../../Utils/Loader';
@@ -132,16 +131,6 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
               >
                 <Button variant="contained">CREATE</Button>
               </Link>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <IconButton
-                edge="end"
-                color="inherit"
-                onClick={setInput}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
             </Box>
           </div>
         </Box>
