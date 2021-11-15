@@ -59,7 +59,7 @@ const useStyles = makeStyles((muiTheme) => ({
     marginBottom: '10%',
     marginTop: '8%',
     borderRadius: '15px',
-    boxShadow: '2px 2px 4px 4px #c3d3d1',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
   cursignmentBody: {
     flex: 1,
@@ -71,7 +71,7 @@ const useStyles = makeStyles((muiTheme) => ({
     marginBottom: '5%',
     marginTop: '3%',
     borderRadius: '15px',
-    boxShadow: '2px 2px 4px 4px #c3d3d1',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
   timelineBody: {
     paddingLeft: '5%',
