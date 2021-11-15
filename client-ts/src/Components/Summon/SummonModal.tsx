@@ -1,44 +1,34 @@
 import React, { FC } from 'react';
-import { styled, Box } from '@mui/system';
-import { Button, Typography } from '@mui/material';
+import { Backdrop, Box, Modal, Fade, Button, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../../Utils/Loader';
-import ModalUnstyled from '@mui/core/ModalUnstyled';
 import YoutubeEmbed from '../ReusableComponents/YoutubeEmbed';
 import { Summon } from '../../Interfaces/interfaces';
 import { Link } from 'react-router-dom';
 
-const StyledModal = styled(ModalUnstyled)`
-  position: fixed;
-  background-color: #c0b3c2;
-  z-index: 100;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Backdrop = styled('div')`
-  z-index: 100;
-  position: fixed;
-  right: 15;
-  bottom: 15;
-  top: 15;
-  left: 15;
-`;
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 300,
+  height: 600,
+  borderRadius: '20px',
+  bgcolor: '#fff',
+  boxShadow: '3px 1px 4px 4px #87A8A4',
+  p: 2,
+};
 
 const useStyles = makeStyles({
-  modal: {
+  dialogFrame: {
     maxHeight: '100%',
     overflow: 'hidden',
+    boxShadow: '3px 1px 4px 4px #87A8A4',
   },
   modalContent: {
     minHeight: '40%',
-    maxHeight: '300px',
+    maxHeight: '500px',
     overflow: 'auto',
     marginBottom: '5%',
   },
@@ -47,17 +37,6 @@ const useStyles = makeStyles({
     minHeight: '20%',
   },
 });
-
-const style = {
-  maxWidth: '80%',
-  height: '70%',
-  bgcolor: '#fff',
-  borderRadius: '20px',
-  p: 3,
-  px: 3,
-  pb: 3,
-};
-
 interface Props {
   input: boolean;
   setInput: any;
@@ -87,54 +66,64 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
 
   return (
     <div>
-      {body && <Loader />}
-      <StyledModal open={input} onClose={setInput} BackdropComponent={Backdrop}>
-        <Box sx={style} className={classes.modal}>
-          <div className={classes.modalHeading}>
-            <Typography variant="h3">{body?.assignmentTitle}</Typography>
-            <Typography variant="h6">
-              Summon Author: {body?.author?.artistName}
-            </Typography>
-            <Box sx={{ mt: 4, mb: 4 }}>
-              <hr className="beautyHr" />
-            </Box>
-          </div>
-          <div className={classes.modalContent}>
-            <YoutubeEmbed embedId={embedId} />
-            <Box sx={{ mt: 4, mb: 4 }}>
-              <ul>
-                <li>
-                  <Typography variant="h6">Time Frame</Typography>
-                  <Typography variant="body1">
-                    Start:
-                    {}
-                  </Typography>
-                </li>
-                <li>
-                  <Typography variant="body1">
-                    End:
-                    {}
-                  </Typography>
-                </li>
-              </ul>
-            </Box>
-            <Box
-              sx={{
-                m: 2,
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <Link
-                style={{ textDecoration: 'none' }}
-                to={`/creationSubmit/${body?._id}`}
+      {input && <Loader />}
+      <Modal
+        open={input}
+        onClose={setInput}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={input}>
+          <Box className={classes.dialogFrame} sx={style}>
+            <div className={classes.modalHeading}>
+              <Typography variant="h3">{body?.assignmentTitle}</Typography>
+              <Typography variant="h6">
+                Summon Author: {body?.author?.artistName}
+              </Typography>
+              <Box sx={{ mt: 4, mb: 4 }}>
+                <hr className="beautyHr" />
+              </Box>
+            </div>
+            <div className={classes.modalContent}>
+              <YoutubeEmbed embedId={embedId} />
+              <Box sx={{ mt: 4, mb: 4 }}>
+                <ul>
+                  <li>
+                    <Typography variant="h6">Time Frame</Typography>
+                    <Typography variant="body1">
+                      Start:
+                      {}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body1">
+                      End:
+                      {}
+                    </Typography>
+                  </li>
+                </ul>
+              </Box>
+              <Box
+                sx={{
+                  mb: 2,
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
               >
-                <Button variant="contained">CREATE</Button>
-              </Link>
-            </Box>
-          </div>
-        </Box>
-      </StyledModal>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  to={`/creationSubmit/${body?._id}`}
+                >
+                  <Button variant="contained">CREATE</Button>
+                </Link>
+              </Box>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
     </div>
   );
 };

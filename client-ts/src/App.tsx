@@ -9,6 +9,7 @@ import { ChatContextProvider } from './Context/chatContext';
 // MUI imports
 import { makeStyles } from '@material-ui/core/styles';
 // Internal Imports
+import Enso from './Images/EnsoTransparent.png';
 import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
@@ -21,6 +22,7 @@ import GoogleSuccess from './Components/Google oAuth/GoogleSuccess';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
 import { ThemeContextProvider } from './Context/themeContext';
+import BackgroundImageApp from './Utils/BackgroundImageApp';
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -30,6 +32,7 @@ const useStyles = makeStyles((muiTheme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 3,
   },
 }));
 
@@ -97,6 +100,7 @@ const App: FC = () => {
                     </Route>
                   </div>
                 </div>
+                <BackgroundImageApp />
               </ChatContextProvider>
             </CreationContextProvider>
           </SummonContextProvider>

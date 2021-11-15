@@ -77,19 +77,6 @@ const useStyles = makeStyles((muiTheme) => ({
     paddingLeft: '5%',
     paddingRight: '5%',
   },
-  backgroundImageDiv: {
-    opacity: 0.6,
-    height: '15%',
-    zIndex: 1,
-    position: 'absolute',
-    bottom: 0,
-    overflow: 'hidden',
-  },
-  backgroundImage: {
-    width: '100%',
-    height: 'auto',
-    zIndex: 1,
-  },
 }));
 
 const Home: FC = (props: Props) => {
@@ -172,9 +159,6 @@ const Home: FC = (props: Props) => {
           </div>
           <CustomizedCard></CustomizedCard>
         </div>
-      </div>
-      <div className={classes.backgroundImageDiv}>
-        <img className={classes.backgroundImage} src={Enso} alt="Enso" />
       </div>
     </div>
   );
