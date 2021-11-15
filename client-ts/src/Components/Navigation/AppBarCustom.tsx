@@ -28,7 +28,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 const CustomizedAppBar = styled(AppBar)`
   background-color: #fafafa;
-  color: #e085c2;
+  color: #986d8e;
   box-shadow: 3px 1px 4px 4px #f3e5f5;
 `;
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((muiTheme) => ({
     },
   },
   avatarFrame: {
-    boxShadow: '1px 1px 3px 3px  #e085c2',
+    boxShadow: '1px 1px 3px 3px  #986D8E',
   },
 }));
 

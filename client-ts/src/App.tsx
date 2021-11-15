@@ -20,6 +20,7 @@ import CreationSubmit from './Views/CreationSubmit';
 import GoogleSuccess from './Components/Google oAuth/GoogleSuccess';
 import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
+import { ThemeContextProvider } from './Context/themeContext';
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -36,69 +37,71 @@ const App: FC = () => {
   const classes = useStyles();
   return (
     <Router>
-      <AuthContextProvider>
-        <SummonContextProvider>
-          <CreationContextProvider>
-            <ChatContextProvider>
-              <div className={classes.app}>
-                <div className={'header'}>
-                  <Route
-                    exact
-                    path={[
-                      '/',
-                      '/createSummon',
-                      '/setUp',
-                      '/userSearch',
-                      '/chatroom/:receiverId',
-                      '/creationSubmit/:id',
-                    ]}
-                  >
-                    <AppBarCostum />
-                  </Route>
+      <ThemeContextProvider>
+        <AuthContextProvider>
+          <SummonContextProvider>
+            <CreationContextProvider>
+              <ChatContextProvider>
+                <div className={classes.app}>
+                  <div className={'header'}>
+                    <Route
+                      exact
+                      path={[
+                        '/',
+                        '/createSummon',
+                        '/setUp',
+                        '/userSearch',
+                        '/chatroom/:receiverId',
+                        '/creationSubmit/:id',
+                      ]}
+                    >
+                      <AppBarCostum />
+                    </Route>
+                  </div>
+                  <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/signin" exact component={SignIn} />
+                    <Route path="/signup" exact component={SignUp} />
+                    <Route path="/setUp" exact component={SetUp} />
+                    <Route path="/createSummon" exact component={SummonBuild} />
+                    <Route path="/userSearch" exact component={UserSearch} />
+                    <Route
+                      path="/creationSubmit/:id"
+                      exact
+                      component={CreationSubmit}
+                    />
+                    <Route
+                      path="/chatroom/:receiverId"
+                      exact
+                      component={Chatroom}
+                    />
+                    <Route
+                      path="/google/success"
+                      exact
+                      component={GoogleSuccess}
+                    />
+                  </Switch>
+                  <div className={'footer'}>
+                    <Route
+                      exact
+                      path={[
+                        '/',
+                        '/createSummon',
+                        '/setUp',
+                        '/userSearch',
+                        '/chatroom/:receiverId',
+                        '/creationSubmit/:id',
+                      ]}
+                    >
+                      <BottomNavigationCustom />
+                    </Route>
+                  </div>
                 </div>
-                <Switch>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/signin" exact component={SignIn} />
-                  <Route path="/signup" exact component={SignUp} />
-                  <Route path="/setUp" exact component={SetUp} />
-                  <Route path="/createSummon" exact component={SummonBuild} />
-                  <Route path="/userSearch" exact component={UserSearch} />
-                  <Route
-                    path="/creationSubmit/:id"
-                    exact
-                    component={CreationSubmit}
-                  />
-                  <Route
-                    path="/chatroom/:receiverId"
-                    exact
-                    component={Chatroom}
-                  />
-                  <Route
-                    path="/google/success"
-                    exact
-                    component={GoogleSuccess}
-                  />
-                </Switch>
-                <div className={'footer'}>
-                  <Route
-                    exact
-                    path={[
-                      '/',
-                      '/createSummon',
-                      '/setUp',
-                      '/userSearch',
-                      '/chatroom/:receiverId',
-                      '/creationSubmit/:id',
-                    ]}
-                  >
-                    <BottomNavigationCustom />
-                  </Route>
-                </div>
-              </div>
-            </ChatContextProvider>
-          </CreationContextProvider>
-        </SummonContextProvider>
-      </AuthContextProvider>
+              </ChatContextProvider>
+            </CreationContextProvider>
+          </SummonContextProvider>
+        </AuthContextProvider>
+      </ThemeContextProvider>
     </Router>
   );
 };

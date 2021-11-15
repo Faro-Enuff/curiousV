@@ -12,11 +12,11 @@ const style = {
   height: 500,
   borderRadius: '20px',
   bgcolor: '#fff',
-  boxShadow: '3px 1px 4px 4px #e0f7fa',
+  boxShadow: '3px 1px 4px 4px #87A8A4',
   p: 6,
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((muiTheme) => ({
   dialogFrame: {
     maxWidth: '100%',
     overflow: 'hidden',
@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   },
   titleRow: {
     fontWeight: 'bold',
-    color: '#c0b3c2',
+    color: '#986D8E',
     margin: '5%',
     padding: 5,
     height: '80px',
@@ -55,12 +55,12 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   btnRow: {
     margin: '5%',
     height: '50px',
-    width: '100%',
+    width: '60%',
     backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
@@ -109,8 +109,6 @@ const TimelineModal: FC<Props> = ({
     <div>
       <Button onClick={handleOpen}>Open modal</Button>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -135,10 +133,10 @@ const TimelineModal: FC<Props> = ({
                 />
               </div>
               <div className={classes.btnRow}>
-                <Button variant="outlined" size="medium">
+                <Button variant="outlined" color="secondary" size="small">
                   Comment
                 </Button>
-                <Button variant="outlined" size="medium">
+                <Button variant="contained" color="secondary" size="small">
                   Share
                 </Button>
               </div>

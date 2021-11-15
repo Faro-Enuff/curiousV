@@ -21,7 +21,7 @@ interface Props {
 
 const CustomizedCard = styled(Card)`
   border-radius: 8px;
-  box-shadow: 3px 1px 4px 4px #e0f7fa;
+  box-shadow: 2px 2px 4px 4px #d5c4d1;
 `;
 
 const useStyles = makeStyles((muiTheme) => ({
@@ -54,6 +54,9 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   btnRow: {
     marginTop: '5%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -91,18 +94,18 @@ const AssEqCard: FC<Props> = ({ header, body }) => {
                       <hr className="beautyHrSmall" />
                     </Box>
                     <CardActions className={classes.btnRow}>
-                      <Button variant="outlined" size="small" color="primary">
+                      <Button variant="outlined" size="small" color="secondary">
                         Comment
                       </Button>
                       <Button
                         variant="outlined"
                         size="small"
-                        color="primary"
+                        color="secondary"
                         onClick={() => handleClick(b)}
                       >
                         See Details
                       </Button>
-                      <Button variant="outlined" size="small" color="primary">
+                      <Button variant="outlined" size="small" color="secondary">
                         Share
                       </Button>
                     </CardActions>

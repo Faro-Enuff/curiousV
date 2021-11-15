@@ -23,7 +23,8 @@ const CustomizedPaper = styled(Paper)`
 const CustomizedCard = styled(Card)`
   border-radius: 8px;
   margin-bottom: 5%;
-  box-shadow: 3px 1px 4px 4px #e0f7fa;
+  margin-top: 3%;
+  box-shadow: 2px 2px 4px 4px #c3d3d1;
 `;
 
 const useStyles = makeStyles((muiTheme) => ({
@@ -57,7 +58,7 @@ const useStyles = makeStyles((muiTheme) => ({
     maxHeight: '320px',
     marginBottom: '10%',
     borderRadius: '10px',
-    boxShadow: '3px 1px 4px 4px #e0f7fa',
+    boxShadow: '2px 2px 4px 4px #c3d3d1',
   },
   cursignmentBody: {
     flex: 1,
@@ -68,7 +69,7 @@ const useStyles = makeStyles((muiTheme) => ({
     maxHeight: '200px',
     marginBottom: '5%',
     borderRadius: '10px',
-    boxShadow: '3px 1px 4px 4px #e0f7fa',
+    boxShadow: '2px 2px 4px 4px #c3d3d1',
   },
   timelineBody: {
     paddingLeft: '5%',

@@ -32,13 +32,13 @@ const badgeStyle: any = {
     backgroundColor: dangerColor[0],
   },
   success: {
-    backgroundColor: successColor[0],
+    backgroundColor: '#D9CAB3',
   },
   info: {
     backgroundColor: infoColor[0],
   },
   rose: {
-    backgroundColor: roseColor[0],
+    backgroundColor: '#D9CAB3',
   },
   gray: {
     backgroundColor: grayColor[0],

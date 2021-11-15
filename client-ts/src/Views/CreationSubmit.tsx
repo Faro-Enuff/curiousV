@@ -29,7 +29,7 @@ interface Props {}
 
 const StyledCard = styled(Card)`
   border-radius: 20px;
-  box-shadow: 3px 1px 4px 4px #e0f7fa;
+  box-shadow: 3px 1px 4px 4px #c3d3d1;
 `;
 
 const useStyles = makeStyles({
@@ -212,7 +212,7 @@ const CreationSubmit: FC<Props> = () => {
                 fontSize="medium"
                 style={{ cursor: 'pointer' }}
               />
-              {`  ...File Upload`}
+              {`   File Upload`}
             </Button>
           </label>
         </form>
@@ -224,10 +224,14 @@ const CreationSubmit: FC<Props> = () => {
             ? creationInput?.creationFile?.name
             : 'none'
         }`}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1, mb: 3 }}>
+          <hr className="beautyHrExtraSmall" />
+        </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Button
             variant="contained"
-            color="inherit"
+            color="primary"
+            size="large"
             onClick={handleClickSubmit}
           >
             Submit
