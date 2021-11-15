@@ -1,7 +1,7 @@
-import { useState, FC } from 'react';
+import { FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Box, Modal, Fade, Button, Typography } from '@mui/material';
-import { TimelineCreation } from '../../Interfaces/interfaces';
+import Enso from '../../Images/EnsoTransparent.png';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -12,18 +12,82 @@ const style = {
   height: 500,
   borderRadius: '20px',
   bgcolor: '#fff',
-  border: '1px solid #c0b3c2',
   boxShadow: '3px 1px 4px 4px #e0f7fa',
-  p: 4,
+  p: 6,
 };
 
 const useStyles = makeStyles(() => ({
   dialogFrame: {
     maxWidth: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+    width: '100%',
+  },
+  creationImageDiv: {
+    position: 'absolute',
+    height: '100%',
+    width: '90%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    zIndex: 20,
+    right: '5%',
+    top: 0,
+    bottom: 0,
+  },
+  titleRow: {
+    fontWeight: 'bold',
+    color: '#c0b3c2',
+    margin: '5%',
+    padding: 5,
+    height: '80px',
+    minWidth: '100%',
+    backgroundColor: 'transparent',
+    textAlign: 'left',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
+  },
+  imageRow: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
+  btnRow: {
+    margin: '5%',
+    height: '50px',
+    width: '100%',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
   creationImage: {
-    width: '200px',
+    zIndex: 120,
+    width: '240px',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
+  },
+  image: {
+    width: '600px',
+    opacity: 0.4,
     height: 'auto',
+    maxHeight: '100vh',
+    zIndex: 100,
+  },
+  backgroundImageDiv: {
+    opacity: 1,
+    maxWidth: '90%',
+    height: '150px',
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
   },
 }));
 interface Props {
@@ -57,11 +121,31 @@ const TimelineModal: FC<Props> = ({
       >
         <Fade in={open}>
           <Box className={classes.dialogFrame} sx={style}>
-            <img
-              className={classes.creationImage}
-              src={creationData[0].creationFile}
-              alt="Creation"
-            />
+            <div className={classes.creationImageDiv}>
+              <div className={classes.titleRow}>
+                <Typography variant="h5">
+                  {creationData[0].summon.assignmentTitle}
+                </Typography>
+              </div>
+              <div className={classes.imageRow}>
+                <img
+                  className={classes.creationImage}
+                  src={creationData[0].creationFile}
+                  alt="Creation"
+                />
+              </div>
+              <div className={classes.btnRow}>
+                <Button variant="outlined" size="medium">
+                  Comment
+                </Button>
+                <Button variant="outlined" size="medium">
+                  Share
+                </Button>
+              </div>
+            </div>
+            <div className={classes.backgroundImageDiv}>
+              <img src={Enso} alt="Enso Background" className={classes.image} />
+            </div>
           </Box>
         </Fade>
       </Modal>
