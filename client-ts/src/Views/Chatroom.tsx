@@ -38,7 +38,7 @@ const useStyles = makeStyles((muiTheme) => ({
     flexDirection: 'column',
     overflowY: 'auto',
     marginTop: '15%',
-    marginBottom: '20%',
+    marginBottom: '26%',
   },
   chatHeader: {
     position: 'fixed',
@@ -52,15 +52,16 @@ const useStyles = makeStyles((muiTheme) => ({
   chatFooter: {
     position: 'fixed',
     width: '80%',
-    bottom: '8%',
+    paddingLeft: '5%',
+    bottom: '14%',
   },
   chatBody: {
     '& #Sender': {
-      backgroundColor: muiTheme.palette.primary.main,
+      backgroundColor: '#b7cac8',
       marginRight: '50%',
     },
     '& #Receiver': {
-      backgroundColor: muiTheme.palette.secondary.main,
+      backgroundColor: '#b7cac8',
       marginLeft: '50%',
     },
   },
@@ -247,7 +248,7 @@ const Chatroom: FC = () => {
               return (
                 key >= 1 && (
                   <Box
-                    sx={{ borderRadius: 7, boxShadow: 15, mb: '10%', p: 1 }}
+                    sx={{ borderRadius: 7, boxShadow: 15, mb: '10%', p: 2 }}
                     className={classes.bodyContent}
                     key={key}
                     id={
