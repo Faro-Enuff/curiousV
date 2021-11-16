@@ -1,5 +1,14 @@
 import React, { FC } from 'react';
-import { Backdrop, Box, Modal, Fade, Button, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
+import {
+  Backdrop,
+  Box,
+  Modal,
+  Fade,
+  Button,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { format } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../../Utils/Loader';
@@ -7,6 +16,7 @@ import YoutubeEmbed from '../ReusableComponents/YoutubeEmbed';
 import { Summon } from '../../Interfaces/interfaces';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../Utils/useFetch';
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -46,18 +56,19 @@ interface Props {
 
 const SummonModal: FC<Props> = ({ input, setInput, body }) => {
   const classes = useStyles();
+  let history = useHistory();
 
   const { isLoading, apiData: creation } = useFetch(
     'get',
-    'http://localhost:5000/api/creations/getSummonCreationUser'
+    `http://localhost:5000/api/creations/getSummonCreationUser/${body?._id}`
   );
 
   let embedId: string = body?.learningMaterial.substring(
     body?.learningMaterial.indexOf('=') + 1
   );
 
-  console.log(body?._id);
-  console.log(creation);
+  console.log('Summon Modal Body : >> ', body);
+  console.log('Creation : >>', creation);
 
   return (
     <div>
@@ -122,7 +133,9 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
                     <Button variant="contained">CREATE</Button>
                   </Link>
                 ) : (
-                  <p></p>
+                  <IconButton edge="start" color="secondary" onClick={setInput}>
+                    <CloseIcon />
+                  </IconButton>
                 )}
               </Box>
             </div>

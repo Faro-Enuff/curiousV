@@ -65,7 +65,7 @@ const getCreations = async (req, res) => {
 const getSummonCreationUser = async (req, res) => {
   try {
     console.log(req.body);
-    const { summonId } = req.body;
+    const summonId = req.params.summonId;
 
     const userId = await services.getAuthenticatedUser(req);
 

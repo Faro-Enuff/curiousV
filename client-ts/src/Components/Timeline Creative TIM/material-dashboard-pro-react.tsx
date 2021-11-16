@@ -1,24 +1,8 @@
-const infoColor = [
-  '#00acc1',
-  '#26c6da',
-  '#00acc1',
-  '#00d3ee',
-  '#0097a7',
-  '#c4e3f3',
-  '#d9edf7',
-];
+const infoColor = ['#c3d3d1'];
 
 const primaryColor = ['#9c27b0', '#ab47bc', '#8e24aa', '#af2cc5', '#7b1fa2'];
 
-const successColor = [
-  '#4caf50',
-  '#66bb6a',
-  '#43a047',
-  '#5cb860',
-  '#388e3c',
-  '#d0e9c6',
-  '#dff0d8',
-];
+const successColor = ['#d5c4d1'];
 
 const dangerColor = [
   '#f44336',

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 // Custom Hooks
 import { useFetch } from '../Utils/useFetch';
@@ -82,21 +82,22 @@ const useStyles = makeStyles((muiTheme) => ({
 const Home: FC = (props: Props) => {
   const classes = useStyles();
 
-  // Hobbies useFetch API
-  const { isLoading: loaderUserHobby, apiData: user } = useFetch(
-    'get',
-    'http://localhost:5000/api/users/getUserHobby'
-  );
-  // console.log(user);
-
   const { isLoading: loaderUserCollection, apiData: collectionFetch } =
     useFetch('get', 'http://localhost:5000/api/collections/getUserCollection');
+
+  const [userCollection, setUserCollection] = useState<any>();
+
+  useEffect(() => {
+    setUserCollection(collectionFetch?.userCollection[0]);
+  }, [collectionFetch]);
+
+  console.log('User Collection : >> ', userCollection && userCollection);
 
   // console.log('Collection Fetch : >>', collectionFetch);
 
   return (
     <div className={classes.home}>
-      {loaderUserHobby && loaderUserCollection && <Loader />}
+      {loaderUserCollection && <Loader />}
       {/* <div className={classes.backgroundImageTopDiv}>
         <img className={classes.backgroundImage} src={Enso} alt="Enso" />
       </div> */}
@@ -152,7 +153,7 @@ const Home: FC = (props: Props) => {
                 <div className={classes.cursignmentBody}>
                   <AssEqCard
                     header={'Cursignments'}
-                    body={collectionFetch?.userCollection[0]?.summons}
+                    body={userCollection && userCollection.summons}
                   />
                 </div>
               </CustomizedPaper>

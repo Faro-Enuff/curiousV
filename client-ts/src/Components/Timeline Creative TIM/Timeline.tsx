@@ -33,6 +33,7 @@ const Timeline: FC<Props> = (props) => {
   const [creationsArray, setCreationsArray] = useState<TimelineCreation[] | []>(
     []
   );
+  const [creation, setCreation] = useState<any>();
 
   useEffect(() => {
     if (creations) {
@@ -53,8 +54,9 @@ const Timeline: FC<Props> = (props) => {
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen: () => void = () => {
+  const handleOpen = (p: any): void => {
     setOpen(true);
+    setCreation(p);
   };
 
   const handleClose: () => void = () => {
@@ -83,21 +85,17 @@ const Timeline: FC<Props> = (props) => {
           return (
             <li className={classes.item} key={key}>
               {prop.Avatar ? (
-                <div onClick={handleOpen}>
+                <div
+                  onClick={() =>
+                    handleOpen(
+                      creations.userCreations.filter(
+                        (creation: any) =>
+                          creation.summon.assignmentTitle === prop.title
+                      )
+                    )
+                  }
+                >
                   <Avatar className={timelineBadgeClasses} src={prop.Avatar} />
-                </div>
-              ) : null}
-              {open ? (
-                <div className={classes.assignmentClasses}>
-                  <TimelineDialog
-                    open={open}
-                    handleOpen={handleOpen}
-                    handleClose={handleClose}
-                    creationData={creations.userCreations.filter(
-                      (creation: any) =>
-                        creation.summon.assignmentTitle === prop.title
-                    )}
-                  />
                 </div>
               ) : null}
               <div className={panelClasses}>
@@ -119,6 +117,13 @@ const Timeline: FC<Props> = (props) => {
           );
         })}
       </ul>
+      <div className={classes.assignmentClasses}>
+        <TimelineDialog
+          open={open}
+          handleClose={handleClose}
+          creationData={creation}
+        />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,12 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+// Custom Hooks
+import { useFetch } from '../../Utils/useFetch';
+// Internal Imports
+import Loader from '../../Utils/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, Box, Modal, Fade, Button, Typography } from '@mui/material';
 import Enso from '../../Images/EnsoTransparent.png';
+import SummonModal from '../Summon/SummonModal';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -92,22 +97,32 @@ const useStyles = makeStyles((muiTheme) => ({
 }));
 interface Props {
   open: boolean;
-  handleOpen: () => void;
   handleClose: () => void;
   creationData: any[];
 }
 
-const TimelineModal: FC<Props> = ({
-  open,
-  handleOpen,
-  handleClose,
-  creationData,
-}) => {
+const TimelineModal: FC<Props> = ({ open, handleClose, creationData }) => {
   const classes = useStyles();
-  console.log(creationData);
+
+  console.log('Creation Data : >>', creationData);
+
+  const { isLoading: summonLoader, apiData: summon } = useFetch(
+    'get',
+    `http://localhost:5000/api/summons/getSummon/${
+      creationData && creationData[0].summon._id
+    }`
+  );
+
+  const [openSummon, setOpenSummon] = useState(false);
+  const handleCloseSummon = (): void => setOpenSummon(false);
+  const handleOpen = (): void => {
+    handleClose();
+    setOpenSummon(true);
+  };
+
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      {summonLoader && <Loader />}
       <Modal
         open={open}
         onClose={handleClose}
@@ -122,18 +137,23 @@ const TimelineModal: FC<Props> = ({
             <div className={classes.creationImageDiv}>
               <div className={classes.titleRow}>
                 <Typography variant="h5">
-                  {creationData[0].summon.assignmentTitle}
+                  {creationData && creationData[0].summon.assignmentTitle}
                 </Typography>
               </div>
               <div className={classes.imageRow}>
                 <img
                   className={classes.creationImage}
-                  src={creationData[0].creationFile}
+                  src={creationData && creationData[0].creationFile}
                   alt="Creation"
                 />
               </div>
               <div className={classes.btnRow}>
-                <Button variant="contained" color="secondary" size="small">
+                <Button
+                  onClick={handleOpen}
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                >
                   Summon
                 </Button>
                 <Button variant="contained" color="secondary" size="small">
@@ -150,6 +170,11 @@ const TimelineModal: FC<Props> = ({
           </Box>
         </Fade>
       </Modal>
+      <SummonModal
+        input={openSummon}
+        setInput={handleCloseSummon}
+        body={summon?.userSummon}
+      />
     </div>
   );
 };
