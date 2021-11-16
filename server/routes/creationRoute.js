@@ -26,4 +26,12 @@ router.get(
   creationController.getCreations
 );
 
+// Get specific Creation - req.body Summon Id & loggedIn User
+
+router.get(
+  '/getSummonCreationUser',
+  passport.authenticate('jwt', { session: false }),
+  creationController.getSummonCreationUser
+);
+
 export default router;

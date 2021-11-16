@@ -29,4 +29,26 @@ const getCollection = async (req, res) => {
   }
 };
 
-export { getCollection };
+const updateCollection = async (req, res) => {
+  try {
+    const summonId = req.params.summonId;
+    console.log('summonId : >>', summonId);
+    const userId = services.getAuthenticatedUser(req);
+    const updatedCollectionArray = await services.deleteArrayValue(
+      collectionModel,
+      'artist',
+      userId,
+      'summons',
+      summonId
+    );
+
+    console.log('Updated Collection Array : >>', updatedCollectionArray);
+
+    res.status(200).send({ updatedCollectionArray });
+  } catch (error) {
+    // console.log("Error : >>", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export { getCollection, updateCollection };

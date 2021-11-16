@@ -19,7 +19,7 @@ export const fillArray = (creations: any): TimelineCreation[] => {
               Duration:{' '}
               {creation?.approxTimeInvestment + ' ' + creation?.timeUnit}
             </Box>
-            <Box sx={{ ml: 2 }}>Curiosity: {creation?.funFactor}</Box>
+            <Box sx={{ ml: 2, mb: 1 }}>Curiosity: {creation?.funFactor}</Box>
           </div>
         ),
       };
@@ -36,7 +36,7 @@ export const fillArray = (creations: any): TimelineCreation[] => {
               Duration:{' '}
               {creation?.approxTimeInvestment + ' ' + creation?.timeUnit}
             </Box>
-            <Box sx={{ ml: 2 }}>Curiosity: {creation?.funFactor}</Box>
+            <Box sx={{ ml: 2, mb: 1 }}>Curiosity: {creation?.funFactor}</Box>
           </div>
         ),
       };

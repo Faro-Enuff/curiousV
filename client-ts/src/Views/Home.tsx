@@ -87,11 +87,12 @@ const Home: FC = (props: Props) => {
     'get',
     'http://localhost:5000/api/users/getUserHobby'
   );
-  console.log(user);
+  // console.log(user);
 
   const { isLoading: loaderUserCollection, apiData: collectionFetch } =
     useFetch('get', 'http://localhost:5000/api/collections/getUserCollection');
-  console.log('Collection Fetch : >>', collectionFetch);
+
+  // console.log('Collection Fetch : >>', collectionFetch);
 
   return (
     <div className={classes.home}>

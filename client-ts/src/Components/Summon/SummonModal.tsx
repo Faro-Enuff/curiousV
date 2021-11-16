@@ -6,6 +6,7 @@ import Loader from '../../Utils/Loader';
 import YoutubeEmbed from '../ReusableComponents/YoutubeEmbed';
 import { Summon } from '../../Interfaces/interfaces';
 import { Link } from 'react-router-dom';
+import { useFetch } from '../../Utils/useFetch';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -42,31 +43,25 @@ interface Props {
   setInput: any;
   body: Summon;
 }
-interface Dates {
-  startDate: Date;
-  endDate: Date;
-}
 
 const SummonModal: FC<Props> = ({ input, setInput, body }) => {
   const classes = useStyles();
+
+  const { isLoading, apiData: creation } = useFetch(
+    'get',
+    'http://localhost:5000/api/creations/getSummonCreationUser'
+  );
 
   let embedId: string = body?.learningMaterial.substring(
     body?.learningMaterial.indexOf('=') + 1
   );
 
-  // const [dates, setDates] = useState<Dates>({
-  //   startDate: body?.startDate,
-  //   endDate: body?.endDate,
-  // });
-
-  // let startDate: string = format(new Date(body?.startDate), 'dd. MMMM yyyy');
-  // let endDate: string = format(new Date(body?.endDate), 'dd. MMMM yyyy');
-
-  console.log(body);
+  console.log(body?._id);
+  console.log(creation);
 
   return (
     <div>
-      {input && <Loader />}
+      {isLoading && <Loader />}
       <Modal
         open={input}
         onClose={setInput}
@@ -94,14 +89,20 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
                   <li>
                     <Typography variant="h6">Time Frame</Typography>
                     <Typography variant="body1">
-                      Start:
-                      {}
+                      {body &&
+                        `Start:    ${format(
+                          Date.parse(String(body?.startDate)),
+                          'dd. MMMM yyyy'
+                        )}`}
                     </Typography>
                   </li>
                   <li>
                     <Typography variant="body1">
-                      End:
-                      {}
+                      {body &&
+                        `End:    ${format(
+                          Date.parse(String(body?.endDate)),
+                          'dd. MMMM yyyy'
+                        )}`}
                     </Typography>
                   </li>
                 </ul>
@@ -113,12 +114,16 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
                   justifyContent: 'center',
                 }}
               >
-                <Link
-                  style={{ textDecoration: 'none' }}
-                  to={`/creationSubmit/${body?._id}`}
-                >
-                  <Button variant="contained">CREATE</Button>
-                </Link>
+                {creation?.userCreation?.length < 1 ? (
+                  <Link
+                    style={{ textDecoration: 'none' }}
+                    to={`/creationSubmit/${body?._id}`}
+                  >
+                    <Button variant="contained">CREATE</Button>
+                  </Link>
+                ) : (
+                  <p></p>
+                )}
               </Box>
             </div>
           </Box>

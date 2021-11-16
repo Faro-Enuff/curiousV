@@ -15,4 +15,10 @@ router.get(
   collectionController.getCollection
 );
 
+router.post(
+  '/updateCollection/:summonId',
+  passport.authenticate('jwt', { session: false }),
+  collectionController.updateCollection
+);
+
 export default router;

@@ -59,8 +59,8 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   btnRow: {
     margin: '5%',
-    height: '50px',
-    width: '60%',
+    height: '40px',
+    width: '100%',
     backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
@@ -133,7 +133,10 @@ const TimelineModal: FC<Props> = ({
                 />
               </div>
               <div className={classes.btnRow}>
-                <Button variant="outlined" color="secondary" size="small">
+                <Button variant="contained" color="secondary" size="small">
+                  Summon
+                </Button>
+                <Button variant="contained" color="secondary" size="small">
                   Comment
                 </Button>
                 <Button variant="contained" color="secondary" size="small">

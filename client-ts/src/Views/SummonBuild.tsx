@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     marginTop: '5%',
     marginBottom: '5%',
     borderRadius: '15px',
-    boxShadow: '2px 2px 4px 4px #c3d3d1',
+    boxShadow: '2px 2px 4px 3px #c3d3d1',
   },
 });
 

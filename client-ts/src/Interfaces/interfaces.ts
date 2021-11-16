@@ -30,8 +30,8 @@ interface Summon {
   author?: Author;
   assignmentTitle: string;
   timeFrame: any;
-  startDate: Date;
-  endDate: Date;
+  startDate: string | Date;
+  endDate: string | Date;
   learningSource: string;
   learningMaterial: string;
   learningFile: File | null;

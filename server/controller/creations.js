@@ -60,4 +60,26 @@ const getCreations = async (req, res) => {
   }
 };
 
-export { createCreation, getCreations };
+// Get Creation for specific SummonId
+
+const getSummonCreationUser = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { summonId } = req.body;
+
+    const userId = await services.getAuthenticatedUser(req);
+
+    const userCreation = await creationModel.find({
+      summon: summonId,
+      author: userId,
+    });
+
+    console.log('User Creation : >>', userCreation);
+
+    res.status(200).send({ userCreation });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export { createCreation, getCreations, getSummonCreationUser };

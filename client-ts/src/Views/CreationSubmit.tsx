@@ -81,7 +81,7 @@ const CreationSubmit: FC<Props> = () => {
     `http://localhost:5000/api/summons/getSummon/${id}`
   );
   // Creation Context
-  const { postCreation } = useContext(CreationContext);
+  const { postCreation, updateCollection } = useContext(CreationContext);
 
   console.log(id, summon);
 
@@ -137,6 +137,7 @@ const CreationSubmit: FC<Props> = () => {
 
     // Post Creation Data to API
     postCreation(formData);
+    updateCollection(id);
     setCreationInput({
       approxTimeInvestment: 0,
       timeUnit: '',
