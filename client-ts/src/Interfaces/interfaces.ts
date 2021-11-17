@@ -67,6 +67,13 @@ interface CurrentMessage {
   time: number;
 }
 
+interface CurrentComment {
+  room: string;
+  author: string;
+  comment: string;
+  time: number;
+}
+
 interface ChatroomUser {
   _id: string;
   artistName: string;
@@ -83,4 +90,5 @@ export type {
   CurrentMessage,
   ChatroomUser,
   TimelineCreation,
+  CurrentComment,
 };

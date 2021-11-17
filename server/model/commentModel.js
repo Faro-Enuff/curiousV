@@ -1,6 +1,6 @@
 // Import Mongoose
-import mongoose from "mongoose";
-
+import mongoose from 'mongoose';
+import { commentInputSchema } from './commentInputModel.js';
 // Import Schema
 const { Schema } = mongoose;
 
@@ -8,15 +8,15 @@ export const commentsSchema = new Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     message: {
-      type: String,
+      type: commentInputSchema,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("comment", commentsSchema);
+export default mongoose.model('comment', commentsSchema);

@@ -2,15 +2,20 @@ import { FC, createContext } from 'react';
 // Import CostumHooks
 import axios from '../Utils/axios';
 // Import Interfaces
+import { CurrentComment } from '../Interfaces/interfaces';
 
 interface ProviderValues {
   postSummon: (summon: FormData) => void;
+  createComment: (comment: CurrentComment) => void;
 }
 interface Props {}
 
 const initialProviderValue: ProviderValues = {
   postSummon: () => {
     throw new Error("postSummon function hasn't been provided");
+  },
+  createComment: () => {
+    throw new Error("createComment function hasn't been provided");
   },
 };
 
@@ -25,8 +30,16 @@ export const SummonContextProvider: FC<Props> = ({ children }) => {
       .catch((error) => console.log(error.message));
   };
 
+  const createComment = (comment: CurrentComment) => {
+    axios
+      .post('/summons/createComment', comment)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.message));
+  };
+
   const value: null | ProviderValues = {
     postSummon,
+    createComment,
   };
 
   return (

@@ -27,6 +27,13 @@ hr {
   color: #fafafa;
 }
 
+.beautyHrSwitched {
+  min-width: 80%;
+  border-radius: 50%;
+  box-shadow: 2px 0px 0.5px 4px #87a8a4;
+  color: #fafafa;
+}
+
 .beautyHrSmall {
   min-width: 40%;
   max-width: 70%;

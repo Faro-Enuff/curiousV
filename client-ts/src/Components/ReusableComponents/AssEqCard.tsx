@@ -1,4 +1,5 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
+// MUI Imports
 import {
   Button,
   Card,
@@ -7,13 +8,16 @@ import {
   CardContent,
   CardActions,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { formatDistanceToNow } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
-import SummonModal from '../Summon/SummonModal';
-import { Summon } from '../../Interfaces/interfaces';
+import { styled } from '@mui/material/styles';
+// Date FNS Import
+import { formatDistanceToNow } from 'date-fns';
+// Internal Imports
 import Enso from '../../Images/Enso.png';
-import { useFetch } from '../../Utils/useFetch';
+import CommentDialog from '../Comments/CommentDialog';
+import SummonModal from '../Summon/SummonModal';
+// Interface Imports
+import { Summon } from '../../Interfaces/interfaces';
 
 interface Props {
   header: string;
@@ -95,9 +99,9 @@ const AssEqCard: FC<Props> = ({ header, body }) => {
                       <hr className="beautyHrSmall" />
                     </Box>
                     <CardActions className={classes.btnRow}>
-                      <Button variant="outlined" size="small" color="secondary">
-                        Comment
-                      </Button>
+                      <Box sx={{ mr: 1 }}>
+                        <CommentDialog input={b} />
+                      </Box>
                       <Button
                         variant="outlined"
                         size="small"

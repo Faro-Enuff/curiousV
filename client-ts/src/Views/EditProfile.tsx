@@ -59,6 +59,7 @@ const useStyles = makeStyles({
     transform: 'rotate(180deg)',
     width: 'auto',
     height: '500px',
+    opacity: 0.8,
     zIndex: -1,
   },
 });
@@ -83,13 +84,13 @@ const EditProfile: FC<Props> = () => {
     if (event.target.files) {
       handleUpload(event.target.files);
     }
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
   };
 
   const handleUpload = (files: File[]) => {
     // get Image
     const profileImage: File = files[0];
-    console.log(profileImage);
+    // console.log(profileImage);
 
     // setUser
     setUser({ ...user, profileImage: profileImage });
@@ -101,7 +102,7 @@ const EditProfile: FC<Props> = () => {
     updateProfileImage(formData, setUser);
   };
 
-  console.log('User : >>', user);
+  // console.log('User : >>', user);
 
   return (
     <div className={classes.editProfileWindow}>
@@ -135,7 +136,7 @@ const EditProfile: FC<Props> = () => {
         </div>
       </div>
       <div className={classes.frameImageDiv}>
-        <img src={Enso} alt="Frame Image" className={classes.frameImage} />
+        <img src={Enso} alt="FrameImage" className={classes.frameImage} />
       </div>
     </div>
   );

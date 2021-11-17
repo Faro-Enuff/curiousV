@@ -163,6 +163,7 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
+  // Chatroom
   socket.on('join_room', (data) => {
     socket.join(data);
     console.log('User with ID:', socket.id, 'joined room:', data);
@@ -170,6 +171,12 @@ io.on('connection', (socket) => {
 
   socket.on('send_message', (data) => {
     socket.to(data.room).emit('receive_message', data);
+    console.log(data);
+  });
+
+  // Comment
+  socket.on('send_comment', (data) => {
+    socket.to(data.room).emit('receive_comment', data);
     console.log(data);
   });
 

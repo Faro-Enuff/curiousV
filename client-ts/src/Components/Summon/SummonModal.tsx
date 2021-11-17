@@ -17,6 +17,7 @@ import { Summon } from '../../Interfaces/interfaces';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../../Utils/useFetch';
 import CloseIcon from '@mui/icons-material/Close';
+import CommentDialog from '../Comments/CommentDialog';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -95,7 +96,10 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
             </div>
             <div className={classes.modalContent}>
               <YoutubeEmbed embedId={embedId} />
-              <Box sx={{ mt: 4, mb: 4 }}>
+              <Box sx={{ mt: 2 }}>
+                <CommentDialog input={body} />
+              </Box>
+              <Box sx={{ mt: 2, mb: 4 }}>
                 <ul>
                   <li>
                     <Typography variant="h6">Time Frame</Typography>

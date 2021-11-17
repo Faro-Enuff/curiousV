@@ -23,6 +23,7 @@ import BottomNavigationCustom from './Components/Navigation/BottomNavigationCust
 import { ThemeContextProvider } from './Context/themeContext';
 import BackgroundImageApp from './Utils/BackgroundImageApp';
 import EditProfile from './Views/EditProfile';
+import Comments from './Views/Comments';
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -79,6 +80,7 @@ const App: FC = () => {
                       exact
                       component={Chatroom}
                     />
+                    <Route path="/comments" exact component={Comments} />
                     <Route path="/editProfile" exact component={EditProfile} />
                     <Route
                       path="/google/success"

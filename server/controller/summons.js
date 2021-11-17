@@ -11,9 +11,17 @@ const getSummon = async (req, res) => {
     ('    console.log(req.params.id);');
     const userId = services.getAuthenticatedUser(req);
 
+    const populateQuery = [
+      { path: 'author', select: 'artistName' },
+      {
+        path: 'comments',
+        populate: { path: 'userId', select: 'artistName profileImage' },
+      },
+    ];
+
     const userSummon = await summonModel
       .findById(paramsId)
-      .populate({ path: 'author', select: 'artistName' });
+      .populate(populateQuery);
     res.status(200).send({ userSummon });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -125,20 +133,21 @@ const deleteSummon = async (req, res) => {
 
 const createComment = async (req, res) => {
   try {
+    console.log(req.body);
     const userId = services.getAuthenticatedUser(req);
-    const { summonId, message } = req.body;
-    const comment = { userId, message };
-
+    const { room, author, comment, time } = req.body;
+    const commentPrep = { userId, message: { room, author, comment, time } };
+    const summonId = room;
     // Push new Comment into Array
     const userComment = await services.updateArray(
       summonModel,
       '_id',
       summonId,
       'comments',
-      comment
+      commentPrep
     );
-
     console.log('User comment : >>', userComment);
+
     res.status(200).json({ userComment });
   } catch (error) {
     console.log('Comment Error : >>', error);
