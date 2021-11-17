@@ -41,8 +41,9 @@ const useStyles = makeStyles((muiTheme) => ({
     marginBottom: '26%',
   },
   chatHeader: {
+    width: '100%',
     position: 'fixed',
-    top: '8%',
+    top: '7%',
   },
   chatFrame: {
     flex: 1,
@@ -238,7 +239,11 @@ const Chatroom: FC = () => {
       {chatLoader && <Loader />}
       <div className={classes.chatHeader}>
         <Box sx={{ pt: 1, pb: 1 }}>
-          <h2>{`Private chat with ${receiver.artistName}`}</h2>
+          <Typography
+            variant="h4"
+            color="secondary"
+            sx={{ textAlign: 'end', mr: 4 }}
+          >{`${receiver.artistName}`}</Typography>
         </Box>
       </div>
       <div className={classes.chatFrame}>

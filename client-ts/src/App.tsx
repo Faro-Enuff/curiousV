@@ -13,6 +13,9 @@ import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
 import SetUp from './Views/SetUp';
+import EditProfile from './Views/EditProfile';
+import Comments from './Views/Comments';
+import OtherProfile from './Views/OtherProfile';
 import UserSearch from './Views/UserSearch';
 import Chatroom from './Views/Chatroom';
 import SummonBuild from './Views/SummonBuild';
@@ -22,8 +25,6 @@ import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
 import { ThemeContextProvider } from './Context/themeContext';
 import BackgroundImageApp from './Utils/BackgroundImageApp';
-import EditProfile from './Views/EditProfile';
-import Comments from './Views/Comments';
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -58,6 +59,7 @@ const App: FC = () => {
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
                         '/editProfile',
+                        '/otherProfile/:id',
                       ]}
                     >
                       <AppBarCostum />
@@ -83,6 +85,11 @@ const App: FC = () => {
                     <Route path="/comments" exact component={Comments} />
                     <Route path="/editProfile" exact component={EditProfile} />
                     <Route
+                      path="/otherProfile/:id"
+                      exact
+                      component={OtherProfile}
+                    />
+                    <Route
                       path="/google/success"
                       exact
                       component={GoogleSuccess}
@@ -99,6 +106,7 @@ const App: FC = () => {
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
                         '/editProfile',
+                        '/otherProfile/:id',
                       ]}
                     >
                       <BottomNavigationCustom />
