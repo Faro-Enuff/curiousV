@@ -41,15 +41,15 @@ const BottomNavigationCustom: FC = (props: Props) => {
       >
         <BottomNavigationAction
           href="/createSummon"
-          icon={<AssignmentIcon color="secondary" />}
+          icon={<AssignmentIcon color="primary" />}
         />
         <BottomNavigationAction
           href="/"
-          icon={<HomeMiniIcon color="secondary" />}
+          icon={<HomeMiniIcon color="primary" />}
         />
         <BottomNavigationAction
           href="/userSearch"
-          icon={<SearchIcon color="secondary" />}
+          icon={<SearchIcon color="primary" />}
         />
       </CustomizedBottomNavigation>
     </Box>
