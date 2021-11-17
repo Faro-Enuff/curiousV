@@ -26,7 +26,7 @@ export const fillArray = (creations: any): TimelineCreation[] => {
     } else {
       return {
         inverted: false,
-        badgeColor: 'success',
+        badgeColor: 'info',
         Avatar: EnsoTransp,
         title: creation.summon.assignmentTitle,
         titleColor: 'success',

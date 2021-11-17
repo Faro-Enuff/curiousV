@@ -29,6 +29,7 @@ interface ProviderValues {
   googleSignInUser: (loadingState: Dispatch<SetStateAction<boolean>>) => void;
   logout: () => void;
   postHobbies: (hobby: hobbyPostInput) => void;
+  updateProfileImage: (image: FormData, setUser: Dispatch<any>) => void;
   loggedInUser: User | null;
 }
 interface Props {}
@@ -54,6 +55,9 @@ const initialProviderValue: ProviderValues = {
   },
   postHobbies: () => {
     throw new Error("Post Hobbies-Function hasn't been provided");
+  },
+  updateProfileImage: () => {
+    throw new Error("Update Profile Image-Function hasn't been provided");
   },
   loggedInUser: null,
 };
@@ -160,6 +164,15 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };
+  /////////////////////////////////
+  // Update Profile Image
+  /////////////////////////////////
+  const updateProfileImage = (image: FormData, setUser: Dispatch<any>) => {
+    axios
+      .post('/users/uploadProfileImage', image)
+      .then((response) => setUser(response.data.newProfile))
+      .catch((error) => console.log(error.message));
+  };
 
   const value: null | ProviderValues = {
     registerUser,
@@ -168,6 +181,7 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
     loggedInUser,
     logout,
     postHobbies,
+    updateProfileImage,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -71,7 +71,7 @@ const SetUp: FC = (props: Props) => {
     history.push('/');
   };
 
-  console.log('SetUp: Hobby Input:', input);
+  // console.log('SetUp: Hobby Input:', input);
 
   return (
     <div className={classes.setUpDiv}>

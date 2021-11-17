@@ -9,7 +9,6 @@ import { ChatContextProvider } from './Context/chatContext';
 // MUI imports
 import { makeStyles } from '@material-ui/core/styles';
 // Internal Imports
-import Enso from './Images/EnsoTransparent.png';
 import Home from './Views/Home';
 import SignIn from './Views/SignIn';
 import SignUp from './Views/SignUp';
@@ -23,6 +22,7 @@ import AppBarCostum from './Components/Navigation/AppBarCustom';
 import BottomNavigationCustom from './Components/Navigation/BottomNavigationCustom';
 import { ThemeContextProvider } from './Context/themeContext';
 import BackgroundImageApp from './Utils/BackgroundImageApp';
+import EditProfile from './Views/EditProfile';
 
 const useStyles = makeStyles((muiTheme) => ({
   app: {
@@ -56,6 +56,7 @@ const App: FC = () => {
                         '/userSearch',
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
+                        '/editProfile',
                       ]}
                     >
                       <AppBarCostum />
@@ -78,6 +79,7 @@ const App: FC = () => {
                       exact
                       component={Chatroom}
                     />
+                    <Route path="/editProfile" exact component={EditProfile} />
                     <Route
                       path="/google/success"
                       exact
@@ -94,6 +96,7 @@ const App: FC = () => {
                         '/userSearch',
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
+                        '/editProfile',
                       ]}
                     >
                       <BottomNavigationCustom />

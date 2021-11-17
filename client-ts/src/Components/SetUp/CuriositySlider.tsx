@@ -1,6 +1,6 @@
 import React, { FC, SetStateAction, Dispatch } from 'react';
 // MUI Core
-import { Button, Box, FormControl, Slider } from '@mui/material';
+import { Typography, Button, Box, FormControl, Slider } from '@mui/material';
 // Interface Imports
 import { hobbyPostInput } from '../../Interfaces/interfaces';
 
@@ -11,7 +11,7 @@ interface Props {
 
 const CuriositySlider: FC<Props> = ({ input, setInput }) => {
   const handleChange = (event: any) => {
-    console.log(event);
+    // console.log(event);
     setInput({
       ...input,
       [event.target.name]: event.target.value,
@@ -30,7 +30,6 @@ const CuriositySlider: FC<Props> = ({ input, setInput }) => {
             max={5}
             name="curiosity"
             onChange={handleChange}
-            valueLabelDisplay="on"
             style={{ minWidth: 200 }}
           />
         </FormControl>

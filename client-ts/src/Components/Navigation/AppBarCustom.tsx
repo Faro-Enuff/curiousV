@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 // Context Imports
 import { AuthContext } from '../../Context/authContext';
 
@@ -51,6 +52,7 @@ const useStyles = makeStyles((muiTheme) => ({
 
 const AppBarCostum = () => {
   const classes = useStyles();
+  let history = useHistory();
 
   const { logout } = useContext(AuthContext);
 
@@ -59,13 +61,17 @@ const AppBarCostum = () => {
     'http://localhost:5000/api/users/profile'
   );
 
+  const handleClick = () => {
+    history.push('/editProfile');
+  };
+
   console.log(profile);
   return (
     <div className={classes.appBarBox}>
       <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
         <CustomizedAppBar position="static" color="primary">
           <Toolbar>
-            <div>
+            <div onClick={handleClick}>
               <Avatar
                 className={classes.avatarFrame}
                 src={

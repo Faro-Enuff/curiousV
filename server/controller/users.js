@@ -235,28 +235,24 @@ const updateImage = async (req, res) => {
 
   try {
     // Find User by ID and Update Profile Image
-    userModel.findByIdAndUpdate(
-      userId,
-      {
-        profileImage: `${
-          'http://localhost:5000/' +
-          req.file.fieldname +
-          '/' +
-          req.file.filename
-        }`,
-      },
-      { runValidators: true, new: true },
-      (err, res) => {
-        if (res) {
-          console.log('res Profile old (success): >>', res);
-        } else {
-          console.log('err profileImage : >>', err);
-        }
-      }
-    );
-    res.status(200).send('Profile Image successfully updated!');
+    const newProfile = await userModel
+      .findByIdAndUpdate(
+        userId,
+        {
+          profileImage: `${
+            'http://localhost:5000/' +
+            req.file.fieldname +
+            '/' +
+            req.file.filename
+          }`,
+        },
+        { runValidators: true, new: true }
+      )
+      .exec();
+    console.log('New Profile : >>', newProfile);
+    res.status(200).json({ newProfile });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
