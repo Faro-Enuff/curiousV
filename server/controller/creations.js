@@ -37,11 +37,34 @@ const createCreation = async (req, res) => {
   }
 };
 
-// Get all Creations of a specific userId
+// Get all Creations of logged in userId
 
 const getCreations = async (req, res) => {
   try {
     const userId = await services.getAuthenticatedUser(req);
+
+    const populateQuery = [
+      { path: 'author', select: 'artistName hobbies' },
+      { path: 'summon' },
+    ];
+
+    const userCreations = await creationModel
+      .find({ author: userId })
+      .populate(populateQuery);
+
+    console.log('User Creations : >>', userCreations);
+
+    res.status(200).send({ userCreations });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// Get all Creations of specific Users
+
+const getOtherUsersCreations = async (req, res) => {
+  try {
+    const userId = req.params.userId;
 
     const populateQuery = [
       { path: 'author', select: 'artistName hobbies' },
@@ -82,4 +105,9 @@ const getSummonCreationUser = async (req, res) => {
   }
 };
 
-export { createCreation, getCreations, getSummonCreationUser };
+export {
+  createCreation,
+  getCreations,
+  getSummonCreationUser,
+  getOtherUsersCreations,
+};

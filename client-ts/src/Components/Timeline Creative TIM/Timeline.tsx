@@ -16,19 +16,15 @@ import styles from './TimelineStyle';
 import TimelineDialog from './TimelineDialog';
 
 interface Props {
+  creations: any;
   simple?: any;
 }
 
 const useStyles = makeStyles<any | undefined>(styles);
 
 const Timeline: FC<Props> = (props) => {
-  const { simple } = props;
+  const { creations, simple } = props;
   const classes = useStyles();
-
-  const { apiData: creations } = useFetch(
-    'get',
-    'http://localhost:5000/api/creations/getCreations'
-  );
 
   const [creationsArray, setCreationsArray] = useState<TimelineCreation[] | []>(
     []

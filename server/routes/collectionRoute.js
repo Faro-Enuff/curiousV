@@ -15,6 +15,16 @@ router.get(
   collectionController.getCollection
 );
 
+// Get all Creations of other Users
+
+router.get(
+  '/getOtherUserCollection/:userId',
+  passport.authenticate('jwt', { session: false }),
+  collectionController.getOtherUserCollection
+);
+
+// Update collection - if summon was accomplished
+
 router.post(
   '/updateCollection/:summonId',
   passport.authenticate('jwt', { session: false }),

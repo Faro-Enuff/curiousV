@@ -82,6 +82,14 @@ const useStyles = makeStyles((muiTheme) => ({
 const Home: FC = (props: Props) => {
   const classes = useStyles();
 
+  // Use Fetch for Timeline
+  ////////////////////////////////////////////////////////////////////////////////////
+  const { isLoading: loaderCreations, apiData: creations } = useFetch(
+    'get',
+    'http://localhost:5000/api/creations/getCreations'
+  );
+  ////////////////////////////////////////////////////////////////////////////////////
+  // Use Fetch for Cursignments
   const { isLoading: loaderUserCollection, apiData: collectionFetch } =
     useFetch('get', 'http://localhost:5000/api/collections/getUserCollection');
 
@@ -91,6 +99,8 @@ const Home: FC = (props: Props) => {
     setUserCollection(collectionFetch?.userCollection[0]);
   }, [collectionFetch]);
 
+  ////////////////////////////////////////////////////////////////////////////////////
+
   console.log('User Collection : >> ', userCollection && userCollection);
 
   // console.log('Collection Fetch : >>', collectionFetch);
@@ -98,9 +108,6 @@ const Home: FC = (props: Props) => {
   return (
     <div className={classes.home}>
       {loaderUserCollection && <Loader />}
-      {/* <div className={classes.backgroundImageTopDiv}>
-        <img className={classes.backgroundImage} src={Enso} alt="Enso" />
-      </div> */}
       <div className={classes.homeDiv}>
         <div className={classes.test}>
           <div className={classes.timeline}>
@@ -124,7 +131,7 @@ const Home: FC = (props: Props) => {
                   <hr className="beautyHr" />
                 </Box>
                 <div className={classes.timelineBody}>
-                  <Timeline />
+                  <Timeline creations={creations && creations} />
                 </div>
               </CustomizedPaper>
             </Box>

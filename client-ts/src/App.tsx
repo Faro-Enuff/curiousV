@@ -59,7 +59,7 @@ const App: FC = () => {
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
                         '/editProfile',
-                        '/otherProfile/:id',
+                        '/otherProfile/:userId',
                       ]}
                     >
                       <AppBarCostum />
@@ -85,7 +85,7 @@ const App: FC = () => {
                     <Route path="/comments" exact component={Comments} />
                     <Route path="/editProfile" exact component={EditProfile} />
                     <Route
-                      path="/otherProfile/:id"
+                      path="/otherProfile/:userId"
                       exact
                       component={OtherProfile}
                     />
@@ -106,7 +106,7 @@ const App: FC = () => {
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
                         '/editProfile',
-                        '/otherProfile/:id',
+                        '/otherProfile/:userId',
                       ]}
                     >
                       <BottomNavigationCustom />

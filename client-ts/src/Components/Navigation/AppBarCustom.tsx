@@ -82,21 +82,21 @@ const AppBarCostum = () => {
             <Box sx={{ flexGrow: 1 }} />
             {profile && (
               <Typography
-                variant="h5"
+                variant="h6"
                 noWrap
                 component="div"
                 sx={{ display: 'flex' }}
               >
-                {profile.user.artistName}
+                {`${profile.user.artistName}'s | ${profile.user.hobbies[0].genre} cV`}
               </Typography>
             )}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: 'flex' }}>
-              <IconButton href="/chatRoom" size="large" color="inherit">
-                {/* <Badge badgeContent={4} color="error"> */}
+              {/* <IconButton href="/chatRoom" size="large" color="inherit">
+                <Badge badgeContent={4} color="error">
                 <MailIcon />
-                {/* </Badge> */}
-              </IconButton>
+                </Badge>
+              </IconButton> */}
               <MenuCostum
                 profileImage={profile?.user.profileImage}
                 logout={logout}

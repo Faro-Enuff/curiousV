@@ -26,6 +26,14 @@ router.get(
   creationController.getCreations
 );
 
+// Get all Creations of another (specific) user
+
+router.get(
+  '/getCreations/:userId',
+  passport.authenticate('jwt', { session: false }),
+  creationController.getOtherUsersCreations
+);
+
 // Get specific Creation - req.body Summon Id & loggedIn User
 
 router.get(

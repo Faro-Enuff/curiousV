@@ -86,7 +86,7 @@ const UserSearch: FC<Props> = () => {
   const onClickHandlerProfile = async (event: any) => {
     console.log(event.target.id);
 
-    history.push(`/otherProfile/123`);
+    history.push(`/otherProfile/${event.target.id}`);
   };
 
   const onClickHandlerChat = async (event: any) => {
@@ -139,7 +139,7 @@ const UserSearch: FC<Props> = () => {
                     <div className={classes.iconRow}>
                       <Button
                         className={classes.btn}
-                        id={user.artistName}
+                        id={user._id}
                         onClick={onClickHandlerProfile}
                         variant="outlined"
                         color="secondary"
