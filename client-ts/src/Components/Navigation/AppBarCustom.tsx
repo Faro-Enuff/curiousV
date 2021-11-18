@@ -87,7 +87,11 @@ const AppBarCostum = () => {
                 component="div"
                 sx={{ display: 'flex' }}
               >
-                {`${profile.user.artistName}'s | ${profile.user.hobbies[0].genre} cV`}
+                {`${profile.user.artistName}'s | ${
+                  profile.user.hobbies[0]?.genre
+                    ? profile.user.hobbies[0]?.genre
+                    : ''
+                } cV`}
               </Typography>
             )}
             <Box sx={{ flexGrow: 1 }} />

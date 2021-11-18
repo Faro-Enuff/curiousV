@@ -93,7 +93,7 @@ const Comments: FC<Props> = ({ input }) => {
   );
 
   const [commentList, setCommentList] = useState<any[]>([]);
-
+  console.log('Comment List : >>', commentList);
   useEffect(() => {
     setCommentList(summons?.userSummon.comments);
   }, [summons]);
@@ -151,11 +151,11 @@ const Comments: FC<Props> = ({ input }) => {
       await socket.emit('send_comment', commentData);
 
       // set use State
-      setCommentList((list) => [...list, commentData]);
+      // setCommentList((list) => [...list, commentData]);
       // Reset Current Comment
       setCurrentComment('');
       // Send Comment to Back-End -
-      createComment(commentData);
+      createComment(commentData, setCommentList);
     }
   };
 
@@ -171,29 +171,29 @@ const Comments: FC<Props> = ({ input }) => {
     <div className={classes.flexContainer}>
       {summonsLoading && <Loader />}
       <div className={classes.commentsContainer}>
-        {commentList &&
+        {commentList?.length >= 1 &&
           commentList.map((comment, key) => {
             return (
               <div className={classes.commentOrder} key={key}>
                 <div className={classes.userAvatar}>
-                  <Avatar src={comment.userId.profileImage} />
+                  <Avatar src={comment.userId?.profileImage} />
                 </div>
                 <div className={classes.userComment}>
                   <Paper className={classes.comments}>
                     <div className={classes.commentElements}>
                       <div>
                         <Typography variant="h6">
-                          {comment.message.author}
+                          {comment.message?.author}
                         </Typography>
                         <Typography variant="body2">
-                          {formatDistance(comment.message.time, new Date(), {
+                          {formatDistance(comment.message?.time, new Date(), {
                             addSuffix: true,
                           })}
                         </Typography>
                       </div>
                       <div>
                         <Typography variant="body1">
-                          {comment.message.comment}
+                          {comment.message?.comment}
                         </Typography>
                       </div>
                     </div>

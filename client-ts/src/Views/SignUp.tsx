@@ -88,24 +88,28 @@ const SignUp = (props: Props) => {
                   name="email"
                   label="Email Address"
                   input={user}
+                  typePassword={false}
                   setInput={setUser}
                 />
                 <TextfieldAuth
                   name="artistName"
                   label="Artist Name"
                   input={user}
+                  typePassword={false}
                   setInput={setUser}
                 />
                 <TextfieldAuth
                   name="firstName"
                   label="First Name"
                   input={user}
+                  typePassword={false}
                   setInput={setUser}
                 />
                 <TextfieldAuth
                   name="password"
                   label="Password"
                   input={user}
+                  typePassword={true}
                   setInput={setUser}
                 />
                 <Box sx={{ mb: 2 }} />
@@ -124,7 +128,7 @@ const SignUp = (props: Props) => {
             </Box>
             <hr className="beautyHr" />
             <Box m={2}>
-              <Link to="/signup">
+              <Link to="/signin">
                 Already registered? <b>Sign In</b>
               </Link>
             </Box>

@@ -83,7 +83,7 @@ const createSummon = async (req, res) => {
     // Update Collection Model
     await services.updateArray(
       collectionModel,
-      'author',
+      'artist',
       userId,
       'summons',
       summon._id
@@ -138,6 +138,15 @@ const createComment = async (req, res) => {
     const { room, author, comment, time } = req.body;
     const commentPrep = { userId, message: { room, author, comment, time } };
     const summonId = room;
+
+    const populateQuery = [
+      { path: 'author', select: 'artistName' },
+      {
+        path: 'comments',
+        populate: { path: 'userId', select: 'artistName profileImage' },
+      },
+    ];
+
     // Push new Comment into Array
     const userComment = await services.updateArray(
       summonModel,
@@ -146,9 +155,12 @@ const createComment = async (req, res) => {
       'comments',
       commentPrep
     );
-    console.log('User comment : >>', userComment);
 
-    res.status(200).json({ userComment });
+    const popUserComment = await userComment.populate(populateQuery);
+
+    console.log('User comment : >>', popUserComment);
+
+    res.status(200).json({ popUserComment });
   } catch (error) {
     console.log('Comment Error : >>', error);
   }

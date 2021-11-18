@@ -7,9 +7,16 @@ interface Props {
   label: string;
   input: RegisterUser;
   setInput: any;
+  typePassword: boolean;
 }
 
-const TextfieldAuth: FC<Props> = ({ name, label, input, setInput }) => {
+const TextfieldAuth: FC<Props> = ({
+  name,
+  label,
+  input,
+  setInput,
+  typePassword,
+}) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
@@ -20,6 +27,7 @@ const TextfieldAuth: FC<Props> = ({ name, label, input, setInput }) => {
       margin="normal"
       required
       fullWidth
+      type={typePassword ? 'password' : 'text'}
       id={name}
       label={label}
       name={name}

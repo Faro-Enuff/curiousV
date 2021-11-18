@@ -88,6 +88,7 @@ const CreationSubmit: FC<Props> = () => {
   const timeUnities: string[] = [
     'timeUnit',
     'hour/s',
+    'day/s',
     'week/s',
     'month/s',
     'year/s',

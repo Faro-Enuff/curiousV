@@ -1,4 +1,4 @@
-import { FC, createContext } from 'react';
+import { FC, Dispatch, createContext } from 'react';
 // Import CostumHooks
 import axios from '../Utils/axios';
 // Import Interfaces
@@ -6,7 +6,10 @@ import { CurrentComment } from '../Interfaces/interfaces';
 
 interface ProviderValues {
   postSummon: (summon: FormData) => void;
-  createComment: (comment: CurrentComment) => void;
+  createComment: (
+    comment: CurrentComment,
+    setCommentList: Dispatch<any>
+  ) => void;
 }
 interface Props {}
 
@@ -30,10 +33,16 @@ export const SummonContextProvider: FC<Props> = ({ children }) => {
       .catch((error) => console.log(error.message));
   };
 
-  const createComment = (comment: CurrentComment) => {
+  const createComment = (
+    comment: CurrentComment,
+    setCommentList: Dispatch<any>
+  ) => {
     axios
       .post('/summons/createComment', comment)
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response.data.popUserComment.comments);
+        setCommentList(response.data.popUserComment.comments);
+      })
       .catch((error) => console.log(error.message));
   };
 

@@ -62,6 +62,12 @@ const useStyles = makeStyles((muiTheme) => ({
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
+  videoRow: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+  },
   btnRow: {
     margin: '5%',
     height: '40px',
@@ -70,6 +76,13 @@ const useStyles = makeStyles((muiTheme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
+    borderRadius: '15px',
+    boxShadow: '3px 1px 4px 4px #f3e5f5',
+  },
+  creationVideo: {
+    zIndex: 120,
+    width: '300px',
+    height: 'auto',
     borderRadius: '15px',
     boxShadow: '3px 1px 4px 4px #f3e5f5',
   },
@@ -140,13 +153,32 @@ const TimelineModal: FC<Props> = ({ open, handleClose, creationData }) => {
                   {creationData && creationData[0].summon.assignmentTitle}
                 </Typography>
               </div>
-              <div className={classes.imageRow}>
-                <img
-                  className={classes.creationImage}
-                  src={creationData && creationData[0].creationFile}
-                  alt="Creation"
-                />
-              </div>
+              {creationData &&
+              creationData[0].creationFile.substr(
+                creationData[0].creationFile.length - 3
+              ) === 'mp4' ? (
+                <div className={classes.videoRow}>
+                  <video
+                    width="320"
+                    height="240"
+                    controls
+                    className={classes.creationVideo}
+                  >
+                    <source
+                      src={creationData && creationData[0].creationFile}
+                      type="video/mp4"
+                    ></source>
+                  </video>
+                </div>
+              ) : (
+                <div className={classes.imageRow}>
+                  <img
+                    className={classes.creationImage}
+                    src={creationData && creationData[0].creationFile}
+                    alt="Creation"
+                  />
+                </div>
+              )}
               <div className={classes.btnRow}>
                 <Button
                   onClick={handleOpen}
