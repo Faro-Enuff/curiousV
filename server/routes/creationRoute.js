@@ -29,7 +29,7 @@ router.get(
 // Get all Creations of another (specific) user
 
 router.get(
-  '/getCreations/:userId',
+  '/getOtherUsersCreations/:userId',
   passport.authenticate('jwt', { session: false }),
   creationController.getOtherUsersCreations
 );

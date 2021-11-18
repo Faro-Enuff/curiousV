@@ -59,11 +59,11 @@ const useStyles = makeStyles((muiTheme) => ({
   chatBody: {
     '& #Sender': {
       backgroundColor: '#b7cac8',
-      marginRight: '50%',
+      marginRight: '30%',
     },
     '& #Receiver': {
       backgroundColor: '#b7cac8',
-      marginLeft: '50%',
+      marginLeft: '30%',
     },
   },
   bodyContent: {},
@@ -271,7 +271,7 @@ const Chatroom: FC = () => {
                           : Enso
                       }
                     />
-                    <Typography variant="h6">
+                    <Typography variant="body1">
                       {messageContent.message}
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

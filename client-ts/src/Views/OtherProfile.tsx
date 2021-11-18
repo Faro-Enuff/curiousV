@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useContext } from 'react';
 
 // Custom Hooks
 import { useFetch } from '../Utils/useFetch';
@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 // Rect Router dom
 import { useParams } from 'react-router-dom';
+import { CreationContext } from '../Context/creationContext';
 
 interface Props {}
 
@@ -85,14 +86,20 @@ const OtherProfile: FC<Props> = () => {
   const classes = useStyles();
 
   const { userId } = useParams<{ userId?: string }>();
+  const { creations, setCreations } = useContext(CreationContext);
 
   // Use Fetch for Timeline
   ////////////////////////////////////////////////////////////////////////////////////
-  const { isLoading: loaderCreations, apiData: creations } = useFetch(
+  const { isLoading: loaderCreations, apiData: creationsData } = useFetch(
     'get',
     `http://localhost:5000/api/creations/getOtherUsersCreations/${userId}`
   );
   ////////////////////////////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    setCreations(creationsData);
+  }, [creationsData]);
+
   // Use Fetch for Cursignments
   const { isLoading: loaderUserCollection, apiData: collectionFetch } =
     useFetch(
