@@ -15,6 +15,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 // Internal Imports
 import { useFetch } from '../Utils/useFetch';
 import Loader from '../Utils/Loader';
+import Enso from '../Images/EnsoTransparent.png';
 // Context Imports
 import { ChatContext } from '../Context/chatContext';
 // Interface Imports
@@ -131,7 +132,9 @@ const UserSearch: FC<Props> = () => {
                 <li key={user._id} className={classes.innerBox}>
                   <Box sx={{ display: 'flex' }} className={classes.boxUser}>
                     <Box className={classes.avatarRow}>
-                      <Avatar src={user.profileImage} />
+                      <Avatar
+                        src={user.profileImage ? user.profileImage : Enso}
+                      />
                     </Box>
                     <Box sx={{ ml: 2 }} className={classes.nameRow}>
                       <Typography variant="h6">{user.artistName}</Typography>

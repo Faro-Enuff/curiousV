@@ -198,6 +198,31 @@ const profileDetail = async (req, res) => {
   }
 };
 
+const profileDetailSelected = async (req, res) => {
+  const userId = req.params.userId;
+  // console.log("userId : >>", userId);
+
+  try {
+    const user = await userModel
+      .findById(userId)
+      .select([
+        '_id',
+        'artistName',
+        'email',
+        'firstName',
+        'profileImage',
+        'chatroomIds',
+      ])
+      .populate('hobbies');
+
+    // console.log("User : >>", user);
+
+    res.json({ user: user });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};
+
 ////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
@@ -362,6 +387,7 @@ export {
   googleUser,
   updateImage,
   profileDetail,
+  profileDetailSelected,
   userArray,
   addHobby,
   getUserHobby,

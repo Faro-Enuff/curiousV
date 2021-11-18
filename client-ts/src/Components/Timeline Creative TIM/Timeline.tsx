@@ -39,7 +39,7 @@ const Timeline: FC<Props> = (props) => {
     }
   }, [creations]);
 
-  console.log('Creations : >>', creations);
+  // console.log('Creations : >>', creations);
 
   const timelineClass =
     classes.timeline +

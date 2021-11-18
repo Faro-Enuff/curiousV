@@ -61,7 +61,7 @@ const SummonBuild = (props: Props) => {
     complexity: '',
   });
 
-  console.log(summonInput);
+  // console.log(summonInput);
 
   const onClickHandler = () => {
     // Transform Object in Array

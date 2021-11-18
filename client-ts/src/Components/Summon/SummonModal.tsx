@@ -68,8 +68,8 @@ const SummonModal: FC<Props> = ({ input, setInput, body }) => {
     body?.learningMaterial.indexOf('=') + 1
   );
 
-  console.log('Summon Modal Body : >> ', body);
-  console.log('Creation : >>', creation);
+  // console.log('Summon Modal Body : >> ', body);
+  // console.log('Creation : >>', creation);
 
   return (
     <div>

@@ -77,11 +77,19 @@ router.get(
 ////////////////////////////
 ////////////////////////////
 
-// Specific User
+// Get LoggedIn User
 router.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   userController.profileDetail
+);
+
+// Get Selected User by params
+
+router.get(
+  '/selectedProfile/:userId',
+  passport.authenticate('jwt', { session: false }),
+  userController.profileDetailSelected
 );
 
 // Array of all Users !!! besides the logged in user !!!

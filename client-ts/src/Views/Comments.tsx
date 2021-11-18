@@ -83,7 +83,7 @@ const useStyles = makeStyles((muiTheme) => ({
 
 const Comments: FC<Props> = ({ input }) => {
   const classes = useStyles();
-  console.log('Comments : >>', input);
+  // console.log('Comments : >>', input);
 
   const { createComment } = useContext(SummonContext);
 
@@ -93,7 +93,7 @@ const Comments: FC<Props> = ({ input }) => {
   );
 
   const [commentList, setCommentList] = useState<any[]>([]);
-  console.log('Comment List : >>', commentList);
+  // console.log('Comment List : >>', commentList);
   useEffect(() => {
     setCommentList(summons?.userSummon.comments);
   }, [summons]);
@@ -125,7 +125,7 @@ const Comments: FC<Props> = ({ input }) => {
       }
     };
     joinRoom();
-    console.log('Joined room :>>', room);
+    // console.log('Joined room :>>', room);
   }, [input]);
 
   ////////////////////////////////////////////////////////

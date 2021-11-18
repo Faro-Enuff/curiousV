@@ -65,7 +65,7 @@ const AppBarCostum = () => {
     history.push('/editProfile');
   };
 
-  console.log(profile);
+  // console.log(profile);
   return (
     <div className={classes.appBarBox}>
       <Box sx={{ flexGrow: 1 }} className={classes.appBar}>
@@ -73,6 +73,7 @@ const AppBarCostum = () => {
           <Toolbar>
             <div onClick={handleClick}>
               <Avatar
+                sx={{ height: 48, width: 48, mr: 2 }}
                 className={classes.avatarFrame}
                 src={
                   profile?.user.profileImage ? profile.user.profileImage : Enso
@@ -82,12 +83,22 @@ const AppBarCostum = () => {
             <Box sx={{ flexGrow: 1 }} />
             {profile && (
               <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{ display: 'flex' }}
+              >
+                {`${profile.user.artistName}`}
+              </Typography>
+            )}
+            {profile && (
+              <Typography
                 variant="h6"
                 noWrap
                 component="div"
                 sx={{ display: 'flex' }}
               >
-                {`${profile.user.artistName}'s | ${
+                {`' | ${
                   profile.user.hobbies[0]?.genre
                     ? profile.user.hobbies[0]?.genre
                     : ''

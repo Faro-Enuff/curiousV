@@ -77,7 +77,7 @@ const AssEqCard: FC<Props> = ({ header, body }) => {
   };
   const handleClose = (): void => setOpen(false);
 
-  console.log(body);
+  // console.log(body);
   return (
     <div className={classes.outerCard}>
       <div className={classes.innerCardsDiv}>
@@ -96,7 +96,7 @@ const AssEqCard: FC<Props> = ({ header, body }) => {
                         justifyContent: 'center',
                       }}
                     >
-                      <hr className="beautyHrSmall" />
+                      <hr className="beautyHr" />
                     </Box>
                     <CardActions className={classes.btnRow}>
                       <Box sx={{ mr: 1 }}>

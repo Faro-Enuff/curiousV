@@ -131,8 +131,8 @@ const Chatroom: FC = () => {
     'get',
     `http://localhost:5000/api/chatrooms/${receiverId}`
   );
-  console.log(receiverId);
-  console.log(chatroomData);
+  // console.log(receiverId);
+  // console.log(chatroomData);
   // console.log(chatroomData?.chatroom[0].messages);
 
   // Receiver
@@ -157,8 +157,8 @@ const Chatroom: FC = () => {
       chatroomIds: filteredUser?.chatroomIds,
     });
   }, [filteredUser]);
-  console.log(filteredUser);
-  console.log(receiver);
+  // console.log(filteredUser);
+  // console.log(receiver);
 
   ////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////
@@ -173,12 +173,12 @@ const Chatroom: FC = () => {
     // console.log(chatroomData?.chatroom[0]._id);
     const joinRoom = () => {
       if (room) {
-        console.log('Join Room');
+        // console.log('Join Room');
         socket.emit('join_room', room);
       }
     };
     joinRoom();
-    console.log('Joined room :>>');
+    // console.log('Joined room :>>');
   }, [chatroomData]);
 
   ////////////////////////////////////////////////////////

@@ -64,11 +64,7 @@ const CommentTextfield: FC<Props> = ({ sendComment }) => {
   const handleOnChange = (event: any) => {
     setCurrentComment(event.target.value);
   };
-  console.log(currentComment);
-  //   const handleWriteComment = (event: any) => {
-  //     event.preventDefault();
-  //     setCurrentComment('');
-  //   };
+  // console.log(currentComment);
 
   return (
     <div className={classes.root}>

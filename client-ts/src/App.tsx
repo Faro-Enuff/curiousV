@@ -59,7 +59,6 @@ const App: FC = () => {
                         '/chatroom/:receiverId',
                         '/creationSubmit/:id',
                         '/editProfile',
-                        '/otherProfile/:userId',
                       ]}
                     >
                       <AppBarCostum />

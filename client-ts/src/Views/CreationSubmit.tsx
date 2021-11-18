@@ -83,7 +83,7 @@ const CreationSubmit: FC<Props> = () => {
   // Creation Context
   const { postCreation, updateCollection } = useContext(CreationContext);
 
-  console.log(id, summon);
+  // console.log(id, summon);
 
   const timeUnities: string[] = [
     'timeUnit',
@@ -118,7 +118,7 @@ const CreationSubmit: FC<Props> = () => {
     }
     console.log(event.target.files[0]);
   };
-  console.log('Creation Input : >>', creationInput);
+  // console.log('Creation Input : >>', creationInput);
 
   // Submit Handler
   const handleClickSubmit = (): void => {

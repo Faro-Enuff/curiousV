@@ -71,7 +71,7 @@ const useStyles = makeStyles((muiTheme) => ({
   btnRow: {
     margin: '5%',
     height: '40px',
-    width: '100%',
+    width: '40%',
     backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
@@ -117,7 +117,7 @@ interface Props {
 const TimelineModal: FC<Props> = ({ open, handleClose, creationData }) => {
   const classes = useStyles();
 
-  console.log('Creation Data : >>', creationData);
+  // console.log('Creation Data : >>', creationData);
 
   const { isLoading: summonLoader, apiData: summon } = useFetch(
     'get',
@@ -187,12 +187,6 @@ const TimelineModal: FC<Props> = ({ open, handleClose, creationData }) => {
                   size="small"
                 >
                   Summon
-                </Button>
-                <Button variant="contained" color="secondary" size="small">
-                  Comment
-                </Button>
-                <Button variant="contained" color="secondary" size="small">
-                  Share
                 </Button>
               </div>
             </div>

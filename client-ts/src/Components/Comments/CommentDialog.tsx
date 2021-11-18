@@ -59,7 +59,7 @@ const CommentDialog: FC<Props> = ({ input }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log('Comment Dialog : >> ', input);
+  // console.log('Comment Dialog : >> ', input);
   return (
     <div>
       <Button

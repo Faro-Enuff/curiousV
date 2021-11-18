@@ -10,7 +10,7 @@ import AssEqCard from '../Components/ReusableComponents/AssEqCard';
 import Enso from '../Images/EnsoTransparent.png';
 
 // MUI Core Imports
-import { Card, Typography, Box, Paper } from '@mui/material';
+import { Card, Typography, Box, Paper, Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -55,6 +55,17 @@ const useStyles = makeStyles((muiTheme) => ({
     position: 'relative',
   },
   test: {},
+  heading: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  avatar: {
+    boxShadow: '1px 1px 3px 3px  #87A8A4',
+    marginTop: '1%',
+    marginBottom: '3%',
+    marginLeft: '5%',
+  },
   cursignment: {
     flex: 1,
     overflowY: 'auto',
@@ -88,6 +99,13 @@ const OtherProfile: FC<Props> = () => {
   const { userId } = useParams<{ userId?: string }>();
   const { creations, setCreations } = useContext(CreationContext);
 
+  // Use Fetch for Profile
+  ////////////////////////////////////////////////////////////////////////////////////
+  const { apiData: profile } = useFetch(
+    'get',
+    `http://localhost:5000/api/users/selectedProfile/${userId}`
+  );
+  ////////////////////////////////////////////////////////////////////////////////////
   // Use Fetch for Timeline
   ////////////////////////////////////////////////////////////////////////////////////
   const { isLoading: loaderCreations, apiData: creationsData } = useFetch(
@@ -113,7 +131,7 @@ const OtherProfile: FC<Props> = () => {
     setUserCollection(collectionFetch?.userCollection[0]);
   }, [collectionFetch]);
 
-  console.log('User Collection : >> ', userCollection && userCollection);
+  // console.log('User Collection : >> ', userCollection && userCollection);
 
   // console.log('Collection Fetch : >>', collectionFetch);
 
@@ -122,6 +140,30 @@ const OtherProfile: FC<Props> = () => {
       {loaderCreations && loaderUserCollection && <Loader />}
       <div className={classes.homeDiv}>
         <div className={classes.test}>
+          <div className={classes.heading}>
+            {profile && (
+              <Typography
+                variant="h5"
+                noWrap
+                color="primary"
+                component="div"
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                {`${profile.user.artistName}'s | ${
+                  profile.user.hobbies[0]?.genre
+                    ? profile.user.hobbies[0]?.genre
+                    : ''
+                } cV`}
+              </Typography>
+            )}
+            <Avatar
+              className={classes.avatar}
+              sx={{ width: 51, height: 51 }}
+              src={
+                profile?.user.profileImage ? profile.user.profileImage : Enso
+              }
+            />
+          </div>
           <div className={classes.timeline}>
             <Box sx={{ flexGrow: 3 }}>
               <CustomizedPaper>
